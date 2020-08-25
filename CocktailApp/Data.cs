@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -94,7 +95,7 @@ namespace CocktailApp
         }
 
         public static void AddEditCocktail(
-            string mode, string id, string name, string ingredients, string fullIngredients, string recipe)
+            string mode, string id, string name, string ingredients, string fullIngredients, string recipe, byte[] image)
         {
             using (var connect = Connection)
             {
@@ -108,6 +109,14 @@ namespace CocktailApp
                 sqlCmd.Parameters.AddWithValue("@Ingredients", ingredients);
                 sqlCmd.Parameters.AddWithValue("@FullIngredients", fullIngredients);
                 sqlCmd.Parameters.AddWithValue("@Recipe", recipe);
+                if (image == null)
+                {
+                    sqlCmd.Parameters.Add(new SqlParameter("@Image", SqlDbType.Image) { Value = DBNull.Value });
+                }
+                else
+                {
+                    sqlCmd.Parameters.AddWithValue("@Image", image);
+                }
                 sqlCmd.ExecuteNonQuery();
                 connect.Close();
             }

@@ -7,6 +7,7 @@
         public string Ingredients { get; set; }
         public string FullIngredients { get; set; }
         public string Recipe { get; set; }
+        public byte[] Image { get; set; }
         public string FullIngredientInfo => "○ " + FullIngredients.Replace(";", "\r\n○ ");
         public string InfoAvailable => GetInfoAvailable();
         public string Info => Name.ToUpper() + " - " + Ingredients.Replace(";", ", ");

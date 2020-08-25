@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CocktailApp.Forms;
+using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,6 +11,8 @@ namespace CocktailApp
     public partial class EditCocktails : Form
     {
         private BindingList<string> TagList = new BindingList<string>();
+
+        private byte[] CocktailImage;
 
         public EditCocktails()
         {
@@ -60,6 +64,9 @@ namespace CocktailApp
                 IngredientTagListBox.DataSource = TagList;
                 FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace(";", "\r\n");
                 RecipeTextBox.Text = selectedCocktail.Recipe;
+                
+                CocktailImage = selectedCocktail.Image;
+                UploadedFileLabel.Text = CocktailImage == null ? "No image uploaded" : "Image stored on database";
             }
         }
 
@@ -88,6 +95,32 @@ namespace CocktailApp
             TagList.Remove(IngredientTagListBox.SelectedItem.ToString());
         }
 
+        private void UploadButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "Image files | *.bmp; *.gif; *.jpg; *.jpeg; *.jpe; *.jif; *.jfif; *.jfi; *.png; *.tiff; *.tif | All files | *.*"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                CocktailImage = Format.GetByteArray(Format.ResizeImage(Image.FromFile(dialog.FileName)));
+
+                UploadedFileLabel.Text = dialog.SafeFileName;
+            }
+        }
+
+        private void ViewButton_Click(object sender, EventArgs e)
+        {
+            var form = new PictureMessageBox(CocktailImage);
+            form.ShowDialog();
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            ClearImage();
+        }
+
         private void AddCocktailButton_Click(object sender, EventArgs e)
         {
             if (TextBoxValidation())
@@ -100,7 +133,8 @@ namespace CocktailApp
                     fullIngredients: string.Join(";", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                                                         .Select(s => s.Trim())),
-                    recipe: RecipeTextBox.Text.Trim());
+                    recipe: RecipeTextBox.Text.Trim(),
+                    image: CocktailImage);
 
                 RefreshAfterEdit();
 
@@ -124,7 +158,8 @@ namespace CocktailApp
                     fullIngredients: string.Join(";", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                                                         .Select(s => s.Trim())),
-                    recipe: RecipeTextBox.Text.Trim());
+                    recipe: RecipeTextBox.Text.Trim(),
+                    image: CocktailImage);
 
                 RefreshAfterEdit();
 
@@ -164,7 +199,7 @@ namespace CocktailApp
         {
             SuccessLabelClear();
         }
-        
+
         private void RefreshListContent()
         {
             CocktailsListBox.DataSource = Data.Cocktails;
@@ -196,6 +231,15 @@ namespace CocktailApp
             TagList.Clear();
             FullIngredientInfoTextBox.Text = "";
             RecipeTextBox.Text = "";
+
+            ClearImage();
+        }
+
+        private void ClearImage()
+        {
+            CocktailImage = null;
+
+            UploadedFileLabel.Text = "No image uploaded";
         }
 
         private void SuccessLabelClear()
@@ -212,6 +256,5 @@ namespace CocktailApp
         {
             SuccessLabel.Text = "All text fields must be filled!";
         }
-
     }
 }

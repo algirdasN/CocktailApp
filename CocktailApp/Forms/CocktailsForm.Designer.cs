@@ -40,9 +40,9 @@
             this.SearchByIngredientRadioButton = new System.Windows.Forms.RadioButton();
             this.IngredientsTextBox = new System.Windows.Forms.TextBox();
             this.RecipeTextBox = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CocktailImageBox = new System.Windows.Forms.PictureBox();
             this.CocktailNameLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CocktailImageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -167,15 +167,14 @@
             this.RecipeTextBox.Size = new System.Drawing.Size(400, 170);
             this.RecipeTextBox.TabIndex = 15;
             // 
-            // pictureBox1
+            // CocktailImageBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(605, 200);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(160, 160);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 16;
-            this.pictureBox1.TabStop = false;
+            this.CocktailImageBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("CocktailImageBox.InitialImage")));
+            this.CocktailImageBox.Location = new System.Drawing.Point(605, 200);
+            this.CocktailImageBox.Name = "CocktailImageBox";
+            this.CocktailImageBox.Size = new System.Drawing.Size(160, 160);
+            this.CocktailImageBox.TabIndex = 16;
+            this.CocktailImageBox.TabStop = false;
             // 
             // CocktailNameLabel
             // 
@@ -194,7 +193,7 @@
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.ControlBox = false;
             this.Controls.Add(this.CocktailNameLabel);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.CocktailImageBox);
             this.Controls.Add(this.RecipeTextBox);
             this.Controls.Add(this.IngredientsTextBox);
             this.Controls.Add(this.SearchByIngredientRadioButton);
@@ -211,7 +210,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Cocktails";
             this.Text = "ShowCocktails";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CocktailImageBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,7 +229,7 @@
         private System.Windows.Forms.RadioButton SearchByIngredientRadioButton;
         private System.Windows.Forms.TextBox IngredientsTextBox;
         private System.Windows.Forms.TextBox RecipeTextBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox CocktailImageBox;
         private System.Windows.Forms.Label CocktailNameLabel;
     }
 }

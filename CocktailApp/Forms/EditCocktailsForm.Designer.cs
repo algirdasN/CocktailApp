@@ -56,6 +56,8 @@
             this.UploadImageBox = new System.Windows.Forms.GroupBox();
             this.RecipeGroupBox = new System.Windows.Forms.GroupBox();
             this.SuccessLabel = new System.Windows.Forms.Label();
+            this.ClearButton = new System.Windows.Forms.Button();
+            this.ViewButton = new System.Windows.Forms.Button();
             this.NameBox.SuspendLayout();
             this.IngredientTagsBox.SuspendLayout();
             this.FullIngredientInfoBox.SuspendLayout();
@@ -216,23 +218,24 @@
             // 
             // UploadButton
             // 
-            this.UploadButton.Font = new System.Drawing.Font("Arial", 12F);
-            this.UploadButton.Location = new System.Drawing.Point(45, 80);
+            this.UploadButton.Font = new System.Drawing.Font("Arial", 10F);
+            this.UploadButton.Location = new System.Drawing.Point(10, 81);
             this.UploadButton.Name = "UploadButton";
-            this.UploadButton.Size = new System.Drawing.Size(120, 30);
+            this.UploadButton.Size = new System.Drawing.Size(60, 30);
             this.UploadButton.TabIndex = 30;
             this.UploadButton.Text = "Upload";
             this.UploadButton.UseVisualStyleBackColor = true;
+            this.UploadButton.Click += new System.EventHandler(this.UploadButton_Click);
             // 
             // UploadedFileLabel
             // 
-            this.UploadedFileLabel.Font = new System.Drawing.Font("Arial", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UploadedFileLabel.ForeColor = System.Drawing.Color.Red;
-            this.UploadedFileLabel.Location = new System.Drawing.Point(10, 30);
+            this.UploadedFileLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UploadedFileLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.UploadedFileLabel.Location = new System.Drawing.Point(5, 30);
             this.UploadedFileLabel.Name = "UploadedFileLabel";
-            this.UploadedFileLabel.Size = new System.Drawing.Size(190, 40);
+            this.UploadedFileLabel.Size = new System.Drawing.Size(200, 40);
             this.UploadedFileLabel.TabIndex = 31;
-            this.UploadedFileLabel.Text = "Not implemented yet";
+            this.UploadedFileLabel.Text = "No image uploaded";
             this.UploadedFileLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RecipeTextBox
@@ -327,6 +330,8 @@
             // 
             // UploadImageBox
             // 
+            this.UploadImageBox.Controls.Add(this.ViewButton);
+            this.UploadImageBox.Controls.Add(this.ClearButton);
             this.UploadImageBox.Controls.Add(this.UploadedFileLabel);
             this.UploadImageBox.Controls.Add(this.UploadButton);
             this.UploadImageBox.Font = new System.Drawing.Font("Arial", 14F);
@@ -356,8 +361,29 @@
             this.SuccessLabel.Name = "SuccessLabel";
             this.SuccessLabel.Size = new System.Drawing.Size(280, 70);
             this.SuccessLabel.TabIndex = 44;
-            this.SuccessLabel.Text = "All text fields must be filled!";
             this.SuccessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Font = new System.Drawing.Font("Arial", 10F);
+            this.ClearButton.Location = new System.Drawing.Point(140, 81);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(60, 30);
+            this.ClearButton.TabIndex = 32;
+            this.ClearButton.Text = "Clear";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
+            // ViewButton
+            // 
+            this.ViewButton.Font = new System.Drawing.Font("Arial", 10F);
+            this.ViewButton.Location = new System.Drawing.Point(75, 81);
+            this.ViewButton.Name = "ViewButton";
+            this.ViewButton.Size = new System.Drawing.Size(60, 30);
+            this.ViewButton.TabIndex = 33;
+            this.ViewButton.Text = "View";
+            this.ViewButton.UseVisualStyleBackColor = true;
+            this.ViewButton.Click += new System.EventHandler(this.ViewButton_Click);
             // 
             // EditCocktails
             // 
@@ -429,5 +455,7 @@
         private System.Windows.Forms.GroupBox FullIngredientInfoBox;
         private System.Windows.Forms.Label NameLabel;
         private System.Windows.Forms.Label SuccessLabel;
+        private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.Button ViewButton;
     }
 }

@@ -72,6 +72,9 @@ namespace CocktailApp
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
                 RecipeTextBox.Text = selectedCocktail.Recipe;
+
+                CocktailImageBox.Image = selectedCocktail.Image == null ? 
+                    CocktailImageBox.InitialImage : Format.GetImage(selectedCocktail.Image);
             }
         }
     }
