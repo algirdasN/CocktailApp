@@ -22,7 +22,7 @@ namespace CocktailApp
 
         public static Bitmap ResizeImage(Image image)
         {
-            int size = 160; 
+            int size = 640; 
 
             var destRect = new Rectangle(0, 0, size, size);
             var destImage = new Bitmap(size, size);

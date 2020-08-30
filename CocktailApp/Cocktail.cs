@@ -27,7 +27,10 @@
 
         private string GetInfoAvailable()
         {
+            Data.GetIngredients();
+
             var str = Ingredients;
+
             foreach (string item in Ingredients.Split(';'))
             {
                 if (!Data.Ingredients.Exists(i => i.Type == item))

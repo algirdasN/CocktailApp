@@ -9,11 +9,11 @@ namespace CocktailApp
         {
             InitializeComponent();
 
-            Data.GetNewCocktailList();
+            Data.GetCocktails();
 
             RefreshListContent();
 
-            CocktailsListBox.SetSelected(0, true);
+            CocktailsListBox.ClearSelected();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -66,14 +66,15 @@ namespace CocktailApp
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
+            if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
                 var selectedCocktail = Data.Cocktails.Find(c => c.Id == id);
+
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
                 RecipeTextBox.Text = selectedCocktail.Recipe;
 
-                CocktailImageBox.Image = selectedCocktail.Image == null ? 
+                CocktailImageBox.Image = selectedCocktail.Image == null ?
                     CocktailImageBox.InitialImage : Format.GetImage(selectedCocktail.Image);
             }
         }

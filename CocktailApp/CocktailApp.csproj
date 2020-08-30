@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\Desktop\cocktailapp\</PublishUrl>
+    <PublishUrl>D:\Desktop\cocktailapp2.0\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -92,12 +92,6 @@
     <Compile Include="Forms\CocktailsForm.Designer.cs">
       <DependentUpon>CocktailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PictureMessageBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PictureMessageBox.Designer.cs">
-      <DependentUpon>PictureMessageBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Ingredient.cs" />
     <Compile Include="Forms\MainMenu.cs">
       <SubType>Form</SubType>
@@ -115,16 +109,15 @@
     </Compile>
     <EmbeddedResource Include="Forms\EditCocktailsForm.resx">
       <DependentUpon>EditCocktailsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CocktailsForm.resx">
       <DependentUpon>CocktailsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PictureMessageBox.resx">
-      <DependentUpon>PictureMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -138,6 +131,7 @@
     </Compile>
     <EmbeddedResource Include="Forms\IngredientsForm.resx">
       <DependentUpon>IngredientsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="CocktailApp_TemporaryKey.pfx" />
     <None Include="packages.config" />

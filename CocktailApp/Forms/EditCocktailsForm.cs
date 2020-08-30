@@ -1,5 +1,4 @@
-﻿using CocktailApp.Forms;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -18,7 +17,9 @@ namespace CocktailApp
         {
             InitializeComponent();
 
-            Data.GetNewCocktailList();
+            Data.GetIngredients();
+
+            Data.GetCocktails();
 
             RefreshListContent();
 
@@ -56,7 +57,7 @@ namespace CocktailApp
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
+            if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
                 var selectedCocktail = Data.Cocktails.Single(c => c.Id == id);
                 NameTextBox.Text = selectedCocktail.Name;
@@ -64,8 +65,9 @@ namespace CocktailApp
                 IngredientTagListBox.DataSource = TagList;
                 FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace(";", "\r\n");
                 RecipeTextBox.Text = selectedCocktail.Recipe;
-                
+
                 CocktailImage = selectedCocktail.Image;
+                UploadedImagePictureBox.Image = CocktailImage == null ? UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
                 UploadedFileLabel.Text = CocktailImage == null ? "No image uploaded" : "Image stored on database";
             }
         }
@@ -106,14 +108,10 @@ namespace CocktailApp
             {
                 CocktailImage = Format.GetByteArray(Format.ResizeImage(Image.FromFile(dialog.FileName)));
 
+                UploadedImagePictureBox.Image = Format.GetImage(CocktailImage);
+
                 UploadedFileLabel.Text = dialog.SafeFileName;
             }
-        }
-
-        private void ViewButton_Click(object sender, EventArgs e)
-        {
-            var form = new PictureMessageBox(CocktailImage);
-            form.ShowDialog();
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -148,7 +146,11 @@ namespace CocktailApp
 
         private void EditCocktailButton_Click(object sender, EventArgs e)
         {
-            if (TextBoxValidation())
+            if (CocktailsListBox.SelectedItems.Count == 0)
+            {
+                SuccessLabelNoSelection();
+            }
+            else if (TextBoxValidation())
             {
                 Data.AddEditCocktail(
                     mode: "Edit",
@@ -173,11 +175,18 @@ namespace CocktailApp
 
         private void RemoveCocktailButton_Click(object sender, EventArgs e)
         {
-            Data.RemoveCocktail(CocktailsListBox.SelectedValue.ToString());
+            if (CocktailsListBox.SelectedItems.Count > 0)
+            {
+                Data.RemoveCocktail(CocktailsListBox.SelectedValue.ToString());
 
-            RefreshAfterEdit();
+                RefreshAfterEdit();
 
-            SuccessLabelSuccess();
+                SuccessLabelSuccess();
+            }
+            else
+            {
+                SuccessLabelNoSelection();
+            }
         }
 
         private void NameTextBox_TextChanged(object sender, EventArgs e)
@@ -205,6 +214,8 @@ namespace CocktailApp
             CocktailsListBox.DataSource = Data.Cocktails;
             CocktailsListBox.DisplayMember = "Info";
             CocktailsListBox.ValueMember = "Id";
+
+            CocktailsListBox.ClearSelected();
         }
 
         private void PopulateComboBox()
@@ -222,7 +233,7 @@ namespace CocktailApp
 
         private void RefreshAfterEdit()
         {
-            Data.GetNewCocktailList();
+            Data.GetCocktails();
 
             RefreshListContent();
 
@@ -239,6 +250,8 @@ namespace CocktailApp
         {
             CocktailImage = null;
 
+            UploadedImagePictureBox.Image = UploadedImagePictureBox.InitialImage;
+
             UploadedFileLabel.Text = "No image uploaded";
         }
 
@@ -254,7 +267,11 @@ namespace CocktailApp
 
         private void SuccessLabelError()
         {
-            SuccessLabel.Text = "All text fields must be filled!";
+            SuccessLabel.Text = "All fields must be filled!";
+        }
+        private void SuccessLabelNoSelection()
+        {
+            SuccessLabel.Text = "Select a cocktail";
         }
     }
 }

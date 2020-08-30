@@ -9,38 +9,27 @@ namespace CocktailApp
 {
     public static class Data
     {
-        public static List<Cocktail> Cocktails;
+        public static List<Cocktail> Cocktails { get; private set; }
+        public static List<Ingredient> Ingredients { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.Available).ToList();
-        public static List<Ingredient> Ingredients => GetIngredients();
         private static IDbConnection Connection => 
             new SqlConnection($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database.mdf\";Integrated Security=True");
-        
-        private static List<Ingredient> GetIngredients()
+       
+        public static void GetIngredients()
         {
-            using (Connection)
-            {
-                return Connection.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
-            }
+            Ingredients = Connection.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
         }
 
-        private static List<Cocktail> GetCocktails()
+        public static void GetCocktails()
         {
-            using (Connection)
-            {
-                return Connection.Query<Cocktail>("SELECT * FROM Cocktails ORDER BY Name").ToList();
-            }
-        }
-
-        public static void GetNewCocktailList()
-        {
-            SearchCocktails("", "Name");
+            Cocktails = Connection.Query<Cocktail>("SELECT * FROM Cocktails ORDER BY Name").ToList();
         }
 
         public static void SearchCocktails(string term, string searchby)
         {
             if (term == "")
             {
-                Cocktails = GetCocktails();
+                GetCocktails();
             }
             else
             {
