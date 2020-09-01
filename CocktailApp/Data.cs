@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace CocktailApp
 {
@@ -12,17 +14,23 @@ namespace CocktailApp
         public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.Available).ToList();
-        private static IDbConnection Connection => 
+        private static IDbConnection Connection =>
             new SqlConnection($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database.mdf\";Integrated Security=True");
-       
+
         public static void GetIngredients()
         {
-            Ingredients = Connection.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
+            using (var connect = Connection)
+            {
+                Ingredients = connect.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
+            }
         }
 
         public static void GetCocktails()
         {
-            Cocktails = Connection.Query<Cocktail>("SELECT * FROM Cocktails ORDER BY Name").ToList();
+            using (var connect = Connection)
+            {
+                Cocktails = connect.Query<Cocktail>("SELECT * FROM Cocktails ORDER BY Name").ToList();
+            }
         }
 
         public static void SearchCocktails(string term, string searchby)
@@ -34,15 +42,15 @@ namespace CocktailApp
             else
             {
                 var query = $"SELECT * FROM Cocktails WHERE {searchby} LIKE @{searchby} ORDER BY Name";
-                using (Connection)
+                using (var connect = Connection)
                 {
                     switch (searchby)
                     {
                         case "Name":
-                            Cocktails = Connection.Query<Cocktail>(query, new { Name = '%' + term + '%' }).ToList();
+                            Cocktails = connect.Query<Cocktail>(query, new { Name = '%' + term + '%' }).ToList();
                             break;
                         case "Ingredients":
-                            Cocktails = Connection.Query<Cocktail>(query, new { Ingredients = '%' + term + '%' }).ToList();
+                            Cocktails = connect.Query<Cocktail>(query, new { Ingredients = '%' + term + '%' }).ToList();
                             break;
                     }
                 }
@@ -55,15 +63,17 @@ namespace CocktailApp
             using (var connect = Connection)
             {
                 connect.Open();
-                SqlCommand sqlCmd = new SqlCommand($"Ingredient{mode}", (SqlConnection)connect)
+                using (var sqlCmd = new SqlCommand($"Ingredient{mode}", (SqlConnection)connect))
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                sqlCmd.Parameters.AddWithValue("@Id", id);
-                sqlCmd.Parameters.AddWithValue("@Type", type);
-                sqlCmd.Parameters.AddWithValue("@Brand", brand);
-                sqlCmd.Parameters.AddWithValue("@Level", level);
-                sqlCmd.ExecuteNonQuery();
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                    sqlCmd.Parameters.AddWithValue("@Id", id);
+                    sqlCmd.Parameters.AddWithValue("@Type", type);
+                    sqlCmd.Parameters.AddWithValue("@Brand", brand);
+                    sqlCmd.Parameters.AddWithValue("@Level", level);
+
+                    sqlCmd.ExecuteNonQuery();
+                }
                 connect.Close();
             }
         }
@@ -73,12 +83,14 @@ namespace CocktailApp
             using (var connect = Connection)
             {
                 connect.Open();
-                SqlCommand sqlCmd = new SqlCommand("IngredientDelete", (SqlConnection)connect)
+                using (var sqlCmd = new SqlCommand($"IngredientDelete", (SqlConnection)connect))
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                sqlCmd.Parameters.AddWithValue("@Id", id);
-                sqlCmd.ExecuteNonQuery();
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                    sqlCmd.Parameters.AddWithValue("@Id", id);
+
+                    sqlCmd.ExecuteNonQuery();
+                }
                 connect.Close();
             }
         }
@@ -89,24 +101,27 @@ namespace CocktailApp
             using (var connect = Connection)
             {
                 connect.Open();
-                SqlCommand sqlCmd = new SqlCommand($"Cocktail{mode}", (SqlConnection)connect)
+                using (var sqlCmd = new SqlCommand($"Cocktail{mode}", (SqlConnection)connect))
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                sqlCmd.Parameters.AddWithValue("@Id", id);
-                sqlCmd.Parameters.AddWithValue("@Name", name);
-                sqlCmd.Parameters.AddWithValue("@Ingredients", ingredients);
-                sqlCmd.Parameters.AddWithValue("@FullIngredients", fullIngredients);
-                sqlCmd.Parameters.AddWithValue("@Recipe", recipe);
-                if (image == null)
-                {
-                    sqlCmd.Parameters.Add(new SqlParameter("@Image", SqlDbType.Image) { Value = DBNull.Value });
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                    sqlCmd.Parameters.AddWithValue("@Id", id);
+                    sqlCmd.Parameters.AddWithValue("@Name", name);
+                    sqlCmd.Parameters.AddWithValue("@Ingredients", ingredients);
+                    sqlCmd.Parameters.AddWithValue("@FullIngredients", fullIngredients);
+                    sqlCmd.Parameters.AddWithValue("@Recipe", recipe);
+
+                    if (image == null)
+                    {
+                        sqlCmd.Parameters.Add(new SqlParameter("@Image", SqlDbType.Image) { Value = DBNull.Value });
+                    }
+                    else
+                    {
+                        sqlCmd.Parameters.AddWithValue("@Image", image);
+                    }
+
+                    sqlCmd.ExecuteNonQuery();
                 }
-                else
-                {
-                    sqlCmd.Parameters.AddWithValue("@Image", image);
-                }
-                sqlCmd.ExecuteNonQuery();
                 connect.Close();
             }
         }
@@ -116,13 +131,175 @@ namespace CocktailApp
             using (var connect = Connection)
             {
                 connect.Open();
-                SqlCommand sqlCmd = new SqlCommand("CocktailDelete", (SqlConnection)connect)
+                using (var sqlCmd = new SqlCommand("CocktailDelete", (SqlConnection)connect))
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                sqlCmd.Parameters.AddWithValue("@Id", id);
-                sqlCmd.ExecuteNonQuery();
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                    sqlCmd.Parameters.AddWithValue("@Id", id);
+
+                    sqlCmd.ExecuteNonQuery();
+                }
                 connect.Close();
+            }
+        }
+
+        public static void ImportIngredients(string fileName)
+        {
+            try
+            {
+                using (var reader = new StreamReader(fileName))
+                {
+                    bool headers = true;
+                    string line;
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var currentRow = line.Split(';');
+
+                        if (headers == true)
+                        {
+                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" || currentRow[2] != "Level")
+                            {
+                                MessageBox.Show("Incorrect CSV file headers.", "Data import");
+                                return;
+                            }
+                            else
+                            {
+                                headers = false;
+                            }
+                        }
+                        else
+                        {
+                            AddEditIngredient(
+                                mode: "Add",
+                                id: "0",
+                                type: currentRow[0],
+                                brand: currentRow[1],
+                                level: currentRow[2]);
+                        }
+                    }
+                    MessageBox.Show("Ingredients imported successfully.", "Data import");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data import");
+            }
+        }
+
+        public static void ExportIngredients()
+        {
+            string fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
+            string query = "SELECT Type, Brand, Level FROM Ingredients ORDER BY Type";
+
+            try
+            {
+                using (var connect = Connection)
+                using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
+                {
+                    connect.Open();
+                    using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
+                    {
+                        csvFile.WriteLine("{0};{1};{2}", 
+                            reader.GetName(0), reader.GetName(1), reader.GetName(2));
+
+                        while (reader.Read())
+                        {
+                            csvFile.WriteLine("{0};{1};{2}", 
+                                reader[0], reader[1], reader[2]);
+                        }
+                    }
+                    csvFile.Close();
+                    connect.Close();
+                }
+                MessageBox.Show("Ingredients exported successfully.\r\n\r\nFile name: " + fileName, "Data export");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data export");
+            }
+        }
+
+        public static void ImportCocktails(string fileName)
+        {
+            try
+            {
+                using (var reader = new StreamReader(fileName))
+                {
+                    bool headers = true;
+                    string line;
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var currentRow = line.Split(';');
+
+                        if (headers == true)
+                        {
+                            if (currentRow[0] != "Name" || 
+                                currentRow[1] != "Ingredients" || 
+                                currentRow[2] != "FullIngredients" || 
+                                currentRow[3] != "Recipe" || 
+                                currentRow[4] != "Image")
+                            {
+                                MessageBox.Show("Incorrect CSV file headers.", "Data import");
+                                return;
+                            }
+                            else
+                            {
+                                headers = false;
+                            }
+                        }
+                        else
+                        {
+                            AddEditCocktail(
+                                mode: "Add",
+                                id: "0",
+                                name: currentRow[0],
+                                ingredients: currentRow[1],
+                                fullIngredients: currentRow[2],
+                                recipe: currentRow[3],
+                                image: Convert.FromBase64String(currentRow[4]));
+                        }
+                    }
+                    MessageBox.Show("Cocktails imported successfully.", "Data import");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data import");
+            }
+        }
+
+        public static void ExportCocktails()
+        {
+            string fileName = DateTime.Now.ToString("d") + "_Cocktails.csv";
+            string query = "SELECT Name, Ingredients, FullIngredients, Recipe, Image FROM Cocktails ORDER BY Name";
+
+            try
+            {
+                using (var connect = Connection)
+                using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
+                {
+                    connect.Open();
+                    using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
+                    {
+                        csvFile.WriteLine("{0};{1};{2};{3};{4}",
+                            reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4));
+
+                        while (reader.Read())
+                        {
+                            csvFile.WriteLine("{0};{1};{2};{3};{4}",
+                                reader[0], reader[1], reader[2], reader[3], Convert.ToBase64String((byte[])reader[4]));
+                        }
+                    }
+                    csvFile.Close();
+                    connect.Close();
+                }
+                MessageBox.Show("Cocktails exported successfully.\r\n\r\nFile name: " + fileName, "Data export");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data export");
             }
         }
     }

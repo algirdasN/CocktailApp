@@ -62,6 +62,8 @@
             this.FullIngredientsLabel = new System.Windows.Forms.Label();
             this.RecipePanel = new System.Windows.Forms.Panel();
             this.RecipeLabel = new System.Windows.Forms.Label();
+            this.ExportButton = new System.Windows.Forms.Button();
+            this.ImportButton = new System.Windows.Forms.Button();
             this.NamePanel.SuspendLayout();
             this.IngredientTagsPanel.SuspendLayout();
             this.ImagePanel.SuspendLayout();
@@ -174,9 +176,9 @@
             this.CocktailsListBox.FormattingEnabled = true;
             this.CocktailsListBox.HorizontalScrollbar = true;
             this.CocktailsListBox.ItemHeight = 24;
-            this.CocktailsListBox.Location = new System.Drawing.Point(20, 265);
+            this.CocktailsListBox.Location = new System.Drawing.Point(20, 255);
             this.CocktailsListBox.Name = "CocktailsListBox";
-            this.CocktailsListBox.Size = new System.Drawing.Size(320, 388);
+            this.CocktailsListBox.Size = new System.Drawing.Size(320, 340);
             this.CocktailsListBox.TabIndex = 20;
             this.CocktailsListBox.SelectedIndexChanged += new System.EventHandler(this.CocktailsListBox_SelectedIndexChanged);
             // 
@@ -252,6 +254,7 @@
             // 
             // FullIngredientInfoTextBox
             // 
+            this.FullIngredientInfoTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.FullIngredientInfoTextBox.Font = new System.Drawing.Font("Arial", 10F);
             this.FullIngredientInfoTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.FullIngredientInfoTextBox.Location = new System.Drawing.Point(10, 36);
@@ -292,6 +295,7 @@
             // 
             // RecipeTextBox
             // 
+            this.RecipeTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.RecipeTextBox.Font = new System.Drawing.Font("Arial", 10F);
             this.RecipeTextBox.Location = new System.Drawing.Point(10, 36);
             this.RecipeTextBox.Multiline = true;
@@ -310,7 +314,7 @@
             this.AddCocktailButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.AddCocktailButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddCocktailButton.Font = new System.Drawing.Font("Arial", 14F);
-            this.AddCocktailButton.Location = new System.Drawing.Point(375, 608);
+            this.AddCocktailButton.Location = new System.Drawing.Point(375, 610);
             this.AddCocktailButton.Name = "AddCocktailButton";
             this.AddCocktailButton.Size = new System.Drawing.Size(94, 45);
             this.AddCocktailButton.TabIndex = 35;
@@ -327,7 +331,7 @@
             this.EditCocktailButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.EditCocktailButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditCocktailButton.Font = new System.Drawing.Font("Arial", 14F);
-            this.EditCocktailButton.Location = new System.Drawing.Point(478, 608);
+            this.EditCocktailButton.Location = new System.Drawing.Point(477, 610);
             this.EditCocktailButton.Name = "EditCocktailButton";
             this.EditCocktailButton.Size = new System.Drawing.Size(94, 45);
             this.EditCocktailButton.TabIndex = 36;
@@ -344,7 +348,7 @@
             this.RemoveCocktailButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.RemoveCocktailButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RemoveCocktailButton.Font = new System.Drawing.Font("Arial", 14F);
-            this.RemoveCocktailButton.Location = new System.Drawing.Point(581, 608);
+            this.RemoveCocktailButton.Location = new System.Drawing.Point(581, 610);
             this.RemoveCocktailButton.Name = "RemoveCocktailButton";
             this.RemoveCocktailButton.Size = new System.Drawing.Size(94, 45);
             this.RemoveCocktailButton.TabIndex = 37;
@@ -382,7 +386,7 @@
             // SuccessLabel
             // 
             this.SuccessLabel.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Italic);
-            this.SuccessLabel.Location = new System.Drawing.Point(685, 608);
+            this.SuccessLabel.Location = new System.Drawing.Point(685, 610);
             this.SuccessLabel.Name = "SuccessLabel";
             this.SuccessLabel.Size = new System.Drawing.Size(240, 45);
             this.SuccessLabel.TabIndex = 44;
@@ -500,6 +504,40 @@
             this.RecipeLabel.TabIndex = 34;
             this.RecipeLabel.Text = "Recipe";
             // 
+            // ExportButton
+            // 
+            this.ExportButton.BackColor = System.Drawing.Color.SandyBrown;
+            this.ExportButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
+            this.ExportButton.FlatAppearance.BorderSize = 3;
+            this.ExportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
+            this.ExportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
+            this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportButton.Font = new System.Drawing.Font("Arial", 14F);
+            this.ExportButton.Location = new System.Drawing.Point(210, 610);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(120, 45);
+            this.ExportButton.TabIndex = 51;
+            this.ExportButton.Text = "Export";
+            this.ExportButton.UseVisualStyleBackColor = false;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
+            // ImportButton
+            // 
+            this.ImportButton.BackColor = System.Drawing.Color.SandyBrown;
+            this.ImportButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
+            this.ImportButton.FlatAppearance.BorderSize = 3;
+            this.ImportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
+            this.ImportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
+            this.ImportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImportButton.Font = new System.Drawing.Font("Arial", 14F);
+            this.ImportButton.Location = new System.Drawing.Point(30, 610);
+            this.ImportButton.Name = "ImportButton";
+            this.ImportButton.Size = new System.Drawing.Size(120, 45);
+            this.ImportButton.TabIndex = 50;
+            this.ImportButton.Text = "Import";
+            this.ImportButton.UseVisualStyleBackColor = false;
+            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
+            // 
             // EditCocktails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -507,6 +545,8 @@
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(944, 681);
             this.ControlBox = false;
+            this.Controls.Add(this.ExportButton);
+            this.Controls.Add(this.ImportButton);
             this.Controls.Add(this.RecipePanel);
             this.Controls.Add(this.FullIngredientsPanel);
             this.Controls.Add(this.ImagePanel);
@@ -581,5 +621,7 @@
         private System.Windows.Forms.Label FullIngredientsLabel;
         private System.Windows.Forms.Panel RecipePanel;
         private System.Windows.Forms.Label RecipeLabel;
+        private System.Windows.Forms.Button ExportButton;
+        private System.Windows.Forms.Button ImportButton;
     }
 }

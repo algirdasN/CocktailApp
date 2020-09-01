@@ -60,6 +60,8 @@ namespace CocktailApp
             this.HalfRadioButton = new System.Windows.Forms.RadioButton();
             this.FilterDropDown = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.ImportButton = new System.Windows.Forms.Button();
+            this.ExportButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).BeginInit();
             this.EditPanel.SuspendLayout();
             this.SuspendLayout();
@@ -132,7 +134,7 @@ namespace CocktailApp
             this.IngredientsTable.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IngredientsTable.RowTemplate.Height = 25;
             this.IngredientsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.IngredientsTable.Size = new System.Drawing.Size(400, 405);
+            this.IngredientsTable.Size = new System.Drawing.Size(400, 330);
             this.IngredientsTable.TabIndex = 1;
             this.IngredientsTable.TabStop = false;
             this.IngredientsTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.IngredientsTable_CellClick);
@@ -232,7 +234,7 @@ namespace CocktailApp
             // SuccessLabel
             // 
             this.SuccessLabel.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SuccessLabel.Location = new System.Drawing.Point(15, 250);
+            this.SuccessLabel.Location = new System.Drawing.Point(15, 275);
             this.SuccessLabel.Name = "SuccessLabel";
             this.SuccessLabel.Size = new System.Drawing.Size(370, 30);
             this.SuccessLabel.TabIndex = 16;
@@ -280,7 +282,7 @@ namespace CocktailApp
             this.RemoveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RemoveButton.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RemoveButton.Location = new System.Drawing.Point(275, 320);
+            this.RemoveButton.Location = new System.Drawing.Point(275, 340);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(110, 50);
             this.RemoveButton.TabIndex = 7;
@@ -307,7 +309,7 @@ namespace CocktailApp
             this.EditButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.EditButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditButton.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EditButton.Location = new System.Drawing.Point(145, 320);
+            this.EditButton.Location = new System.Drawing.Point(145, 340);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(110, 50);
             this.EditButton.TabIndex = 6;
@@ -334,7 +336,7 @@ namespace CocktailApp
             this.AddButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddButton.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddButton.Location = new System.Drawing.Point(15, 320);
+            this.AddButton.Location = new System.Drawing.Point(15, 340);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(110, 50);
             this.AddButton.TabIndex = 5;
@@ -413,6 +415,40 @@ namespace CocktailApp
             this.label2.TabIndex = 15;
             this.label2.Text = "Filter by type";
             // 
+            // ImportButton
+            // 
+            this.ImportButton.BackColor = System.Drawing.Color.SandyBrown;
+            this.ImportButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
+            this.ImportButton.FlatAppearance.BorderSize = 3;
+            this.ImportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
+            this.ImportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
+            this.ImportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImportButton.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ImportButton.Location = new System.Drawing.Point(50, 592);
+            this.ImportButton.Name = "ImportButton";
+            this.ImportButton.Size = new System.Drawing.Size(150, 50);
+            this.ImportButton.TabIndex = 17;
+            this.ImportButton.Text = "Import";
+            this.ImportButton.UseVisualStyleBackColor = false;
+            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
+            // 
+            // ExportButton
+            // 
+            this.ExportButton.BackColor = System.Drawing.Color.SandyBrown;
+            this.ExportButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
+            this.ExportButton.FlatAppearance.BorderSize = 3;
+            this.ExportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
+            this.ExportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
+            this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportButton.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExportButton.Location = new System.Drawing.Point(280, 592);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(150, 50);
+            this.ExportButton.TabIndex = 18;
+            this.ExportButton.Text = "Export";
+            this.ExportButton.UseVisualStyleBackColor = false;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
             // ShowIngredients
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,6 +456,8 @@ namespace CocktailApp
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(944, 681);
             this.ControlBox = false;
+            this.Controls.Add(this.ExportButton);
+            this.Controls.Add(this.ImportButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.FilterDropDown);
             this.Controls.Add(this.EditPanel);
@@ -469,5 +507,7 @@ namespace CocktailApp
         private System.Windows.Forms.RadioButton HalfRadioButton;
         private System.Windows.Forms.ComboBox FilterDropDown;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button ImportButton;
+        private System.Windows.Forms.Button ExportButton;
     }
 }

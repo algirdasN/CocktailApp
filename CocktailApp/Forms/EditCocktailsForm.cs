@@ -55,15 +55,38 @@ namespace CocktailApp
             RefreshListContent();
         }
 
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "CSV files | *.csv*"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Data.ImportCocktails(dialog.FileName);
+
+                Data.GetCocktails();
+
+                RefreshListContent();
+            }
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            Data.ExportCocktails();
+        }
+
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
                 var selectedCocktail = Data.Cocktails.Single(c => c.Id == id);
+                
                 NameTextBox.Text = selectedCocktail.Name;
-                TagList = new BindingList<string>(selectedCocktail.Ingredients.Split(';').ToList());
+                TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
                 IngredientTagListBox.DataSource = TagList;
-                FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace(";", "\r\n");
+                FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace("|", "\r\n");
                 RecipeTextBox.Text = selectedCocktail.Recipe;
 
                 CocktailImage = selectedCocktail.Image;
@@ -84,6 +107,7 @@ namespace CocktailApp
         private void AddIngredientButton_Click(object sender, EventArgs e)
         {
             var str = Format.CapitalizeFirst(IngredientTagsComboBox.Text);
+
             if (!IngredientTagListBox.Items.Contains(str))
             {
                 TagList.Add(str);
@@ -127,8 +151,8 @@ namespace CocktailApp
                     mode: "Add",
                     id: "0",
                     name: Format.CapitalizeEvery(NameTextBox.Text),
-                    ingredients: string.Join(";", TagList),
-                    fullIngredients: string.Join(";", FullIngredientInfoTextBox.Text
+                    ingredients: string.Join("|", TagList),
+                    fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                                                         .Select(s => s.Trim())),
                     recipe: RecipeTextBox.Text.Trim(),
@@ -156,8 +180,8 @@ namespace CocktailApp
                     mode: "Edit",
                     id: CocktailsListBox.SelectedValue.ToString(),
                     name: Format.CapitalizeEvery(NameTextBox.Text),
-                    ingredients: string.Join(";", TagList),
-                    fullIngredients: string.Join(";", FullIngredientInfoTextBox.Text
+                    ingredients: string.Join("|", TagList),
+                    fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
                                                         .Select(s => s.Trim())),
                     recipe: RecipeTextBox.Text.Trim(),
@@ -269,6 +293,7 @@ namespace CocktailApp
         {
             SuccessLabel.Text = "All fields must be filled!";
         }
+
         private void SuccessLabelNoSelection()
         {
             SuccessLabel.Text = "Select a cocktail";

@@ -8,14 +8,14 @@
         public string FullIngredients { get; set; }
         public string Recipe { get; set; }
         public byte[] Image { get; set; }
-        public string FullIngredientInfo => "○ " + FullIngredients.Replace(";", "\r\n○ ");
+        public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
         public string InfoAvailable => GetInfoAvailable();
-        public string Info => Name.ToUpper() + " - " + Ingredients.Replace(";", ", ");
+        public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
         public bool Available => IsAvailable();
 
         private bool IsAvailable()
         {
-            foreach (string item in Ingredients.Split(';'))
+            foreach (string item in Ingredients.Split('|'))
             {
                 if (!Data.Ingredients.Exists(i => i.Type == item))
                 {
@@ -31,14 +31,14 @@
 
             var str = Ingredients;
 
-            foreach (string item in Ingredients.Split(';'))
+            foreach (string item in Ingredients.Split('|'))
             {
                 if (!Data.Ingredients.Exists(i => i.Type == item))
                 {
                     str = str.Replace(item, ">>" + item + "<<");
                 }
             }
-            return Name.ToUpper() + " - " + str.Replace(";", ", ");
+            return Name.ToUpper() + " - " + str.Replace("|", ", ");
         }
     }
 }

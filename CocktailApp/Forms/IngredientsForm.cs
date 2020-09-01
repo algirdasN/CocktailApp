@@ -44,6 +44,30 @@ namespace CocktailApp
             RefreshIngredientsTable();
         }
 
+        private void ImportButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "CSV files | *.csv*"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Data.ImportIngredients(dialog.FileName);
+
+                Data.GetIngredients();
+
+                RefreshIngredientsTable();
+
+                FilterDropDown.Text = "";
+            }
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            Data.ExportIngredients();
+        }
+
         private void EditModeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var check = EditModeCheckBox.Checked;
