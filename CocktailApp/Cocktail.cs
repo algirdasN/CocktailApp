@@ -11,9 +11,8 @@
         public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
         public string InfoAvailable => GetInfoAvailable();
         public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
-        public bool Available => IsAvailable();
 
-        private bool IsAvailable()
+        public bool IsAvailable()
         {
             foreach (string item in Ingredients.Split('|'))
             {
@@ -27,9 +26,7 @@
 
         private string GetInfoAvailable()
         {
-            Data.GetIngredients();
-
-            var str = Ingredients;
+            string str = Ingredients;
 
             foreach (string item in Ingredients.Split('|'))
             {

@@ -44,10 +44,10 @@ namespace CocktailApp
                 }
             }
 
-            return destImage;
+            return ReplaceTransparency(destImage);
         }
 
-        public static Bitmap ReplaceTransparency(Bitmap image)
+        private static Bitmap ReplaceTransparency(Bitmap image)
         {
             var result = new Bitmap(image.Size.Width, image.Size.Height, PixelFormat.Format24bppRgb);
             

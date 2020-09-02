@@ -81,7 +81,7 @@ namespace CocktailApp
         {
             if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
-                var selectedCocktail = Data.Cocktails.Single(c => c.Id == id);
+                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == id);
                 
                 NameTextBox.Text = selectedCocktail.Name;
                 TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
@@ -90,8 +90,12 @@ namespace CocktailApp
                 RecipeTextBox.Text = selectedCocktail.Recipe;
 
                 CocktailImage = selectedCocktail.Image;
-                UploadedImagePictureBox.Image = CocktailImage == null ? UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
-                UploadedFileLabel.Text = CocktailImage == null ? "No image uploaded" : "Image stored on database";
+
+                UploadedImagePictureBox.Image = CocktailImage == null ? 
+                    UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
+
+                UploadedFileLabel.Text = CocktailImage == null ? 
+                    "No image uploaded" : "Image stored on database";
             }
         }
 
@@ -106,7 +110,7 @@ namespace CocktailApp
 
         private void AddIngredientButton_Click(object sender, EventArgs e)
         {
-            var str = Format.CapitalizeFirst(IngredientTagsComboBox.Text);
+            string str = Format.CapitalizeFirst(IngredientTagsComboBox.Text);
 
             if (!IngredientTagListBox.Items.Contains(str))
             {

@@ -13,13 +13,13 @@ namespace CocktailApp
     {
         public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
-        public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.Available).ToList();
+        public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.IsAvailable()).ToList();
         private static IDbConnection Connection =>
             new SqlConnection($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database.mdf\";Integrated Security=True");
 
         public static void GetIngredients()
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 Ingredients = connect.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
             }
@@ -27,7 +27,7 @@ namespace CocktailApp
 
         public static void GetCocktails()
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 Cocktails = connect.Query<Cocktail>("SELECT * FROM Cocktails ORDER BY Name").ToList();
             }
@@ -42,7 +42,7 @@ namespace CocktailApp
             else
             {
                 var query = $"SELECT * FROM Cocktails WHERE {searchby} LIKE @{searchby} ORDER BY Name";
-                using (var connect = Connection)
+                using (IDbConnection connect = Connection)
                 {
                     switch (searchby)
                     {
@@ -60,7 +60,7 @@ namespace CocktailApp
         public static void AddEditIngredient(
             string mode, string id, string type, string brand, string level)
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 connect.Open();
                 using (var sqlCmd = new SqlCommand($"Ingredient{mode}", (SqlConnection)connect))
@@ -80,7 +80,7 @@ namespace CocktailApp
 
         public static void RemoveIngredient(string id)
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 connect.Open();
                 using (var sqlCmd = new SqlCommand($"IngredientDelete", (SqlConnection)connect))
@@ -98,7 +98,7 @@ namespace CocktailApp
         public static void AddEditCocktail(
             string mode, string id, string name, string ingredients, string fullIngredients, string recipe, byte[] image)
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 connect.Open();
                 using (var sqlCmd = new SqlCommand($"Cocktail{mode}", (SqlConnection)connect))
@@ -128,7 +128,7 @@ namespace CocktailApp
 
         public static void RemoveCocktail(string id)
         {
-            using (var connect = Connection)
+            using (IDbConnection connect = Connection)
             {
                 connect.Open();
                 using (var sqlCmd = new SqlCommand("CocktailDelete", (SqlConnection)connect))
@@ -189,12 +189,12 @@ namespace CocktailApp
 
         public static void ExportIngredients()
         {
-            string fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
-            string query = "SELECT Type, Brand, Level FROM Ingredients ORDER BY Type";
+            var fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
+            var query = "SELECT Type, Brand, Level FROM Ingredients ORDER BY Type";
 
             try
             {
-                using (var connect = Connection)
+                using (IDbConnection connect = Connection)
                 using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
                 {
                     connect.Open();
@@ -251,6 +251,8 @@ namespace CocktailApp
                         }
                         else
                         {
+                            byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
+
                             AddEditCocktail(
                                 mode: "Add",
                                 id: "0",
@@ -258,7 +260,7 @@ namespace CocktailApp
                                 ingredients: currentRow[1],
                                 fullIngredients: currentRow[2],
                                 recipe: currentRow[3],
-                                image: Convert.FromBase64String(currentRow[4]));
+                                image: image);
                         }
                     }
                     MessageBox.Show("Cocktails imported successfully.", "Data import");
@@ -272,12 +274,12 @@ namespace CocktailApp
 
         public static void ExportCocktails()
         {
-            string fileName = DateTime.Now.ToString("d") + "_Cocktails.csv";
-            string query = "SELECT Name, Ingredients, FullIngredients, Recipe, Image FROM Cocktails ORDER BY Name";
+            var fileName = DateTime.Now.ToString("d") + "_Cocktails.csv";
+            var query = "SELECT Name, Ingredients, FullIngredients, Recipe, Image FROM Cocktails ORDER BY Name";
 
             try
             {
-                using (var connect = Connection)
+                using (IDbConnection connect = Connection)
                 using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
                 {
                     connect.Open();
@@ -288,8 +290,10 @@ namespace CocktailApp
 
                         while (reader.Read())
                         {
+                            var image = reader[4].ToString().Any() ? Convert.ToBase64String((byte[])reader[4]) : "";
+
                             csvFile.WriteLine("{0};{1};{2};{3};{4}",
-                                reader[0], reader[1], reader[2], reader[3], Convert.ToBase64String((byte[])reader[4]));
+                                reader[0], reader[1], reader[2], reader[3], image);
                         }
                     }
                     csvFile.Close();

@@ -70,7 +70,7 @@ namespace CocktailApp
 
         private void EditModeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            var check = EditModeCheckBox.Checked;
+            bool check = EditModeCheckBox.Checked;
 
             EditPanel.Enabled = check;
 
@@ -228,7 +228,7 @@ namespace CocktailApp
 
         private void AddToComboBox()
         {
-            var text = Format.CapitalizeFirst(TypeComboBox.Text);
+            string text = Format.CapitalizeFirst(TypeComboBox.Text);
 
             if (!TypeComboBox.Items.Contains(text))
             {

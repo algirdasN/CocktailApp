@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CocktailApp
@@ -8,6 +9,8 @@ namespace CocktailApp
         public Cocktails()
         {
             InitializeComponent();
+            
+            Data.GetIngredients();
 
             Data.GetCocktails();
 
@@ -68,7 +71,7 @@ namespace CocktailApp
         {
             if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
-                var selectedCocktail = Data.Cocktails.Find(c => c.Id == id);
+                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == id);
 
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
