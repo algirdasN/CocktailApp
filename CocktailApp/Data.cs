@@ -187,7 +187,7 @@ namespace CocktailApp
             }
         }
 
-        public static void ExportIngredients()
+        public static void ExportIngredients(string filePath)
         {
             var fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
             var query = "SELECT Type, Brand, Level FROM Ingredients ORDER BY Type";
@@ -195,7 +195,7 @@ namespace CocktailApp
             try
             {
                 using (IDbConnection connect = Connection)
-                using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
+                using (var csvFile = new StreamWriter(filePath + "\\" + fileName))
                 {
                     connect.Open();
                     using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
@@ -212,7 +212,8 @@ namespace CocktailApp
                     csvFile.Close();
                     connect.Close();
                 }
-                MessageBox.Show("Ingredients exported successfully.\r\n\r\nFile name: " + fileName, "Data export");
+                MessageBox.Show("Ingredients exported successfully.\r\n\r\nFile location: " + filePath + 
+                                "\r\nFile name: " + fileName, "Data export");
             }
             catch (Exception e)
             {
@@ -272,7 +273,7 @@ namespace CocktailApp
             }
         }
 
-        public static void ExportCocktails()
+        public static void ExportCocktails(string filePath)
         {
             var fileName = DateTime.Now.ToString("d") + "_Cocktails.csv";
             var query = "SELECT Name, Ingredients, FullIngredients, Recipe, Image FROM Cocktails ORDER BY Name";
@@ -280,7 +281,7 @@ namespace CocktailApp
             try
             {
                 using (IDbConnection connect = Connection)
-                using (var csvFile = new StreamWriter(Directory.GetCurrentDirectory() + "\\" + fileName))
+                using (var csvFile = new StreamWriter(filePath + "\\" + fileName))
                 {
                     connect.Open();
                     using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
@@ -299,7 +300,8 @@ namespace CocktailApp
                     csvFile.Close();
                     connect.Close();
                 }
-                MessageBox.Show("Cocktails exported successfully.\r\n\r\nFile name: " + fileName, "Data export");
+                MessageBox.Show("Cocktails exported successfully.\r\n\r\nFile location: " + filePath + 
+                                "\r\nFile name: " + fileName, "Data export");
             }
             catch (Exception e)
             {

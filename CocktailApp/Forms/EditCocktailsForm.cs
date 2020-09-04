@@ -74,7 +74,12 @@ namespace CocktailApp
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            Data.ExportCocktails();
+            var dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Data.ExportCocktails(dialog.SelectedPath);
+            }
         }
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,7 +87,7 @@ namespace CocktailApp
             if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
             {
                 Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == id);
-                
+
                 NameTextBox.Text = selectedCocktail.Name;
                 TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
                 IngredientTagListBox.DataSource = TagList;
@@ -91,10 +96,10 @@ namespace CocktailApp
 
                 CocktailImage = selectedCocktail.Image;
 
-                UploadedImagePictureBox.Image = CocktailImage == null ? 
+                UploadedImagePictureBox.Image = CocktailImage == null ?
                     UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
 
-                UploadedFileLabel.Text = CocktailImage == null ? 
+                UploadedFileLabel.Text = CocktailImage == null ?
                     "No image uploaded" : "Image stored on database";
             }
         }

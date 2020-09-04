@@ -65,7 +65,12 @@ namespace CocktailApp
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            Data.ExportIngredients();
+            var dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Data.ExportIngredients(dialog.SelectedPath);
+            }
         }
 
         private void EditModeCheckBox_CheckedChanged(object sender, EventArgs e)

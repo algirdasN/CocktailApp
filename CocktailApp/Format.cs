@@ -27,8 +27,6 @@ namespace CocktailApp
             var destRect = new Rectangle(0, 0, size, size);
             var destImage = new Bitmap(size, size);
 
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
             using (var graphics = Graphics.FromImage(destImage))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
@@ -50,7 +48,7 @@ namespace CocktailApp
         private static Bitmap ReplaceTransparency(Bitmap image)
         {
             var result = new Bitmap(image.Size.Width, image.Size.Height, PixelFormat.Format24bppRgb);
-            
+
             using (var graphics = Graphics.FromImage(result))
             {
                 graphics.Clear(Color.White);
