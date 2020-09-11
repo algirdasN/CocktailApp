@@ -1,13 +1,16 @@
-﻿namespace CocktailApp
+﻿using System.Linq;
+
+namespace CocktailApp
 {
     public class Cocktail
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Ingredients { get; set; }
         public string FullIngredients { get; set; }
         public string Recipe { get; set; }
         public byte[] Image { get; set; }
+        public bool Favourite { get; set; }
         public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
         public string InfoAvailable => GetInfoAvailable();
         public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
@@ -35,7 +38,8 @@
                     str = str.Replace(item, ">>" + item + "<<");
                 }
             }
-            return Name.ToUpper() + " - " + str.Replace("|", ", ");
+
+            return (Favourite ? "★" : null) + Name.ToUpper() + " - " + str.Replace("|", ", ");
         }
     }
 }

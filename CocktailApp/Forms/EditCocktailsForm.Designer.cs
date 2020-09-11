@@ -94,7 +94,7 @@
             this.ExitButton.Location = new System.Drawing.Point(825, 20);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(100, 60);
-            this.ExitButton.TabIndex = 13;
+            this.ExitButton.TabIndex = 22;
             this.ExitButton.Text = "Exit";
             this.ExitButton.UseVisualStyleBackColor = false;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
@@ -111,7 +111,7 @@
             this.BackButton.Location = new System.Drawing.Point(20, 20);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(100, 60);
-            this.BackButton.TabIndex = 12;
+            this.BackButton.TabIndex = 21;
             this.BackButton.Text = "Back";
             this.BackButton.UseVisualStyleBackColor = false;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
@@ -123,7 +123,7 @@
             this.SearchByIngredientRadioButton.Location = new System.Drawing.Point(30, 221);
             this.SearchByIngredientRadioButton.Name = "SearchByIngredientRadioButton";
             this.SearchByIngredientRadioButton.Size = new System.Drawing.Size(169, 22);
-            this.SearchByIngredientRadioButton.TabIndex = 18;
+            this.SearchByIngredientRadioButton.TabIndex = 4;
             this.SearchByIngredientRadioButton.TabStop = true;
             this.SearchByIngredientRadioButton.Text = "Search by ingredient";
             this.SearchByIngredientRadioButton.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@
             this.SearchByNameRadioButton.Location = new System.Drawing.Point(30, 193);
             this.SearchByNameRadioButton.Name = "SearchByNameRadioButton";
             this.SearchByNameRadioButton.Size = new System.Drawing.Size(139, 22);
-            this.SearchByNameRadioButton.TabIndex = 17;
+            this.SearchByNameRadioButton.TabIndex = 3;
             this.SearchByNameRadioButton.TabStop = true;
             this.SearchByNameRadioButton.Text = "Search by name";
             this.SearchByNameRadioButton.UseVisualStyleBackColor = true;
@@ -149,7 +149,8 @@
             this.SearchBar.Location = new System.Drawing.Point(20, 152);
             this.SearchBar.Name = "SearchBar";
             this.SearchBar.Size = new System.Drawing.Size(200, 30);
-            this.SearchBar.TabIndex = 15;
+            this.SearchBar.TabIndex = 1;
+            this.SearchBar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchBar_KeyPress);
             // 
             // SearchButton
             // 
@@ -163,7 +164,7 @@
             this.SearchButton.Location = new System.Drawing.Point(240, 151);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(100, 32);
-            this.SearchButton.TabIndex = 16;
+            this.SearchButton.TabIndex = 2;
             this.SearchButton.Text = "Search";
             this.SearchButton.UseVisualStyleBackColor = false;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
@@ -171,6 +172,7 @@
             // CocktailsListBox
             // 
             this.CocktailsListBox.BackColor = System.Drawing.Color.SeaShell;
+            this.CocktailsListBox.DisplayMember = "Info";
             this.CocktailsListBox.Font = new System.Drawing.Font("Arial Narrow", 15F);
             this.CocktailsListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.CocktailsListBox.FormattingEnabled = true;
@@ -179,7 +181,8 @@
             this.CocktailsListBox.Location = new System.Drawing.Point(20, 255);
             this.CocktailsListBox.Name = "CocktailsListBox";
             this.CocktailsListBox.Size = new System.Drawing.Size(320, 340);
-            this.CocktailsListBox.TabIndex = 20;
+            this.CocktailsListBox.TabIndex = 5;
+            this.CocktailsListBox.ValueMember = "Id";
             this.CocktailsListBox.SelectedIndexChanged += new System.EventHandler(this.CocktailsListBox_SelectedIndexChanged);
             // 
             // NameTextBox
@@ -190,7 +193,7 @@
             this.NameTextBox.Location = new System.Drawing.Point(100, 8);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(435, 26);
-            this.NameTextBox.TabIndex = 22;
+            this.NameTextBox.TabIndex = 11;
             this.NameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_TextChanged);
             // 
             // IngredientTagListBox
@@ -203,7 +206,7 @@
             this.IngredientTagListBox.Location = new System.Drawing.Point(355, 8);
             this.IngredientTagListBox.Name = "IngredientTagListBox";
             this.IngredientTagListBox.Size = new System.Drawing.Size(180, 68);
-            this.IngredientTagListBox.TabIndex = 23;
+            this.IngredientTagListBox.TabIndex = 15;
             // 
             // IngredientTagsComboBox
             // 
@@ -214,7 +217,7 @@
             this.IngredientTagsComboBox.Location = new System.Drawing.Point(10, 49);
             this.IngredientTagsComboBox.Name = "IngredientTagsComboBox";
             this.IngredientTagsComboBox.Size = new System.Drawing.Size(180, 24);
-            this.IngredientTagsComboBox.TabIndex = 24;
+            this.IngredientTagsComboBox.TabIndex = 12;
             this.IngredientTagsComboBox.SelectedIndexChanged += new System.EventHandler(this.IngredientTagsComboBox_SelectedIndexChanged);
             this.IngredientTagsComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IngredientTagsComboBox_KeyPress);
             // 
@@ -230,7 +233,7 @@
             this.AddIngredientButton.Location = new System.Drawing.Point(215, 8);
             this.AddIngredientButton.Name = "AddIngredientButton";
             this.AddIngredientButton.Size = new System.Drawing.Size(120, 30);
-            this.AddIngredientButton.TabIndex = 25;
+            this.AddIngredientButton.TabIndex = 13;
             this.AddIngredientButton.Text = "Add tag";
             this.AddIngredientButton.UseVisualStyleBackColor = false;
             this.AddIngredientButton.Click += new System.EventHandler(this.AddIngredientButton_Click);
@@ -247,7 +250,7 @@
             this.RemoveIngredientButton.Location = new System.Drawing.Point(215, 46);
             this.RemoveIngredientButton.Name = "RemoveIngredientButton";
             this.RemoveIngredientButton.Size = new System.Drawing.Size(120, 30);
-            this.RemoveIngredientButton.TabIndex = 26;
+            this.RemoveIngredientButton.TabIndex = 14;
             this.RemoveIngredientButton.Text = "Remove tag";
             this.RemoveIngredientButton.UseVisualStyleBackColor = false;
             this.RemoveIngredientButton.Click += new System.EventHandler(this.RemoveIngredientButton_Click);
@@ -262,7 +265,7 @@
             this.FullIngredientInfoTextBox.Name = "FullIngredientInfoTextBox";
             this.FullIngredientInfoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.FullIngredientInfoTextBox.Size = new System.Drawing.Size(275, 102);
-            this.FullIngredientInfoTextBox.TabIndex = 28;
+            this.FullIngredientInfoTextBox.TabIndex = 16;
             this.FullIngredientInfoTextBox.TextChanged += new System.EventHandler(this.FullIngredientInfoTextBox_TextChanged);
             // 
             // UploadButton
@@ -277,7 +280,7 @@
             this.UploadButton.Location = new System.Drawing.Point(10, 260);
             this.UploadButton.Name = "UploadButton";
             this.UploadButton.Size = new System.Drawing.Size(100, 30);
-            this.UploadButton.TabIndex = 30;
+            this.UploadButton.TabIndex = 18;
             this.UploadButton.Text = "Upload";
             this.UploadButton.UseVisualStyleBackColor = false;
             this.UploadButton.Click += new System.EventHandler(this.UploadButton_Click);
@@ -286,9 +289,9 @@
             // 
             this.UploadedFileLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UploadedFileLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.UploadedFileLabel.Location = new System.Drawing.Point(15, 200);
+            this.UploadedFileLabel.Location = new System.Drawing.Point(10, 200);
             this.UploadedFileLabel.Name = "UploadedFileLabel";
-            this.UploadedFileLabel.Size = new System.Drawing.Size(210, 52);
+            this.UploadedFileLabel.Size = new System.Drawing.Size(220, 54);
             this.UploadedFileLabel.TabIndex = 31;
             this.UploadedFileLabel.Text = "No image uploaded";
             this.UploadedFileLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -302,7 +305,7 @@
             this.RecipeTextBox.Name = "RecipeTextBox";
             this.RecipeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.RecipeTextBox.Size = new System.Drawing.Size(275, 102);
-            this.RecipeTextBox.TabIndex = 33;
+            this.RecipeTextBox.TabIndex = 17;
             this.RecipeTextBox.TextChanged += new System.EventHandler(this.RecipeTextBox_TextChanged);
             // 
             // AddCocktailButton
@@ -317,7 +320,7 @@
             this.AddCocktailButton.Location = new System.Drawing.Point(375, 610);
             this.AddCocktailButton.Name = "AddCocktailButton";
             this.AddCocktailButton.Size = new System.Drawing.Size(94, 45);
-            this.AddCocktailButton.TabIndex = 35;
+            this.AddCocktailButton.TabIndex = 15;
             this.AddCocktailButton.Text = "Add";
             this.AddCocktailButton.UseVisualStyleBackColor = false;
             this.AddCocktailButton.Click += new System.EventHandler(this.AddCocktailButton_Click);
@@ -334,7 +337,7 @@
             this.EditCocktailButton.Location = new System.Drawing.Point(477, 610);
             this.EditCocktailButton.Name = "EditCocktailButton";
             this.EditCocktailButton.Size = new System.Drawing.Size(94, 45);
-            this.EditCocktailButton.TabIndex = 36;
+            this.EditCocktailButton.TabIndex = 16;
             this.EditCocktailButton.Text = "Edit";
             this.EditCocktailButton.UseVisualStyleBackColor = false;
             this.EditCocktailButton.Click += new System.EventHandler(this.EditCocktailButton_Click);
@@ -351,7 +354,7 @@
             this.RemoveCocktailButton.Location = new System.Drawing.Point(581, 610);
             this.RemoveCocktailButton.Name = "RemoveCocktailButton";
             this.RemoveCocktailButton.Size = new System.Drawing.Size(94, 45);
-            this.RemoveCocktailButton.TabIndex = 37;
+            this.RemoveCocktailButton.TabIndex = 17;
             this.RemoveCocktailButton.Text = "Remove";
             this.RemoveCocktailButton.UseVisualStyleBackColor = false;
             this.RemoveCocktailButton.Click += new System.EventHandler(this.RemoveCocktailButton_Click);
@@ -378,7 +381,7 @@
             this.ClearButton.Location = new System.Drawing.Point(126, 260);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(100, 30);
-            this.ClearButton.TabIndex = 32;
+            this.ClearButton.TabIndex = 19;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = false;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
@@ -386,9 +389,9 @@
             // SuccessLabel
             // 
             this.SuccessLabel.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Italic);
-            this.SuccessLabel.Location = new System.Drawing.Point(685, 610);
+            this.SuccessLabel.Location = new System.Drawing.Point(685, 600);
             this.SuccessLabel.Name = "SuccessLabel";
-            this.SuccessLabel.Size = new System.Drawing.Size(240, 45);
+            this.SuccessLabel.Size = new System.Drawing.Size(240, 65);
             this.SuccessLabel.TabIndex = 44;
             this.SuccessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -401,7 +404,7 @@
             this.NamePanel.Location = new System.Drawing.Point(375, 145);
             this.NamePanel.Name = "NamePanel";
             this.NamePanel.Size = new System.Drawing.Size(550, 45);
-            this.NamePanel.TabIndex = 45;
+            this.NamePanel.TabIndex = 10;
             // 
             // IngredientTagsPanel
             // 
@@ -415,7 +418,7 @@
             this.IngredientTagsPanel.Location = new System.Drawing.Point(375, 196);
             this.IngredientTagsPanel.Name = "IngredientTagsPanel";
             this.IngredientTagsPanel.Size = new System.Drawing.Size(550, 87);
-            this.IngredientTagsPanel.TabIndex = 46;
+            this.IngredientTagsPanel.TabIndex = 11;
             // 
             // IngredientTagLabel
             // 
@@ -439,12 +442,12 @@
             this.ImagePanel.Location = new System.Drawing.Point(685, 289);
             this.ImagePanel.Name = "ImagePanel";
             this.ImagePanel.Size = new System.Drawing.Size(240, 306);
-            this.ImagePanel.TabIndex = 47;
+            this.ImagePanel.TabIndex = 14;
             // 
             // UploadedImagePictureBox
             // 
-            this.UploadedImagePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("UploadedImagePictureBox.Image")));
-            this.UploadedImagePictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("UploadedImagePictureBox.InitialImage")));
+            this.UploadedImagePictureBox.Image = global::CocktailApp.Properties.Resources.placeholder_image;
+            this.UploadedImagePictureBox.InitialImage = global::CocktailApp.Properties.Resources.placeholder_image;
             this.UploadedImagePictureBox.Location = new System.Drawing.Point(39, 35);
             this.UploadedImagePictureBox.Name = "UploadedImagePictureBox";
             this.UploadedImagePictureBox.Size = new System.Drawing.Size(160, 160);
@@ -471,7 +474,7 @@
             this.FullIngredientsPanel.Location = new System.Drawing.Point(375, 289);
             this.FullIngredientsPanel.Name = "FullIngredientsPanel";
             this.FullIngredientsPanel.Size = new System.Drawing.Size(300, 150);
-            this.FullIngredientsPanel.TabIndex = 48;
+            this.FullIngredientsPanel.TabIndex = 12;
             // 
             // FullIngredientsLabel
             // 
@@ -492,7 +495,7 @@
             this.RecipePanel.Location = new System.Drawing.Point(375, 445);
             this.RecipePanel.Name = "RecipePanel";
             this.RecipePanel.Size = new System.Drawing.Size(300, 150);
-            this.RecipePanel.TabIndex = 49;
+            this.RecipePanel.TabIndex = 13;
             // 
             // RecipeLabel
             // 
@@ -516,7 +519,7 @@
             this.ExportButton.Location = new System.Drawing.Point(210, 610);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(120, 45);
-            this.ExportButton.TabIndex = 51;
+            this.ExportButton.TabIndex = 7;
             this.ExportButton.Text = "Export";
             this.ExportButton.UseVisualStyleBackColor = false;
             this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
@@ -533,7 +536,7 @@
             this.ImportButton.Location = new System.Drawing.Point(30, 610);
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(120, 45);
-            this.ImportButton.TabIndex = 50;
+            this.ImportButton.TabIndex = 6;
             this.ImportButton.Text = "Import";
             this.ImportButton.UseVisualStyleBackColor = false;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);

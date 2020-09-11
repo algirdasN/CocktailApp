@@ -57,6 +57,21 @@ namespace CocktailApp
             }
         }
 
+        public static void FavouriteCocktail(string id, bool check)
+        {
+            var query = $"UPDATE Cocktails SET Favourite = {(check ? 1 : 0)} WHERE Id = {id}";
+
+            using (IDbConnection connect = Connection)
+            {
+                connect.Open();
+                using (var sqlCmd = new SqlCommand(query, (SqlConnection)connect))
+                {
+                    sqlCmd.ExecuteNonQuery();
+                }
+                connect.Close();
+            }
+        }
+
         public static void AddEditIngredient(
             string mode, string id, string type, string brand, string level)
         {

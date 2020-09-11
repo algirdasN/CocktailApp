@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CocktailApp.Properties;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -6,17 +7,16 @@ namespace CocktailApp
 {
     public partial class Cocktails : Form
     {
+        private bool Favourite;
         public Cocktails()
         {
             InitializeComponent();
-            
+
             Data.GetIngredients();
 
             Data.GetCocktails();
 
             RefreshListContent();
-
-            CocktailsListBox.ClearSelected();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -34,7 +34,20 @@ namespace CocktailApp
 
         private void ShowOnlyAvailableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            var select = CocktailsListBox.SelectedItem;
+
             RefreshListContent();
+
+            CocktailsListBox.SelectedItem = select;
+        }
+
+        private void FavouriteCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            var select = CocktailsListBox.SelectedItem;
+
+            RefreshListContent();
+
+            CocktailsListBox.SelectedItem = select;
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
@@ -49,29 +62,22 @@ namespace CocktailApp
             }
 
             RefreshListContent();
-        }
 
-        private void RefreshListContent()
-        {
-
-            if (ShowOnlyAvailableCheckBox.Checked)
+            if (CocktailsListBox.Items.Count > 0)
             {
-                CocktailsListBox.DataSource = Data.AvailableCocktails;
+                CocktailsListBox.SelectedIndex = 0;
             }
             else
             {
-                CocktailsListBox.DataSource = Data.Cocktails;
+                ClearTextBoxes();
             }
-
-            CocktailsListBox.DisplayMember = "InfoAvailable";
-            CocktailsListBox.ValueMember = "Id";
         }
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
+            if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == id);
+                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == CocktailsListBox.SelectedValue.ToString());
 
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
@@ -79,7 +85,57 @@ namespace CocktailApp
 
                 CocktailImageBox.Image = selectedCocktail.Image == null ?
                     CocktailImageBox.InitialImage : Format.GetImage(selectedCocktail.Image);
+
+                SwitchFavouriteImage(Favourite = selectedCocktail.Favourite);
             }
+        }
+
+        private void FavouritePictureBox_Click(object sender, EventArgs e)
+        {
+            if (CocktailsListBox.SelectedItems.Count > 0)
+            {
+                Favourite = !Favourite;
+
+                var select = CocktailsListBox.SelectedValue;
+
+                Data.FavouriteCocktail(select.ToString(), Favourite);
+
+                SearchButton_Click(sender, e);
+
+                if (FavouriteCheckBox.Checked)
+                {
+                    ClearTextBoxes();
+                }
+                else
+                {
+                    CocktailsListBox.SelectedValue = select;
+                }
+
+                SwitchFavouriteImage(Favourite);
+            }
+        }
+
+        private void RefreshListContent()
+        {
+            var cocktails = AvailableCheckBox.Checked ? Data.AvailableCocktails : Data.Cocktails;
+
+            CocktailsListBox.DataSource = FavouriteCheckBox.Checked ?
+                cocktails.Where(c => c.Favourite).ToList() : cocktails;
+        }
+
+        private void SwitchFavouriteImage(bool check)
+        {
+            FavouritePictureBox.Image = check ? Resources.filled_star : Resources.empty_star;
+        }
+
+        private void ClearTextBoxes()
+        {
+            CocktailsListBox.ClearSelected();
+
+            CocktailNameLabel.Text = "";
+            IngredientsTextBox.Text = "";
+            RecipeTextBox.Text = "";
+            CocktailImageBox.Image = CocktailImageBox.InitialImage;
         }
     }
 }

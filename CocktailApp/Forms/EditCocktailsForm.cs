@@ -19,9 +19,7 @@ namespace CocktailApp
 
             Data.GetIngredients();
 
-            Data.GetCocktails();
-
-            RefreshListContent();
+            RefreshAfterEdit();
 
             PopulateComboBox();
 
@@ -39,6 +37,15 @@ namespace CocktailApp
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void SearchBar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                SearchButton.PerformClick();
+            }
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
@@ -66,9 +73,7 @@ namespace CocktailApp
             {
                 Data.ImportCocktails(dialog.FileName);
 
-                Data.GetCocktails();
-
-                RefreshListContent();
+                RefreshAfterEdit();
             }
         }
 
@@ -84,23 +89,26 @@ namespace CocktailApp
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CocktailsListBox.SelectedItems.Count > 0 && int.TryParse(CocktailsListBox.SelectedValue.ToString(), out int id))
+            if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == id);
+                Cocktail selectedCocktail = Data.Cocktails.FirstOrDefault(c => c.Id == CocktailsListBox.SelectedValue.ToString());
 
-                NameTextBox.Text = selectedCocktail.Name;
-                TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
-                IngredientTagListBox.DataSource = TagList;
-                FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace("|", "\r\n");
-                RecipeTextBox.Text = selectedCocktail.Recipe;
+                if (selectedCocktail != null)
+                {
+                    NameTextBox.Text = selectedCocktail.Name;
+                    TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
+                    IngredientTagListBox.DataSource = TagList;
+                    FullIngredientInfoTextBox.Text = selectedCocktail.FullIngredients.Replace("|", "\r\n");
+                    RecipeTextBox.Text = selectedCocktail.Recipe;
 
-                CocktailImage = selectedCocktail.Image;
+                    CocktailImage = selectedCocktail.Image;
 
-                UploadedImagePictureBox.Image = CocktailImage == null ?
-                    UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
+                    UploadedImagePictureBox.Image = CocktailImage == null ?
+                        UploadedImagePictureBox.InitialImage : Format.GetImage(CocktailImage);
 
-                UploadedFileLabel.Text = CocktailImage == null ?
-                    "No image uploaded" : "Image stored on database";
+                    UploadedFileLabel.Text = CocktailImage == null ?
+                        "No image uploaded" : "Image stored on database";
+                }
             }
         }
 
@@ -115,9 +123,9 @@ namespace CocktailApp
 
         private void AddIngredientButton_Click(object sender, EventArgs e)
         {
-            string str = Format.CapitalizeFirst(IngredientTagsComboBox.Text);
+            string str = Format.CapitalizeFirst(IngredientTagsComboBox.Text.Trim());
 
-            if (!IngredientTagListBox.Items.Contains(str))
+            if (str.Any() && !IngredientTagListBox.Items.Contains(str))
             {
                 TagList.Add(str);
             }
@@ -139,9 +147,9 @@ namespace CocktailApp
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                CocktailImage = Format.GetByteArray(Format.ResizeImage(Image.FromFile(dialog.FileName)));
+                UploadedImagePictureBox.Image = Format.ResizeImage(Image.FromFile(dialog.FileName));
 
-                UploadedImagePictureBox.Image = Format.GetImage(CocktailImage);
+                CocktailImage = Format.GetByteArray(UploadedImagePictureBox.Image);
 
                 UploadedFileLabel.Text = dialog.SafeFileName;
             }
@@ -154,12 +162,18 @@ namespace CocktailApp
 
         private void AddCocktailButton_Click(object sender, EventArgs e)
         {
-            if (TextBoxValidation())
+            string name = Format.CapitalizeEvery(NameTextBox.Text);
+
+            if (Data.Cocktails.Select(c => c.Name).Contains(name))
+            {
+                SuccessLabelNotUnique();
+            }
+            else if (TextBoxValidation())
             {
                 Data.AddEditCocktail(
                     mode: "Add",
                     id: "0",
-                    name: Format.CapitalizeEvery(NameTextBox.Text),
+                    name: name,
                     ingredients: string.Join("|", TagList),
                     fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
@@ -245,8 +259,6 @@ namespace CocktailApp
         private void RefreshListContent()
         {
             CocktailsListBox.DataSource = Data.Cocktails;
-            CocktailsListBox.DisplayMember = "Info";
-            CocktailsListBox.ValueMember = "Id";
 
             CocktailsListBox.ClearSelected();
         }
@@ -306,6 +318,11 @@ namespace CocktailApp
         private void SuccessLabelNoSelection()
         {
             SuccessLabel.Text = "Select a cocktail";
+        }
+
+        private void SuccessLabelNotUnique()
+        {
+            SuccessLabel.Text = "Cocktail already exists";
         }
     }
 }

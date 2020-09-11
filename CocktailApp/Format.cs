@@ -11,7 +11,7 @@ namespace CocktailApp
     {
         public static string CapitalizeFirst(string str)
         {
-            return str.Substring(0, 1).ToUpper() + str.Substring(1).ToLower();
+            return str.Any() ? str.Substring(0, 1).ToUpper() + str.Substring(1).ToLower() : "";
         }
 
         public static string CapitalizeEvery(string str)
@@ -59,11 +59,11 @@ namespace CocktailApp
             return result;
         }
 
-        public static byte[] GetByteArray(Bitmap image)
+        public static byte[] GetByteArray(Image image)
         {
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, ImageFormat.Gif);
+                image.Save(ms, ImageFormat.Bmp);
                 return ms.ToArray();
             }
         }
