@@ -573,6 +573,7 @@
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
             this.Name = "EditCocktails";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditCocktails_FormClosing);
             this.NamePanel.ResumeLayout(false);
             this.NamePanel.PerformLayout();
             this.IngredientTagsPanel.ResumeLayout(false);

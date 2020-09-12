@@ -32,6 +32,14 @@ namespace CocktailApp
             Application.Exit();
         }
 
+        private void Cocktails_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!((sender as Form).ActiveControl is Button))
+            {
+                Application.Exit();
+            }
+        }
+
         private void ShowOnlyAvailableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var select = CocktailsListBox.SelectedItem;

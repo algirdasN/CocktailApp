@@ -31,6 +31,15 @@ namespace CocktailApp
         {
             Application.Exit();
         }
+
+        private void ShowIngredients_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!((sender as Form).ActiveControl is Button))
+            {
+                Application.Exit();
+            }
+        }
+
         private void IngredientsTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (EditModeCheckBox.Checked)

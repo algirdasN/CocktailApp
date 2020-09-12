@@ -275,6 +275,7 @@
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
             this.Name = "Cocktails";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Cocktails_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.FavouritePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CocktailImageBox)).EndInit();
             this.ResumeLayout(false);

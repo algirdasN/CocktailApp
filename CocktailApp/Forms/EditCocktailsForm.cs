@@ -39,6 +39,14 @@ namespace CocktailApp
             Application.Exit();
         }
 
+        private void EditCocktails_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!((sender as Form).ActiveControl is Button))
+            {
+                Application.Exit();
+            }
+        }
+
         private void SearchBar_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)

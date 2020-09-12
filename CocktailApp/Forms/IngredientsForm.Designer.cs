@@ -458,7 +458,7 @@ namespace CocktailApp
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(960, 720);
+            this.ClientSize = new System.Drawing.Size(954, 714);
             this.ControlBox = false;
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.ImportButton);
@@ -476,6 +476,7 @@ namespace CocktailApp
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
             this.Name = "ShowIngredients";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ShowIngredients_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).EndInit();
             this.EditPanel.ResumeLayout(false);
             this.EditPanel.PerformLayout();
