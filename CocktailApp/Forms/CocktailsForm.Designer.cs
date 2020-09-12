@@ -58,7 +58,7 @@
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExitButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.ExitButton.Location = new System.Drawing.Point(825, 20);
+            this.ExitButton.Location = new System.Drawing.Point(827, 22);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(100, 60);
             this.ExitButton.TabIndex = 22;
@@ -76,7 +76,7 @@
             this.BackButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.BackButton.Location = new System.Drawing.Point(20, 20);
+            this.BackButton.Location = new System.Drawing.Point(27, 22);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(100, 60);
             this.BackButton.TabIndex = 21;
@@ -89,7 +89,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.label1.Location = new System.Drawing.Point(320, 40);
+            this.label1.Location = new System.Drawing.Point(327, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(323, 75);
             this.label1.TabIndex = 11;
@@ -104,7 +104,7 @@
             this.CocktailsListBox.FormattingEnabled = true;
             this.CocktailsListBox.HorizontalScrollbar = true;
             this.CocktailsListBox.ItemHeight = 24;
-            this.CocktailsListBox.Location = new System.Drawing.Point(20, 272);
+            this.CocktailsListBox.Location = new System.Drawing.Point(27, 294);
             this.CocktailsListBox.Name = "CocktailsListBox";
             this.CocktailsListBox.Size = new System.Drawing.Size(380, 388);
             this.CocktailsListBox.TabIndex = 6;
@@ -121,7 +121,7 @@
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SearchButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SearchButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.SearchButton.Location = new System.Drawing.Point(280, 154);
+            this.SearchButton.Location = new System.Drawing.Point(287, 176);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(120, 32);
             this.SearchButton.TabIndex = 2;
@@ -134,7 +134,7 @@
             this.SearchBar.BackColor = System.Drawing.Color.SeaShell;
             this.SearchBar.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SearchBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.SearchBar.Location = new System.Drawing.Point(20, 155);
+            this.SearchBar.Location = new System.Drawing.Point(27, 177);
             this.SearchBar.Name = "SearchBar";
             this.SearchBar.Size = new System.Drawing.Size(240, 30);
             this.SearchBar.TabIndex = 1;
@@ -142,7 +142,7 @@
             // AvailableCheckBox
             // 
             this.AvailableCheckBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AvailableCheckBox.Location = new System.Drawing.Point(230, 197);
+            this.AvailableCheckBox.Location = new System.Drawing.Point(237, 219);
             this.AvailableCheckBox.Name = "AvailableCheckBox";
             this.AvailableCheckBox.Size = new System.Drawing.Size(163, 22);
             this.AvailableCheckBox.TabIndex = 5;
@@ -155,7 +155,7 @@
             this.SearchByNameRadioButton.AutoSize = true;
             this.SearchByNameRadioButton.Checked = true;
             this.SearchByNameRadioButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchByNameRadioButton.Location = new System.Drawing.Point(30, 196);
+            this.SearchByNameRadioButton.Location = new System.Drawing.Point(37, 218);
             this.SearchByNameRadioButton.Name = "SearchByNameRadioButton";
             this.SearchByNameRadioButton.Size = new System.Drawing.Size(139, 22);
             this.SearchByNameRadioButton.TabIndex = 3;
@@ -167,7 +167,7 @@
             // 
             this.SearchByIngredientRadioButton.AutoSize = true;
             this.SearchByIngredientRadioButton.Font = new System.Drawing.Font("Arial", 12F);
-            this.SearchByIngredientRadioButton.Location = new System.Drawing.Point(30, 224);
+            this.SearchByIngredientRadioButton.Location = new System.Drawing.Point(37, 246);
             this.SearchByIngredientRadioButton.Name = "SearchByIngredientRadioButton";
             this.SearchByIngredientRadioButton.Size = new System.Drawing.Size(169, 22);
             this.SearchByIngredientRadioButton.TabIndex = 4;
@@ -180,7 +180,7 @@
             this.IngredientsTextBox.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.IngredientsTextBox.Font = new System.Drawing.Font("Arial", 15F);
             this.IngredientsTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.IngredientsTextBox.Location = new System.Drawing.Point(425, 210);
+            this.IngredientsTextBox.Location = new System.Drawing.Point(427, 232);
             this.IngredientsTextBox.Multiline = true;
             this.IngredientsTextBox.Name = "IngredientsTextBox";
             this.IngredientsTextBox.ReadOnly = true;
@@ -193,7 +193,7 @@
             this.RecipeTextBox.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.RecipeTextBox.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RecipeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.RecipeTextBox.Location = new System.Drawing.Point(425, 470);
+            this.RecipeTextBox.Location = new System.Drawing.Point(427, 492);
             this.RecipeTextBox.Multiline = true;
             this.RecipeTextBox.Name = "RecipeTextBox";
             this.RecipeTextBox.ReadOnly = true;
@@ -206,7 +206,7 @@
             // 
             this.CocktailNameLabel.Font = new System.Drawing.Font("Arial", 19F, System.Drawing.FontStyle.Bold);
             this.CocktailNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.CocktailNameLabel.Location = new System.Drawing.Point(425, 150);
+            this.CocktailNameLabel.Location = new System.Drawing.Point(427, 172);
             this.CocktailNameLabel.Name = "CocktailNameLabel";
             this.CocktailNameLabel.Size = new System.Drawing.Size(461, 40);
             this.CocktailNameLabel.TabIndex = 17;
@@ -216,7 +216,7 @@
             // 
             this.FavouritePictureBox.Image = global::CocktailApp.Properties.Resources.empty_star;
             this.FavouritePictureBox.InitialImage = global::CocktailApp.Properties.Resources.empty_star;
-            this.FavouritePictureBox.Location = new System.Drawing.Point(885, 150);
+            this.FavouritePictureBox.Location = new System.Drawing.Point(887, 172);
             this.FavouritePictureBox.Name = "FavouritePictureBox";
             this.FavouritePictureBox.Size = new System.Drawing.Size(40, 40);
             this.FavouritePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -228,7 +228,7 @@
             // 
             this.CocktailImageBox.Image = global::CocktailApp.Properties.Resources.placeholder_image;
             this.CocktailImageBox.InitialImage = global::CocktailApp.Properties.Resources.placeholder_image;
-            this.CocktailImageBox.Location = new System.Drawing.Point(685, 210);
+            this.CocktailImageBox.Location = new System.Drawing.Point(687, 232);
             this.CocktailImageBox.Name = "CocktailImageBox";
             this.CocktailImageBox.Size = new System.Drawing.Size(240, 240);
             this.CocktailImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -238,7 +238,7 @@
             // FavouriteCheckBox
             // 
             this.FavouriteCheckBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FavouriteCheckBox.Location = new System.Drawing.Point(230, 225);
+            this.FavouriteCheckBox.Location = new System.Drawing.Point(237, 247);
             this.FavouriteCheckBox.Name = "FavouriteCheckBox";
             this.FavouriteCheckBox.Size = new System.Drawing.Size(170, 22);
             this.FavouriteCheckBox.TabIndex = 24;
@@ -252,7 +252,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(944, 681);
+            this.ClientSize = new System.Drawing.Size(960, 720);
             this.ControlBox = false;
             this.Controls.Add(this.FavouriteCheckBox);
             this.Controls.Add(this.FavouritePictureBox);
@@ -270,11 +270,11 @@
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.BackButton);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
             this.Name = "Cocktails";
-            this.Text = "ShowCocktails";
             ((System.ComponentModel.ISupportInitialize)(this.FavouritePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CocktailImageBox)).EndInit();
             this.ResumeLayout(false);
