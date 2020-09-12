@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace CocktailApp
+﻿namespace CocktailApp
 {
     public class Cocktail
     {

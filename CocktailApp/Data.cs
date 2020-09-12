@@ -215,19 +215,19 @@ namespace CocktailApp
                     connect.Open();
                     using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
                     {
-                        csvFile.WriteLine("{0};{1};{2}", 
+                        csvFile.WriteLine("{0};{1};{2}",
                             reader.GetName(0), reader.GetName(1), reader.GetName(2));
 
                         while (reader.Read())
                         {
-                            csvFile.WriteLine("{0};{1};{2}", 
+                            csvFile.WriteLine("{0};{1};{2}",
                                 reader[0], reader[1], reader[2]);
                         }
                     }
                     csvFile.Close();
                     connect.Close();
                 }
-                MessageBox.Show("Ingredients exported successfully.\r\n\r\nFile location: " + filePath + 
+                MessageBox.Show("Ingredients exported successfully.\r\n\r\nFile location: " + filePath +
                                 "\r\nFile name: " + fileName, "Data export");
             }
             catch (Exception e)
@@ -251,10 +251,10 @@ namespace CocktailApp
 
                         if (headers == true)
                         {
-                            if (currentRow[0] != "Name" || 
-                                currentRow[1] != "Ingredients" || 
-                                currentRow[2] != "FullIngredients" || 
-                                currentRow[3] != "Recipe" || 
+                            if (currentRow[0] != "Name" ||
+                                currentRow[1] != "Ingredients" ||
+                                currentRow[2] != "FullIngredients" ||
+                                currentRow[3] != "Recipe" ||
                                 currentRow[4] != "Image")
                             {
                                 MessageBox.Show("Incorrect CSV file headers.", "Data import");
@@ -267,11 +267,13 @@ namespace CocktailApp
                         }
                         else
                         {
+                            var currentCocktail = Cocktails.FirstOrDefault(c => c.Name == currentRow[0]);
+                            
                             byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
 
                             AddEditCocktail(
-                                mode: "Add",
-                                id: "0",
+                                mode: currentCocktail == null ? "Add" : "Edit",
+                                id: currentCocktail == null ? "0" : currentCocktail.Id,
                                 name: currentRow[0],
                                 ingredients: currentRow[1],
                                 fullIngredients: currentRow[2],
@@ -315,7 +317,7 @@ namespace CocktailApp
                     csvFile.Close();
                     connect.Close();
                 }
-                MessageBox.Show("Cocktails exported successfully.\r\n\r\nFile location: " + filePath + 
+                MessageBox.Show("Cocktails exported successfully.\r\n\r\nFile location: " + filePath +
                                 "\r\nFile name: " + fileName, "Data export");
             }
             catch (Exception e)
