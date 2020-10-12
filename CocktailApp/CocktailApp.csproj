@@ -24,8 +24,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <MinimumRequiredVersion>1.0.0.13</MinimumRequiredVersion>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -113,6 +113,8 @@
     <Compile Include="Forms\IngredientsForm.Designer.cs">
       <DependentUpon>IngredientsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SortableList\PropertyComparer.cs" />
+    <Compile Include="SortableList\SortableBindingList.cs" />
     <EmbeddedResource Include="Forms\EditCocktailsForm.resx">
       <DependentUpon>EditCocktailsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -201,5 +203,6 @@
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

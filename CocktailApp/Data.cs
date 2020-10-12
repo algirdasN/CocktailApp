@@ -21,7 +21,7 @@ namespace CocktailApp
         {
             using (IDbConnection connect = Connection)
             {
-                Ingredients = connect.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type").ToList();
+                Ingredients = connect.Query<Ingredient>("SELECT * FROM Ingredients ORDER BY Type, Brand, Level DESC, Volume DESC").ToList();
             }
         }
 
@@ -73,7 +73,7 @@ namespace CocktailApp
         }
 
         public static void AddEditIngredient(
-            string mode, string id, string type, string brand, string level)
+            string mode, string id, string type, string brand, string volume, string level)
         {
             using (IDbConnection connect = Connection)
             {
@@ -85,6 +85,7 @@ namespace CocktailApp
                     sqlCmd.Parameters.AddWithValue("@Id", id);
                     sqlCmd.Parameters.AddWithValue("@Type", type);
                     sqlCmd.Parameters.AddWithValue("@Brand", brand);
+                    sqlCmd.Parameters.AddWithValue("@Volume", volume);
                     sqlCmd.Parameters.AddWithValue("@Level", level);
 
                     sqlCmd.ExecuteNonQuery();
@@ -173,7 +174,8 @@ namespace CocktailApp
 
                         if (headers == true)
                         {
-                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" || currentRow[2] != "Level")
+                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" || 
+                                currentRow[2] != "Volume" || currentRow[3] != "Level")
                             {
                                 MessageBox.Show("Incorrect CSV file headers.", "Data import");
                                 return;
@@ -190,7 +192,8 @@ namespace CocktailApp
                                 id: "0",
                                 type: currentRow[0],
                                 brand: currentRow[1],
-                                level: currentRow[2]);
+                                volume: currentRow[2],
+                                level: currentRow[3]);
                         }
                     }
                     MessageBox.Show("Ingredients imported successfully.", "Data import");
@@ -205,7 +208,7 @@ namespace CocktailApp
         public static void ExportIngredients(string filePath)
         {
             var fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
-            var query = "SELECT Type, Brand, Level FROM Ingredients ORDER BY Type";
+            var query = "SELECT Type, Brand, Volume, Level FROM Ingredients ORDER BY Type, Brand, Volume DESC";
 
             try
             {
@@ -215,13 +218,13 @@ namespace CocktailApp
                     connect.Open();
                     using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
                     {
-                        csvFile.WriteLine("{0};{1};{2}",
-                            reader.GetName(0), reader.GetName(1), reader.GetName(2));
+                        csvFile.WriteLine("{0};{1};{2};{3}",
+                            reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3));
 
                         while (reader.Read())
                         {
-                            csvFile.WriteLine("{0};{1};{2}",
-                                reader[0], reader[1], reader[2]);
+                            csvFile.WriteLine("{0};{1};{2};{3}",
+                                reader[0], reader[1], reader[2], reader[3]);
                         }
                     }
                     csvFile.Close();

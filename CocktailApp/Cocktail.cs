@@ -2,13 +2,13 @@
 {
     public class Cocktail
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Ingredients { get; set; }
-        public string FullIngredients { get; set; }
-        public string Recipe { get; set; }
-        public byte[] Image { get; set; }
-        public bool Favourite { get; set; }
+        public string Id { get; private set; }
+        public string Name { get; private set; }
+        public string Ingredients { get; private set; }
+        public string FullIngredients { get; private set; }
+        public string Recipe { get; private set; }
+        public byte[] Image { get; private set; }
+        public bool Favourite { get; private set; }
         public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
         public string InfoAvailable => GetInfoAvailable();
         public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");

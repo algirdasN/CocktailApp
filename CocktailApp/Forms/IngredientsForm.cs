@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -6,15 +7,17 @@ using System.Windows.Forms;
 
 namespace CocktailApp
 {
-    public partial class ShowIngredients : Form
+    public partial class Ingredients : Form
     {
-        public ShowIngredients()
+        private int newSortColumn;
+
+        private ListSortDirection newColumnDirection = ListSortDirection.Ascending;
+
+        public Ingredients()
         {
             InitializeComponent();
 
-            Data.GetIngredients();
-
-            RefreshIngredientsTable();
+            PopulateIngredientsTable();
 
             PopulateComboBox();
         }
@@ -53,6 +56,26 @@ namespace CocktailApp
             RefreshIngredientsTable();
         }
 
+        private void IngredientsTable_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex != 5)
+            {
+                if (e.ColumnIndex == newSortColumn)
+                {
+                    newColumnDirection = newColumnDirection == ListSortDirection.Ascending ?
+                        ListSortDirection.Descending : ListSortDirection.Ascending;
+                }
+                else
+                {
+                    newColumnDirection = ListSortDirection.Ascending;
+                }
+
+                newSortColumn = e.ColumnIndex;
+
+                IngredientsTable.Sort(IngredientsTable.Columns[newSortColumn], newColumnDirection);
+            }
+        }
+
         private void ImportButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -64,9 +87,7 @@ namespace CocktailApp
             {
                 Data.ImportIngredients(dialog.FileName);
 
-                Data.GetIngredients();
-
-                RefreshIngredientsTable();
+                PopulateIngredientsTable();
 
                 FilterDropDown.Text = "";
             }
@@ -108,42 +129,22 @@ namespace CocktailApp
             }
         }
 
-        private void FullRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            LevelTextBox.Text = "Full";
-            SuccessLabelClear();
-        }
-
-        private void HalfRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            LevelTextBox.Text = "Half";
-            SuccessLabelClear();
-        }
-
-        private void QuarterRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            LevelTextBox.Text = "Quarter";
-            SuccessLabelClear();
-        }
-
         private void AddButton_Click(object sender, EventArgs e)
         {
             if (TextBoxValidation())
             {
                 Data.AddEditIngredient(
-                    mode: "Add",
-                    id: "0",
-                    type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
-                    brand: Format.CapitalizeEvery(BrandTextBox.Text),
-                    level: LevelTextBox.Text);
+                  mode: "Add",
+                  id: "0",
+                  type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
+                  brand: BrandTextBox.Text.Trim(),
+                  volume: VolumeTextBox.Text.Trim(),
+                  level: FullRadioButton.Checked ? "full" :
+                      HalfRadioButton.Checked ? "half" : "quarter");
 
                 AddToComboBox();
 
                 RefreshAfterEdit();
-            }
-            else
-            {
-                SuccessLabelError();
             }
         }
 
@@ -156,19 +157,17 @@ namespace CocktailApp
             else if (TextBoxValidation())
             {
                 Data.AddEditIngredient(
-                    mode: "Edit",
-                    id: IngredientsTable.SelectedCells[0].Value.ToString(),
-                    type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
-                    brand: Format.CapitalizeEvery(BrandTextBox.Text),
-                    level: LevelTextBox.Text);
+                mode: "Edit",
+                id: IngredientsTable.SelectedCells[0].Value.ToString(),
+                type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
+                brand: BrandTextBox.Text.Trim(),
+                volume: VolumeTextBox.Text.Trim(),
+                level: FullRadioButton.Checked ? "full" :
+                    HalfRadioButton.Checked ? "half" : "quarter");
 
                 AddToComboBox();
 
                 RefreshAfterEdit();
-            }
-            else
-            {
-                SuccessLabelError();
             }
         }
 
@@ -196,10 +195,42 @@ namespace CocktailApp
             SuccessLabelClear();
         }
 
+        private void VolumeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SuccessLabelClear();
+        }
+
+        private void FullRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            SuccessLabelClear();
+        }
+
+        private void HalfRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            SuccessLabelClear();
+        }
+
+        private void QuarterRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            SuccessLabelClear();
+        }
+
+        private void PopulateIngredientsTable()
+        {
+            Data.GetIngredients();
+
+            RefreshIngredientsTable();
+        }
+
         private void RefreshIngredientsTable()
         {
-            IngredientsTable.DataSource = Data.Ingredients.FindAll(i => i.Type.ToLower().Contains(FilterDropDown.Text.ToLower()));
+            IngredientsTable.DataSource = new SortableBindingList<Ingredient>(
+                Data.Ingredients.FindAll(i => i.Type.ToLower().Contains(FilterDropDown.Text.ToLower()))
+                );
+
             IngredientsTable.Columns["Id"].Visible = false;
+            IngredientsTable.Columns["Volume"].Visible = false;
+            IngredientsTable.Columns["Level"].Visible = false;
         }
 
         private void PopulateComboBox()
@@ -216,15 +247,17 @@ namespace CocktailApp
             {
                 TypeComboBox.Text = IngredientsTable.SelectedCells[1].Value.ToString();
                 BrandTextBox.Text = IngredientsTable.SelectedCells[2].Value.ToString();
-                switch (IngredientsTable.SelectedCells[3].Value.ToString())
+                VolumeTextBox.Text = IngredientsTable.SelectedCells[3].Value.ToString();
+
+                switch (IngredientsTable.SelectedCells[4].Value.ToString())
                 {
-                    case "Full":
+                    case "full":
                         FullRadioButton.Checked = true;
                         break;
-                    case "Half":
+                    case "half":
                         HalfRadioButton.Checked = true;
                         break;
-                    case "Quarter":
+                    case "quarter":
                         QuarterRadioButton.Checked = true;
                         break;
                 }
@@ -237,6 +270,7 @@ namespace CocktailApp
 
             TypeComboBox.Text = "";
             BrandTextBox.Text = "";
+            VolumeTextBox.Text = "";
             FullRadioButton.Checked = true;
         }
 
@@ -253,14 +287,28 @@ namespace CocktailApp
 
         private bool TextBoxValidation()
         {
-            return TypeComboBox.Text.Trim() != "" && BrandTextBox.Text.Trim() != "";
+            if (TypeComboBox.Text.Trim() == "" || BrandTextBox.Text.Trim() == "" || VolumeTextBox.Text.Trim() == "")
+            {
+                SuccessLabelEmpty();
+
+                return false;
+            }
+            else if (!int.TryParse(VolumeTextBox.Text.Trim(), out _))
+            {
+                SuccessLabelInvalid();
+
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
 
         private void RefreshAfterEdit()
         {
-            Data.GetIngredients();
-
-            RefreshIngredientsTable();
+            PopulateIngredientsTable();
 
             Unselect();
 
@@ -277,9 +325,14 @@ namespace CocktailApp
             SuccessLabel.Text = "Success!";
         }
 
-        private void SuccessLabelError()
+        private void SuccessLabelEmpty()
         {
             SuccessLabel.Text = "All fields must be filled!";
+        }
+
+        private void SuccessLabelInvalid()
+        {
+            SuccessLabel.Text = "Volume must be an integer!";
         }
 
         private void SuccessLabelNoSelection()

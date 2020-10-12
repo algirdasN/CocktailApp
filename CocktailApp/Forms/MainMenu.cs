@@ -12,7 +12,7 @@ namespace CocktailApp
 
         private void IngredientsButton_Click(object sender, EventArgs e)
         {
-            var form = new ShowIngredients { Tag = this };
+            var form = new Ingredients { Tag = this };
             form.Show();
             form.Location = Location;
             Hide();
