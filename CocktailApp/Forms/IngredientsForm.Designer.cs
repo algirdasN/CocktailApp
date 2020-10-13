@@ -176,7 +176,7 @@ namespace CocktailApp
             this.BrandTextBox.Name = "BrandTextBox";
             this.BrandTextBox.Size = new System.Drawing.Size(205, 26);
             this.BrandTextBox.TabIndex = 12;
-            this.BrandTextBox.TextChanged += new System.EventHandler(this.BrandTextBox_TextChanged);
+            this.BrandTextBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // TypeComboBox
             // 
@@ -188,7 +188,7 @@ namespace CocktailApp
             this.TypeComboBox.Size = new System.Drawing.Size(205, 26);
             this.TypeComboBox.Sorted = true;
             this.TypeComboBox.TabIndex = 11;
-            this.TypeComboBox.TextChanged += new System.EventHandler(this.TypeComboBox_TextChanged);
+            this.TypeComboBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // VolumeTextBox
             // 
@@ -198,7 +198,7 @@ namespace CocktailApp
             this.VolumeTextBox.Name = "VolumeTextBox";
             this.VolumeTextBox.Size = new System.Drawing.Size(205, 26);
             this.VolumeTextBox.TabIndex = 13;
-            this.VolumeTextBox.TextChanged += new System.EventHandler(this.VolumeTextBox_TextChanged);
+            this.VolumeTextBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // RemoveButton
             // 
@@ -292,7 +292,7 @@ namespace CocktailApp
             this.QuarterRadioButton.TabStop = true;
             this.QuarterRadioButton.Text = "Quarter";
             this.QuarterRadioButton.UseVisualStyleBackColor = true;
-            this.QuarterRadioButton.CheckedChanged += new System.EventHandler(this.QuarterRadioButton_CheckedChanged);
+            this.QuarterRadioButton.CheckedChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // FullRadioButton
             // 
@@ -306,7 +306,7 @@ namespace CocktailApp
             this.FullRadioButton.TabStop = true;
             this.FullRadioButton.Text = "Full";
             this.FullRadioButton.UseVisualStyleBackColor = true;
-            this.FullRadioButton.CheckedChanged += new System.EventHandler(this.FullRadioButton_CheckedChanged);
+            this.FullRadioButton.CheckedChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // HalfRadioButton
             // 
@@ -319,7 +319,7 @@ namespace CocktailApp
             this.HalfRadioButton.TabStop = true;
             this.HalfRadioButton.Text = "Half";
             this.HalfRadioButton.UseVisualStyleBackColor = true;
-            this.HalfRadioButton.CheckedChanged += new System.EventHandler(this.HalfRadioButton_CheckedChanged);
+            this.HalfRadioButton.CheckedChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // FilterDropDown
             // 

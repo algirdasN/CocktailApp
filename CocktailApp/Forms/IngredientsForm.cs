@@ -1,6 +1,5 @@
-﻿using KGySoft.ComponentModel;
-using System;
-using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -10,15 +9,21 @@ namespace CocktailApp
 {
     public partial class IngredientsForm : Form
     {
-        private int newSortColumn;
+        private List<Ingredient> IngredientList;
 
-        private ListSortDirection newColumnDirection = ListSortDirection.Ascending;
+        private int SortedColumn;
+
+        private bool SortAsc = true;
 
         public IngredientsForm()
         {
             InitializeComponent();
 
             PopulateIngredientsTable();
+
+            IngredientsTable.Columns["Id"].Visible = false;
+            IngredientsTable.Columns["Volume"].Visible = false;
+            IngredientsTable.Columns["Level"].Visible = false;
 
             PopulateComboBox();
         }
@@ -68,26 +73,24 @@ namespace CocktailApp
 
         private void IngredientsTable_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == newSortColumn)
-            {
-                newColumnDirection = newColumnDirection == ListSortDirection.Ascending ?
-                    ListSortDirection.Descending : ListSortDirection.Ascending;
-            }
-            else
-            {
-                newColumnDirection = ListSortDirection.Ascending;
-            }
+            SortAsc = !(e.ColumnIndex == SortedColumn && SortAsc);
 
-            newSortColumn = e.ColumnIndex;
+            SortedColumn = e.ColumnIndex;
 
-            if (newSortColumn == 5)
+            SortIngredients();
+
+            var id = IngredientsTable.SelectedCells[0].Value.ToString();
+
+            IngredientsTable.DataSource = IngredientList;
+
+            foreach (DataGridViewRow row in IngredientsTable.Rows)
             {
-                IngredientsTable.Sort(IngredientsTable.Columns[3], newColumnDirection);
-            }
-            else
-            {
-                IngredientsTable.Sort(IngredientsTable.Columns[newSortColumn], newColumnDirection);
-            }
+                if (row.Cells[0].Value.ToString() == id)
+                {
+                    row.Selected = true;
+                    break;
+                }
+            } 
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -199,32 +202,7 @@ namespace CocktailApp
             }
         }
 
-        private void TypeComboBox_TextChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void BrandTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void VolumeTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void FullRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void HalfRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void QuarterRadioButton_CheckedChanged(object sender, EventArgs e)
+        private void InputFieldsChanged(object sender, EventArgs e)
         {
             SuccessLabelClear();
         }
@@ -233,11 +211,10 @@ namespace CocktailApp
         {
             Data.GetIngredients();
 
-            IngredientsTable.DataSource = new SortableBindingList<Ingredient>(Data.Ingredients);
+            IngredientList = new List<Ingredient>(Data.Ingredients);
 
-            IngredientsTable.Columns["Id"].Visible = false;
-            IngredientsTable.Columns["Volume"].Visible = false;
-            IngredientsTable.Columns["Level"].Visible = false;
+            IngredientsTable.DataSource = IngredientList;
+
         }
 
         private void PopulateComboBox()
@@ -246,6 +223,29 @@ namespace CocktailApp
 
             TypeComboBox.Items.AddRange(arr);
             FilterDropDown.Items.AddRange(arr);
+        }
+
+        private void SortIngredients()
+        {
+            switch (SortedColumn)
+            {
+                case 1:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Type).ToList() : IngredientList.OrderByDescending(i => i.Type).ToList();
+                    break;
+                case 2:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Brand).ToList() : IngredientList.OrderByDescending(i => i.Brand).ToList();
+                    break;
+                case 5:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Volume).ToList() : IngredientList.OrderByDescending(i => i.Volume).ToList();
+                    break;
+                case 6:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Level).ToList() : IngredientList.OrderByDescending(i => i.Level).ToList();
+                    break;
+            }
         }
 
         private void FillTextBoxes()

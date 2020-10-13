@@ -40,16 +40,7 @@ namespace CocktailApp
             }
         }
 
-        private void ShowOnlyAvailableCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            var select = CocktailsListBox.SelectedItem;
-
-            RefreshListContent();
-
-            CocktailsListBox.SelectedItem = select;
-        }
-
-        private void FavouriteCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void FilterCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
             var select = CocktailsListBox.SelectedItem;
 

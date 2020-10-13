@@ -148,7 +148,7 @@
             this.AvailableCheckBox.TabIndex = 5;
             this.AvailableCheckBox.Text = "Show only available";
             this.AvailableCheckBox.UseVisualStyleBackColor = true;
-            this.AvailableCheckBox.CheckedChanged += new System.EventHandler(this.ShowOnlyAvailableCheckBox_CheckedChanged);
+            this.AvailableCheckBox.CheckedChanged += new System.EventHandler(this.FilterCheckBoxes_CheckedChanged);
             // 
             // SearchByNameRadioButton
             // 
@@ -244,7 +244,7 @@
             this.FavouriteCheckBox.TabIndex = 24;
             this.FavouriteCheckBox.Text = "Show only favourites";
             this.FavouriteCheckBox.UseVisualStyleBackColor = true;
-            this.FavouriteCheckBox.CheckedChanged += new System.EventHandler(this.FavouriteCheckBox_CheckedChanged);
+            this.FavouriteCheckBox.CheckedChanged += new System.EventHandler(this.FilterCheckBoxes_CheckedChanged);
             // 
             // Cocktails
             // 
