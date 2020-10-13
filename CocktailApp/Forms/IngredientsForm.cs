@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KGySoft.ComponentModel;
+using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -7,13 +8,13 @@ using System.Windows.Forms;
 
 namespace CocktailApp
 {
-    public partial class Ingredients : Form
+    public partial class IngredientsForm : Form
     {
         private int newSortColumn;
 
         private ListSortDirection newColumnDirection = ListSortDirection.Ascending;
 
-        public Ingredients()
+        public IngredientsForm()
         {
             InitializeComponent();
 
@@ -53,25 +54,38 @@ namespace CocktailApp
 
         private void FIlterDropDown_TextChanged(object sender, EventArgs e)
         {
-            RefreshIngredientsTable();
+            var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
+
+            currencyManager.SuspendBinding();
+
+            foreach (DataGridViewRow row in IngredientsTable.Rows)
+            {
+                row.Visible = row.Cells[1].Value.ToString().IndexOf(FilterDropDown.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+
+            currencyManager.ResumeBinding();
         }
 
         private void IngredientsTable_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex != 5)
+            if (e.ColumnIndex == newSortColumn)
             {
-                if (e.ColumnIndex == newSortColumn)
-                {
-                    newColumnDirection = newColumnDirection == ListSortDirection.Ascending ?
-                        ListSortDirection.Descending : ListSortDirection.Ascending;
-                }
-                else
-                {
-                    newColumnDirection = ListSortDirection.Ascending;
-                }
+                newColumnDirection = newColumnDirection == ListSortDirection.Ascending ?
+                    ListSortDirection.Descending : ListSortDirection.Ascending;
+            }
+            else
+            {
+                newColumnDirection = ListSortDirection.Ascending;
+            }
 
-                newSortColumn = e.ColumnIndex;
+            newSortColumn = e.ColumnIndex;
 
+            if (newSortColumn == 5)
+            {
+                IngredientsTable.Sort(IngredientsTable.Columns[3], newColumnDirection);
+            }
+            else
+            {
                 IngredientsTable.Sort(IngredientsTable.Columns[newSortColumn], newColumnDirection);
             }
         }
@@ -219,14 +233,7 @@ namespace CocktailApp
         {
             Data.GetIngredients();
 
-            RefreshIngredientsTable();
-        }
-
-        private void RefreshIngredientsTable()
-        {
-            IngredientsTable.DataSource = new SortableBindingList<Ingredient>(
-                Data.Ingredients.FindAll(i => i.Type.ToLower().Contains(FilterDropDown.Text.ToLower()))
-                );
+            IngredientsTable.DataSource = new SortableBindingList<Ingredient>(Data.Ingredients);
 
             IngredientsTable.Columns["Id"].Visible = false;
             IngredientsTable.Columns["Volume"].Visible = false;
@@ -235,10 +242,10 @@ namespace CocktailApp
 
         private void PopulateComboBox()
         {
-            var list = Data.Ingredients.Select(i => i.Type).Distinct().ToArray();
+            var arr = Data.Ingredients.Select(i => i.Type).Distinct().ToArray();
 
-            TypeComboBox.Items.AddRange(list);
-            FilterDropDown.Items.AddRange(list);
+            TypeComboBox.Items.AddRange(arr);
+            FilterDropDown.Items.AddRange(arr);
         }
 
         private void FillTextBoxes()

@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace CocktailApp
 {
-    public partial class Cocktails : Form
+    public partial class CocktailsForm : Form
     {
         private bool Favourite;
-        public Cocktails()
+        public CocktailsForm()
         {
             InitializeComponent();
 

@@ -12,7 +12,7 @@ namespace CocktailApp
 
         private void IngredientsButton_Click(object sender, EventArgs e)
         {
-            var form = new Ingredients { Tag = this };
+            var form = new IngredientsForm { Tag = this };
             form.Show();
             form.Location = Location;
             Hide();
@@ -20,7 +20,7 @@ namespace CocktailApp
 
         private void CocktailsButton_Click(object sender, EventArgs e)
         {
-            var form = new Cocktails { Tag = this };
+            var form = new CocktailsForm { Tag = this };
             form.Show();
             form.Location = Location;
             Hide();
@@ -28,7 +28,7 @@ namespace CocktailApp
 
         private void EditCocktailsButton_Click(object sender, EventArgs e)
         {
-            var form = new EditCocktails { Tag = this };
+            var form = new EditCocktailsForm { Tag = this };
             form.Show();
             form.Location = Location;
             Hide();

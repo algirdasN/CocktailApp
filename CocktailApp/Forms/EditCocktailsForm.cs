@@ -7,13 +7,13 @@ using System.Windows.Forms;
 
 namespace CocktailApp
 {
-    public partial class EditCocktails : Form
+    public partial class EditCocktailsForm : Form
     {
         private BindingList<string> TagList = new BindingList<string>();
 
         private byte[] CocktailImage;
 
-        public EditCocktails()
+        public EditCocktailsForm()
         {
             InitializeComponent();
 

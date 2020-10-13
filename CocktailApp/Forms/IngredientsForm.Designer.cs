@@ -2,7 +2,7 @@
 
 namespace CocktailApp
 {
-    partial class Ingredients
+    partial class IngredientsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +35,9 @@ namespace CocktailApp
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ingredients));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IngredientsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.BackButton = new System.Windows.Forms.Button();
-            this.IngredientsTable = new System.Windows.Forms.DataGridView();
             this.ExitButton = new System.Windows.Forms.Button();
             this.EditModeCheckBox = new System.Windows.Forms.CheckBox();
             this.EditPanel = new System.Windows.Forms.Panel();
@@ -60,12 +59,13 @@ namespace CocktailApp
             this.FilterLabel = new System.Windows.Forms.Label();
             this.ImportButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
+            this.IngredientsTable = new System.Windows.Forms.DataGridView();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Brand = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VolumeInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LevelInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).BeginInit();
             this.EditPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -94,55 +94,6 @@ namespace CocktailApp
             this.BackButton.Text = "Back";
             this.BackButton.UseVisualStyleBackColor = false;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
-            // 
-            // IngredientsTable
-            // 
-            this.IngredientsTable.AllowUserToAddRows = false;
-            this.IngredientsTable.AllowUserToDeleteRows = false;
-            this.IngredientsTable.AllowUserToResizeColumns = false;
-            this.IngredientsTable.AllowUserToResizeRows = false;
-            this.IngredientsTable.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(210)))), ((int)(((byte)(170)))));
-            this.IngredientsTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.IngredientsTable.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.BlanchedAlmond;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.BlanchedAlmond;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.IngredientsTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.IngredientsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.IngredientsTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Type,
-            this.Brand,
-            this.VolumeInfo,
-            this.LevelInfo});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.SeaShell;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 15F);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SeaShell;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.IngredientsTable.DefaultCellStyle = dataGridViewCellStyle5;
-            this.IngredientsTable.EnableHeadersVisualStyles = false;
-            this.IngredientsTable.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.IngredientsTable.Location = new System.Drawing.Point(42, 227);
-            this.IngredientsTable.MultiSelect = false;
-            this.IngredientsTable.Name = "IngredientsTable";
-            this.IngredientsTable.RowHeadersVisible = false;
-            this.IngredientsTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.IngredientsTable.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.IngredientsTable.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IngredientsTable.RowTemplate.Height = 25;
-            this.IngredientsTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.IngredientsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.IngredientsTable.Size = new System.Drawing.Size(480, 453);
-            this.IngredientsTable.TabIndex = 1;
-            this.IngredientsTable.TabStop = false;
-            this.IngredientsTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.IngredientsTable_CellClick);
-            this.IngredientsTable.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.IngredientsTable_ColumnHeaderMouseClick);
             // 
             // ExitButton
             // 
@@ -427,6 +378,55 @@ namespace CocktailApp
             this.ExportButton.UseVisualStyleBackColor = false;
             this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
             // 
+            // IngredientsTable
+            // 
+            this.IngredientsTable.AllowUserToAddRows = false;
+            this.IngredientsTable.AllowUserToDeleteRows = false;
+            this.IngredientsTable.AllowUserToResizeColumns = false;
+            this.IngredientsTable.AllowUserToResizeRows = false;
+            this.IngredientsTable.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(210)))), ((int)(((byte)(170)))));
+            this.IngredientsTable.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.IngredientsTable.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.BlanchedAlmond;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.BlanchedAlmond;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.IngredientsTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.IngredientsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.IngredientsTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Type,
+            this.Brand,
+            this.VolumeInfo,
+            this.LevelInfo});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.SeaShell;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 15F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SeaShell;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.IngredientsTable.DefaultCellStyle = dataGridViewCellStyle5;
+            this.IngredientsTable.EnableHeadersVisualStyles = false;
+            this.IngredientsTable.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.IngredientsTable.Location = new System.Drawing.Point(42, 227);
+            this.IngredientsTable.MultiSelect = false;
+            this.IngredientsTable.Name = "IngredientsTable";
+            this.IngredientsTable.RowHeadersVisible = false;
+            this.IngredientsTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.IngredientsTable.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.IngredientsTable.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IngredientsTable.RowTemplate.Height = 25;
+            this.IngredientsTable.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.IngredientsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.IngredientsTable.Size = new System.Drawing.Size(480, 453);
+            this.IngredientsTable.TabIndex = 1;
+            this.IngredientsTable.TabStop = false;
+            this.IngredientsTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.IngredientsTable_CellClick);
+            this.IngredientsTable.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.IngredientsTable_ColumnHeaderMouseClick);
+            // 
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -474,7 +474,7 @@ namespace CocktailApp
             this.LevelInfo.Name = "LevelInfo";
             this.LevelInfo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Ingredients
+            // IngredientsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -496,11 +496,11 @@ namespace CocktailApp
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
-            this.Name = "Ingredients";
+            this.Name = "IngredientsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ShowIngredients_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).EndInit();
             this.EditPanel.ResumeLayout(false);
             this.EditPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

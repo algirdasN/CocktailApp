@@ -1,6 +1,6 @@
 ﻿namespace CocktailApp
 {
-    partial class Cocktails
+    partial class CocktailsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cocktails));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CocktailsForm));
             this.ExitButton = new System.Windows.Forms.Button();
             this.BackButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
