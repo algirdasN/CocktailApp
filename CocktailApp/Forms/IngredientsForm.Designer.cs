@@ -64,6 +64,9 @@ namespace CocktailApp
             this.Brand = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VolumeInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LevelInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IngredientsTable)).BeginInit();
             this.SuspendLayout();
@@ -400,7 +403,10 @@ namespace CocktailApp
             this.Type,
             this.Brand,
             this.VolumeInfo,
-            this.LevelInfo});
+            this.LevelInfo,
+            this._Id,
+            this._Volume,
+            this._Level});
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.SeaShell;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 15F);
@@ -474,6 +480,27 @@ namespace CocktailApp
             this.LevelInfo.Name = "LevelInfo";
             this.LevelInfo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // _Id
+            // 
+            this._Id.DataPropertyName = "Id";
+            this._Id.HeaderText = "_Id";
+            this._Id.Name = "_Id";
+            this._Id.Visible = false;
+            // 
+            // _Volume
+            // 
+            this._Volume.DataPropertyName = "Volume";
+            this._Volume.HeaderText = "_Volume";
+            this._Volume.Name = "_Volume";
+            this._Volume.Visible = false;
+            // 
+            // _Level
+            // 
+            this._Level.DataPropertyName = "Level";
+            this._Level.HeaderText = "_Level";
+            this._Level.Name = "_Level";
+            this._Level.Visible = false;
+            // 
             // IngredientsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,5 +563,8 @@ namespace CocktailApp
         private DataGridViewTextBoxColumn Brand;
         private DataGridViewTextBoxColumn VolumeInfo;
         private DataGridViewTextBoxColumn LevelInfo;
+        private DataGridViewTextBoxColumn _Id;
+        private DataGridViewTextBoxColumn _Volume;
+        private DataGridViewTextBoxColumn _Level;
     }
 }

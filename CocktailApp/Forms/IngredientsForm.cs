@@ -21,10 +21,6 @@ namespace CocktailApp
 
             PopulateIngredientsTable();
 
-            IngredientsTable.Columns["Id"].Visible = false;
-            IngredientsTable.Columns["Volume"].Visible = false;
-            IngredientsTable.Columns["Level"].Visible = false;
-
             PopulateComboBox();
         }
 
