@@ -55,6 +55,11 @@ namespace CocktailApp
 
         private void FIlterDropDown_TextChanged(object sender, EventArgs e)
         {
+            FilterIngredients();
+        }
+
+        private void FilterIngredients()
+        {
             var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
 
             currencyManager.SuspendBinding();
@@ -75,18 +80,11 @@ namespace CocktailApp
 
             SortIngredients();
 
-            var id = IngredientsTable.SelectedCells[0].Value.ToString();
-
             IngredientsTable.DataSource = IngredientList;
 
-            foreach (DataGridViewRow row in IngredientsTable.Rows)
-            {
-                if (row.Cells[0].Value.ToString() == id)
-                {
-                    row.Selected = true;
-                    break;
-                }
-            } 
+            FilterIngredients();
+
+            Unselect();
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
