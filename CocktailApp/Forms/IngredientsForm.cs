@@ -11,9 +11,11 @@ namespace CocktailApp
     {
         private List<Ingredient> IngredientList;
 
-        private int SortedColumn;
+        private string SelectedId;
 
         private bool SortAsc = true;
+
+        private int SortedColumn;
 
         public IngredientsForm()
         {
@@ -47,9 +49,11 @@ namespace CocktailApp
 
         private void IngredientsTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (EditModeCheckBox.Checked)
+            if (EditModeCheckBox.Checked && e.RowIndex != -1)
             {
                 FillTextBoxes();
+
+                SelectedId = IngredientsTable.SelectedCells[0].Value.ToString();
             }
         }
 
@@ -84,7 +88,16 @@ namespace CocktailApp
 
             FilterIngredients();
 
-            Unselect();
+            IngredientsTable.ClearSelection();
+
+            foreach (DataGridViewRow row in IngredientsTable.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == SelectedId)
+                {
+                    row.Selected = true;
+                    break;
+                }
+            }
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -268,6 +281,8 @@ namespace CocktailApp
         private void Unselect()
         {
             IngredientsTable.ClearSelection();
+
+            SelectedId = null;
 
             TypeComboBox.Text = "";
             BrandTextBox.Text = "";
