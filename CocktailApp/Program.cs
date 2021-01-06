@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CocktailApp.Forms;
+using System;
 using System.Windows.Forms;
 
 namespace CocktailApp
@@ -13,7 +14,7 @@ namespace CocktailApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainMenu());
+            Application.Run(new MainForm());
         }
     }
 }

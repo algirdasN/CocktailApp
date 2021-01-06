@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Forms
 {
-    public partial class IngredientsForm : Form
+    public partial class IngredientsForm : BaseForm
     {
         private List<Ingredient> IngredientList;
 
@@ -24,32 +24,6 @@ namespace CocktailApp
             PopulateIngredientsTable();
 
             PopulateComboBox();
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            var mainMenu = (MainMenu)Tag;
-            mainMenu.Show();
-            mainMenu.Location = Location;
-            Close();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void ShowIngredients_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            /*
-             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
-             * Otherwise the application process would continue to run.
-             */
-
-            if (!((sender as Form).ActiveControl is Button))
-            {
-                Application.Exit();
-            }
         }
 
         private void IngredientsTable_CellClick(object sender, DataGridViewCellEventArgs e)

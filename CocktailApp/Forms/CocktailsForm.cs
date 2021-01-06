@@ -3,9 +3,9 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Forms
 {
-    public partial class CocktailsForm : Form
+    public partial class CocktailsForm : BaseForm
     {
         private bool Favourite;
         public CocktailsForm()
@@ -17,32 +17,6 @@ namespace CocktailApp
             Data.GetCocktails();
 
             RefreshListContent();
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            var mainMenu = (MainMenu)Tag;
-            mainMenu.Show();
-            mainMenu.Location = Location;
-            Close();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Cocktails_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            /*
-             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
-             * Otherwise the application process would continue to run.
-             */
-
-            if (!((sender as Form).ActiveControl is Button))
-            {
-                Application.Exit();
-            }
         }
 
         private void FilterCheckBoxes_CheckedChanged(object sender, EventArgs e)

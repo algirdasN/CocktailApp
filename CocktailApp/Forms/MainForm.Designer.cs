@@ -1,6 +1,6 @@
-﻿namespace CocktailApp
+﻿namespace CocktailApp.Forms
 {
-    partial class MainMenu
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.IngredientsButton = new System.Windows.Forms.Button();
             this.EditCocktailsButton = new System.Windows.Forms.Button();
