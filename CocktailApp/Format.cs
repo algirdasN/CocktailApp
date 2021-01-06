@@ -9,6 +9,10 @@ namespace CocktailApp
 {
     public static class Format
     {
+        /*
+         * This class is used for string and image formatting.
+         */
+
         public static string CapitalizeFirst(string str)
         {
             return str.Any() ? str.Substring(0, 1).ToUpper() + str.Substring(1).ToLower() : "";

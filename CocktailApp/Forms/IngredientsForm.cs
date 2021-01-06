@@ -41,6 +41,11 @@ namespace CocktailApp
 
         private void ShowIngredients_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /*
+             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
+             * Otherwise the application process would continue to run.
+             */
+
             if (!((sender as Form).ActiveControl is Button))
             {
                 Application.Exit();
@@ -53,6 +58,7 @@ namespace CocktailApp
             {
                 FillTextBoxes();
 
+                //Stores the selected ingredient ID to have it reselected after sorting
                 SelectedId = IngredientsTable.SelectedCells[0].Value.ToString();
             }
         }
@@ -62,22 +68,9 @@ namespace CocktailApp
             FilterIngredients();
         }
 
-        private void FilterIngredients()
-        {
-            var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
-
-            currencyManager.SuspendBinding();
-
-            foreach (DataGridViewRow row in IngredientsTable.Rows)
-            {
-                row.Visible = row.Cells[1].Value.ToString().IndexOf(FilterDropDown.Text, StringComparison.OrdinalIgnoreCase) >= 0;
-            }
-
-            currencyManager.ResumeBinding();
-        }
-
         private void IngredientsTable_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //Determines the sort order based on previously clicked column.
             SortAsc = !(e.ColumnIndex == SortedColumn && SortAsc);
 
             SortedColumn = e.ColumnIndex;
@@ -90,6 +83,7 @@ namespace CocktailApp
 
             IngredientsTable.ClearSelection();
 
+            //Selects the ingredient with ID set by the most recent selection.
             foreach (DataGridViewRow row in IngredientsTable.Rows)
             {
                 if (row.Cells[0].Value.ToString() == SelectedId)
@@ -133,6 +127,7 @@ namespace CocktailApp
 
             EditPanel.Enabled = check;
 
+            //Changes the colors of selected cells to give the appearance of selection being unavailable when not in edit mode.
             IngredientsTable.DefaultCellStyle.SelectionForeColor = check ?
                 Color.SeaShell : IngredientsTable.DefaultCellStyle.ForeColor;
 
@@ -211,6 +206,11 @@ namespace CocktailApp
 
         private void InputFieldsChanged(object sender, EventArgs e)
         {
+            /*
+             * This method is called whenever any of the input fields are changed.
+             * (TypeComboBox, BrandTextBox, VolumeTextBox or one of the radio buttons)
+             */
+
             SuccessLabelClear();
         }
 
@@ -218,10 +218,10 @@ namespace CocktailApp
         {
             Data.GetIngredients();
 
+            //Storing the ingredient list as instance variable to use it later for sorting.
             IngredientList = new List<Ingredient>(Data.Ingredients);
 
             IngredientsTable.DataSource = IngredientList;
-
         }
 
         private void PopulateComboBox()
@@ -230,29 +230,6 @@ namespace CocktailApp
 
             TypeComboBox.Items.AddRange(arr);
             FilterDropDown.Items.AddRange(arr);
-        }
-
-        private void SortIngredients()
-        {
-            switch (SortedColumn)
-            {
-                case 1:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Type).ToList() : IngredientList.OrderByDescending(i => i.Type).ToList();
-                    break;
-                case 2:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Brand).ToList() : IngredientList.OrderByDescending(i => i.Brand).ToList();
-                    break;
-                case 5:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Volume).ToList() : IngredientList.OrderByDescending(i => i.Volume).ToList();
-                    break;
-                case 6:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Level).ToList() : IngredientList.OrderByDescending(i => i.Level).ToList();
-                    break;
-            }
         }
 
         private void FillTextBoxes()
@@ -278,6 +255,42 @@ namespace CocktailApp
             }
         }
 
+        private void FilterIngredients()
+        {
+            var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
+
+            currencyManager.SuspendBinding();
+
+            foreach (DataGridViewRow row in IngredientsTable.Rows)
+            {
+                row.Visible = row.Cells[1].Value.ToString().IndexOf(FilterDropDown.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+
+            currencyManager.ResumeBinding();
+        }
+
+        private void SortIngredients()
+        {
+            switch (SortedColumn)
+            {
+                case 1:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Type).ToList() : IngredientList.OrderByDescending(i => i.Type).ToList();
+                    break;
+                case 2:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Brand).ToList() : IngredientList.OrderByDescending(i => i.Brand).ToList();
+                    break;
+                case 5:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Volume).ToList() : IngredientList.OrderByDescending(i => i.Volume).ToList();
+                    break;
+                case 6:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Level).ToList() : IngredientList.OrderByDescending(i => i.Level).ToList();
+                    break;
+            }
+        }
         private void Unselect()
         {
             IngredientsTable.ClearSelection();

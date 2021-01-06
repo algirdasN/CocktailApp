@@ -34,6 +34,11 @@ namespace CocktailApp
 
         private void Cocktails_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /*
+             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
+             * Otherwise the application process would continue to run.
+             */
+
             if (!((sender as Form).ActiveControl is Button))
             {
                 Application.Exit();
@@ -42,6 +47,10 @@ namespace CocktailApp
 
         private void FilterCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
+            /*
+             * This method is called when either AvailableCheckBox or FavouriteCheckBox is (un-)checked.
+             */
+
             var select = CocktailsListBox.SelectedItem;
 
             RefreshListContent();
@@ -51,14 +60,7 @@ namespace CocktailApp
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            if (SearchByNameRadioButton.Checked)
-            {
-                Data.SearchCocktails(SearchBar.Text, "Name");
-            }
-            else if (SearchByIngredientRadioButton.Checked)
-            {
-                Data.SearchCocktails(SearchBar.Text, "Ingredients");
-            }
+            Data.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
 
             RefreshListContent();
 
@@ -85,7 +87,9 @@ namespace CocktailApp
                 CocktailImageBox.Image = selectedCocktail.Image == null ?
                     CocktailImageBox.InitialImage : Format.GetImage(selectedCocktail.Image);
 
-                SwitchFavouriteImage(Favourite = selectedCocktail.Favourite);
+                Favourite = selectedCocktail.Favourite;
+
+                SwitchFavouriteImage();
             }
         }
 
@@ -110,7 +114,7 @@ namespace CocktailApp
                     CocktailsListBox.SelectedValue = select;
                 }
 
-                SwitchFavouriteImage(Favourite);
+                SwitchFavouriteImage();
             }
         }
 
@@ -122,9 +126,9 @@ namespace CocktailApp
                 cocktails.Where(c => c.Favourite).ToList() : cocktails;
         }
 
-        private void SwitchFavouriteImage(bool check)
+        private void SwitchFavouriteImage()
         {
-            FavouritePictureBox.Image = check ? Resources.filled_star : Resources.empty_star;
+            FavouritePictureBox.Image = Favourite ? Resources.filled_star : Resources.empty_star;
         }
 
         private void ClearTextBoxes()

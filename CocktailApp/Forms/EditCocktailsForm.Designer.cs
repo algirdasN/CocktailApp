@@ -194,7 +194,7 @@
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(435, 26);
             this.NameTextBox.TabIndex = 11;
-            this.NameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_TextChanged);
+            this.NameTextBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // IngredientTagListBox
             // 
@@ -218,7 +218,7 @@
             this.IngredientTagsComboBox.Name = "IngredientTagsComboBox";
             this.IngredientTagsComboBox.Size = new System.Drawing.Size(180, 24);
             this.IngredientTagsComboBox.TabIndex = 12;
-            this.IngredientTagsComboBox.SelectedIndexChanged += new System.EventHandler(this.IngredientTagsComboBox_SelectedIndexChanged);
+            this.IngredientTagsComboBox.SelectedIndexChanged += new System.EventHandler(this.InputFieldsChanged);
             this.IngredientTagsComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IngredientTagsComboBox_KeyPress);
             // 
             // AddIngredientButton
@@ -266,7 +266,7 @@
             this.FullIngredientInfoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.FullIngredientInfoTextBox.Size = new System.Drawing.Size(280, 102);
             this.FullIngredientInfoTextBox.TabIndex = 16;
-            this.FullIngredientInfoTextBox.TextChanged += new System.EventHandler(this.FullIngredientInfoTextBox_TextChanged);
+            this.FullIngredientInfoTextBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // UploadButton
             // 
@@ -306,7 +306,7 @@
             this.RecipeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.RecipeTextBox.Size = new System.Drawing.Size(280, 102);
             this.RecipeTextBox.TabIndex = 17;
-            this.RecipeTextBox.TextChanged += new System.EventHandler(this.RecipeTextBox_TextChanged);
+            this.RecipeTextBox.TextChanged += new System.EventHandler(this.InputFieldsChanged);
             // 
             // AddCocktailButton
             // 

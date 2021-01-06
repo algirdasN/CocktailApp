@@ -19,9 +19,9 @@ namespace CocktailApp
 
             Data.GetIngredients();
 
-            RefreshAfterEdit();
+            RefreshListContent();
 
-            PopulateComboBox();
+            IngredientTagsComboBox.Items.AddRange(Data.Ingredients.Select(i => i.Type).Distinct().ToArray());
 
             IngredientTagListBox.DataSource = TagList;
         }
@@ -41,6 +41,11 @@ namespace CocktailApp
 
         private void EditCocktails_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /*
+             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
+             * Otherwise the application process would continue to run.
+             */
+
             if (!((sender as Form).ActiveControl is Button))
             {
                 Application.Exit();
@@ -58,16 +63,9 @@ namespace CocktailApp
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            if (SearchByNameRadioButton.Checked)
-            {
-                Data.SearchCocktails(SearchBar.Text, "Name");
-            }
-            else if (SearchByIngredientRadioButton.Checked)
-            {
-                Data.SearchCocktails(SearchBar.Text, "Ingredients");
-            }
+            Data.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
 
-            RefreshListContent();
+            CocktailsListBox.DataSource = Data.Cocktails;
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -81,7 +79,7 @@ namespace CocktailApp
             {
                 Data.ImportCocktails(dialog.FileName);
 
-                RefreshAfterEdit();
+                RefreshListContent();
             }
         }
 
@@ -189,7 +187,7 @@ namespace CocktailApp
                     recipe: RecipeTextBox.Text.Trim(),
                     image: CocktailImage);
 
-                RefreshAfterEdit();
+                RefreshListContent();
 
                 SuccessLabelSuccess();
             }
@@ -218,7 +216,7 @@ namespace CocktailApp
                     recipe: RecipeTextBox.Text.Trim(),
                     image: CocktailImage);
 
-                RefreshAfterEdit();
+                RefreshListContent();
 
                 SuccessLabelSuccess();
             }
@@ -234,7 +232,7 @@ namespace CocktailApp
             {
                 Data.RemoveCocktail(CocktailsListBox.SelectedValue.ToString());
 
-                RefreshAfterEdit();
+                RefreshListContent();
 
                 SuccessLabelSuccess();
             }
@@ -244,36 +242,30 @@ namespace CocktailApp
             }
         }
 
-        private void NameTextBox_TextChanged(object sender, EventArgs e)
+        private void InputFieldsChanged(object sender, EventArgs e)
         {
-            SuccessLabelClear();
-        }
+            /*
+             * This method is called whenever any of the input fields are changed.
+             * (NameTextBox, IngredientTagsComboBox, FullIngredientInfoTextBox or RecipeTextBox)
+             */
 
-        private void IngredientTagsComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void FullIngredientInfoTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SuccessLabelClear();
-        }
-
-        private void RecipeTextBox_TextChanged(object sender, EventArgs e)
-        {
             SuccessLabelClear();
         }
 
         private void RefreshListContent()
         {
+            Data.GetCocktails();
+
             CocktailsListBox.DataSource = Data.Cocktails;
-
+            
             CocktailsListBox.ClearSelected();
-        }
+            NameTextBox.Text = "";
+            IngredientTagsComboBox.Text = "";
+            TagList.Clear();
+            FullIngredientInfoTextBox.Text = "";
+            RecipeTextBox.Text = "";
 
-        private void PopulateComboBox()
-        {
-            IngredientTagsComboBox.Items.AddRange(Data.Ingredients.Select(i => i.Type).Distinct().ToArray());
+            ClearImage();
         }
 
         private bool TextBoxValidation()
@@ -282,21 +274,6 @@ namespace CocktailApp
                 && IngredientTagListBox.Text.Trim() != ""
                 && FullIngredientInfoTextBox.Text.Trim() != ""
                 && RecipeTextBox.Text.Trim() != "";
-        }
-
-        private void RefreshAfterEdit()
-        {
-            Data.GetCocktails();
-
-            RefreshListContent();
-
-            NameTextBox.Text = "";
-            IngredientTagsComboBox.Text = "";
-            TagList.Clear();
-            FullIngredientInfoTextBox.Text = "";
-            RecipeTextBox.Text = "";
-
-            ClearImage();
         }
 
         private void ClearImage()

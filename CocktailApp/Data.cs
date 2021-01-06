@@ -11,6 +11,10 @@ namespace CocktailApp
 {
     public static class Data
     {
+        /*
+         * This class is used for data transfer to and from the database and importing/exporting data to .csv files.
+         */
+
         public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.IsAvailable()).ToList();
@@ -41,18 +45,10 @@ namespace CocktailApp
             }
             else
             {
-                var query = $"SELECT * FROM Cocktails WHERE {searchby} LIKE @{searchby} ORDER BY Name";
+                var query = $"SELECT * FROM Cocktails WHERE {searchby} LIKE @term ORDER BY Name";
                 using (IDbConnection connect = Connection)
                 {
-                    switch (searchby)
-                    {
-                        case "Name":
-                            Cocktails = connect.Query<Cocktail>(query, new { Name = '%' + term + '%' }).ToList();
-                            break;
-                        case "Ingredients":
-                            Cocktails = connect.Query<Cocktail>(query, new { Ingredients = '%' + term + '%' }).ToList();
-                            break;
-                    }
+                    Cocktails = connect.Query<Cocktail>(query, new { term = '%' + term + '%' }).ToList();
                 }
             }
         }
@@ -99,7 +95,7 @@ namespace CocktailApp
             using (IDbConnection connect = Connection)
             {
                 connect.Open();
-                using (var sqlCmd = new SqlCommand($"IngredientDelete", (SqlConnection)connect))
+                using (var sqlCmd = new SqlCommand("IngredientDelete", (SqlConnection)connect))
                 {
                     sqlCmd.CommandType = CommandType.StoredProcedure;
 
