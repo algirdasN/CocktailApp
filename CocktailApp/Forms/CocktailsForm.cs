@@ -1,6 +1,11 @@
 ﻿using CocktailApp.Properties;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System;
+using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -96,15 +101,107 @@ namespace CocktailApp.Forms
 
         private void PrintCocktailButton_Click(object sender, EventArgs e)
         {
+            /*
+             * Screenshots InfoPanel and exports it as .png image.
+             */
+
+            if (CocktailsListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("No cocktail selected.", "Print cocktail");
+            }
+            else
+            {
+                var dialog = new FolderBrowserDialog() { SelectedPath = ScreenCapturePath };
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        ScreenCapturePath = dialog.SelectedPath;
+
+                        var filename = Format.SanitizeName(CocktailNameLabel.Text) + ".png";
+
+                        CaptureInfoPanel().Save(Path.Combine(dialog.SelectedPath, filename), ImageFormat.Png);
+
+                        MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
+                                    "\r\nFile name: " + filename, "Print cocktail");
+                    }
+                    catch (Exception exc)
+                    {
+                        MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print cocktail");
+                    }
+                }
+            }
+        }
+
+        private void PrintMenuButton_Click(object sender, EventArgs e)
+        {
+            /*
+             * Selects each favourited cocktail, screenshots the InfoPanel and combines them it into .pdf file.
+             */
+
             var dialog = new FolderBrowserDialog() { SelectedPath = ScreenCapturePath };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                ScreenCapturePath = dialog.SelectedPath;
+                try
+                {
+                    ScreenCapturePath = dialog.SelectedPath;
 
-                var filename = dialog.SelectedPath + "\\" + Format.SanitizeName(CocktailNameLabel.Text) + ".png";
+                    var select = CocktailsListBox.SelectedValue;
+                    var search = SearchBar.Text;
+                    var avaCheck = AvailableCheckBox.Checked;
+                    var favCheck = FavouriteCheckBox.Checked;
 
-                CaptureInfoPanel().Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+                    FilterListBox("", false, true);
+
+                    var n = CocktailsListBox.Items.Count;
+                    var filename = "Cocktail_menu_" + DateTime.Now.ToString("d") + ".pdf";
+
+                    if (n == 0)
+                    {
+                        MessageBox.Show("No cocktails favourited.", "Print cocktail");
+                    }
+                    else
+                    {
+                        using (PdfDocument doc = new PdfDocument())
+                        {
+                            for (int i = 0; i < n; i++)
+                            {
+                                CocktailsListBox.SelectedIndex = i;
+
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    CaptureInfoPanel().Save(ms, ImageFormat.Png);
+
+                                    var page = doc.Pages.Add(new PdfPage());
+
+                                    XImage ximg = XImage.FromStream(ms);
+                                    page.Width = ximg.PointWidth;
+                                    page.Height = ximg.PointHeight;
+
+                                    XGraphics xgr = XGraphics.FromPdfPage(page);
+                                    xgr.DrawImage(ximg, 0, 0);
+                                }
+                            }
+                            doc.Save(Path.Combine(dialog.SelectedPath, filename));
+
+                            MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
+                                            "\r\nFile name: " + filename, "Print cocktail");
+                        }
+                    }
+
+                    FilterListBox(search, avaCheck, favCheck);
+
+                    if (CocktailsListBox.Items.Count > 0)
+                    {
+                        CocktailsListBox.SelectedValue = select;
+                    }
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print menu");
+                }
             }
         }
 
@@ -140,6 +237,15 @@ namespace CocktailApp.Forms
             InfoPanel.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
 
             return bmp;
+        }
+
+        private void FilterListBox(string search, bool avaCheck, bool favCheck)
+        {
+            SearchBar.Text = search;
+            AvailableCheckBox.Checked = avaCheck;
+            FavouriteCheckBox.Checked = favCheck;
+
+            SearchButton.PerformClick();
         }
     }
 }

@@ -145,7 +145,7 @@
             this.IngredientsTextBox.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.IngredientsTextBox.Font = new System.Drawing.Font("Arial", 15F);
             this.IngredientsTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.IngredientsTextBox.Location = new System.Drawing.Point(5, 65);
+            this.IngredientsTextBox.Location = new System.Drawing.Point(10, 70);
             this.IngredientsTextBox.Multiline = true;
             this.IngredientsTextBox.Name = "IngredientsTextBox";
             this.IngredientsTextBox.ReadOnly = true;
@@ -158,11 +158,10 @@
             this.RecipeTextBox.BackColor = System.Drawing.Color.BlanchedAlmond;
             this.RecipeTextBox.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RecipeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.RecipeTextBox.Location = new System.Drawing.Point(5, 325);
+            this.RecipeTextBox.Location = new System.Drawing.Point(10, 330);
             this.RecipeTextBox.Multiline = true;
             this.RecipeTextBox.Name = "RecipeTextBox";
             this.RecipeTextBox.ReadOnly = true;
-            this.RecipeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.RecipeTextBox.Size = new System.Drawing.Size(500, 190);
             this.RecipeTextBox.TabIndex = 15;
             this.RecipeTextBox.TabStop = false;
@@ -171,7 +170,7 @@
             // 
             this.CocktailNameLabel.Font = new System.Drawing.Font("Arial", 19F, System.Drawing.FontStyle.Bold);
             this.CocktailNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.CocktailNameLabel.Location = new System.Drawing.Point(5, 5);
+            this.CocktailNameLabel.Location = new System.Drawing.Point(10, 10);
             this.CocktailNameLabel.Name = "CocktailNameLabel";
             this.CocktailNameLabel.Size = new System.Drawing.Size(460, 40);
             this.CocktailNameLabel.TabIndex = 17;
@@ -193,7 +192,7 @@
             // 
             this.FavouritePictureBox.Image = global::CocktailApp.Properties.Resources.empty_star;
             this.FavouritePictureBox.InitialImage = global::CocktailApp.Properties.Resources.empty_star;
-            this.FavouritePictureBox.Location = new System.Drawing.Point(465, 5);
+            this.FavouritePictureBox.Location = new System.Drawing.Point(470, 10);
             this.FavouritePictureBox.Name = "FavouritePictureBox";
             this.FavouritePictureBox.Size = new System.Drawing.Size(40, 40);
             this.FavouritePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -205,7 +204,7 @@
             // 
             this.CocktailImageBox.Image = global::CocktailApp.Properties.Resources.placeholder_image;
             this.CocktailImageBox.InitialImage = global::CocktailApp.Properties.Resources.placeholder_image;
-            this.CocktailImageBox.Location = new System.Drawing.Point(265, 65);
+            this.CocktailImageBox.Location = new System.Drawing.Point(270, 70);
             this.CocktailImageBox.Name = "CocktailImageBox";
             this.CocktailImageBox.Size = new System.Drawing.Size(240, 240);
             this.CocktailImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -219,9 +218,9 @@
             this.InfoPanel.Controls.Add(this.IngredientsTextBox);
             this.InfoPanel.Controls.Add(this.CocktailImageBox);
             this.InfoPanel.Controls.Add(this.RecipeTextBox);
-            this.InfoPanel.Location = new System.Drawing.Point(422, 167);
+            this.InfoPanel.Location = new System.Drawing.Point(417, 162);
             this.InfoPanel.Name = "InfoPanel";
-            this.InfoPanel.Size = new System.Drawing.Size(510, 520);
+            this.InfoPanel.Size = new System.Drawing.Size(520, 530);
             this.InfoPanel.TabIndex = 100;
             // 
             // PrintMenuButton
@@ -237,8 +236,9 @@
             this.PrintMenuButton.Name = "PrintMenuButton";
             this.PrintMenuButton.Size = new System.Drawing.Size(165, 45);
             this.PrintMenuButton.TabIndex = 102;
-            this.PrintMenuButton.Text = "Print favourites (.pdf)";
+            this.PrintMenuButton.Text = "Print all favourites";
             this.PrintMenuButton.UseVisualStyleBackColor = false;
+            this.PrintMenuButton.Click += new System.EventHandler(this.PrintMenuButton_Click);
             // 
             // PrintCocktailButton
             // 
@@ -253,7 +253,7 @@
             this.PrintCocktailButton.Name = "PrintCocktailButton";
             this.PrintCocktailButton.Size = new System.Drawing.Size(165, 45);
             this.PrintCocktailButton.TabIndex = 101;
-            this.PrintCocktailButton.Text = "Print cocktail (.png)";
+            this.PrintCocktailButton.Text = "Print single cocktail";
             this.PrintCocktailButton.UseVisualStyleBackColor = false;
             this.PrintCocktailButton.Click += new System.EventHandler(this.PrintCocktailButton_Click);
             // 
