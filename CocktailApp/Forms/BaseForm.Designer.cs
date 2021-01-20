@@ -45,7 +45,7 @@
             this.ExitButton.Location = new System.Drawing.Point(827, 22);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(100, 60);
-            this.ExitButton.TabIndex = 24;
+            this.ExitButton.TabIndex = 99;
             this.ExitButton.Text = "Exit";
             this.ExitButton.UseVisualStyleBackColor = false;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
@@ -62,7 +62,7 @@
             this.BackButton.Location = new System.Drawing.Point(27, 22);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(100, 60);
-            this.BackButton.TabIndex = 23;
+            this.BackButton.TabIndex = 98;
             this.BackButton.Text = "Back";
             this.BackButton.UseVisualStyleBackColor = false;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);

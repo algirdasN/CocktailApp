@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CocktailApp
 {
@@ -22,6 +23,11 @@ namespace CocktailApp
         {
             return string.Join(" ", str.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)
                                        .Select(s => CapitalizeFirst(s)));
+        }
+
+        public static string SanitizeName(string str)
+        {
+            return Regex.Replace(Regex.Replace(str.ToLower(), @"[^\w\s\.-]", ""), @"\s+", "_");
         }
 
         public static Bitmap ResizeImage(Image image)

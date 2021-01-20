@@ -1,5 +1,6 @@
 ﻿using CocktailApp.Properties;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,6 +9,7 @@ namespace CocktailApp.Forms
     public partial class CocktailsForm : BaseForm
     {
         private bool Favourite;
+        private string ScreenCapturePath;
         public CocktailsForm()
         {
             InitializeComponent();
@@ -92,6 +94,20 @@ namespace CocktailApp.Forms
             }
         }
 
+        private void PrintCocktailButton_Click(object sender, EventArgs e)
+        {
+            var dialog = new FolderBrowserDialog() { SelectedPath = ScreenCapturePath };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                ScreenCapturePath = dialog.SelectedPath;
+
+                var filename = dialog.SelectedPath + "\\" + Format.SanitizeName(CocktailNameLabel.Text) + ".png";
+
+                CaptureInfoPanel().Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+            }
+        }
+
         private void RefreshListContent()
         {
             var cocktails = AvailableCheckBox.Checked ? Data.AvailableCocktails : Data.Cocktails;
@@ -113,6 +129,17 @@ namespace CocktailApp.Forms
             IngredientsTextBox.Text = "";
             RecipeTextBox.Text = "";
             CocktailImageBox.Image = CocktailImageBox.InitialImage;
+        }
+
+        private Bitmap CaptureInfoPanel()
+        {
+            int width = InfoPanel.Width;
+            int height = InfoPanel.Height;
+
+            var bmp = new Bitmap(width, height);
+            InfoPanel.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+
+            return bmp;
         }
     }
 }
