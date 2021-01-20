@@ -14,6 +14,7 @@ namespace CocktailApp.Forms
     public partial class CocktailsForm : BaseForm
     {
         private bool Favourite;
+
         private string ScreenCapturePath;
         public CocktailsForm()
         {
@@ -61,6 +62,19 @@ namespace CocktailApp.Forms
             {
                 Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == CocktailsListBox.SelectedValue.ToString());
 
+                if (selectedCocktail.Name.Length > 25)
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 18F, FontStyle.Bold);
+                }
+                else if (selectedCocktail.Name.Length > 20)
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 19F, FontStyle.Bold);
+                }
+                else
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 20F, FontStyle.Bold);
+                }
+
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
                 RecipeTextBox.Text = selectedCocktail.Recipe;
@@ -84,7 +98,7 @@ namespace CocktailApp.Forms
 
                 Data.FavouriteCocktail(select.ToString(), Favourite);
 
-                SearchButton_Click(sender, e);
+                SearchButton.PerformClick();
 
                 if (FavouriteCheckBox.Checked)
                 {
@@ -117,17 +131,23 @@ namespace CocktailApp.Forms
                 {
                     try
                     {
+                        FavouritePictureBox.Visible = false;
+
                         ScreenCapturePath = dialog.SelectedPath;
 
                         var filename = Format.SanitizeName(CocktailNameLabel.Text) + ".png";
 
                         CaptureInfoPanel().Save(Path.Combine(dialog.SelectedPath, filename), ImageFormat.Png);
 
+                        FavouritePictureBox.Visible = true;
+
                         MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
                                     "\r\nFile name: " + filename, "Print cocktail");
                     }
                     catch (Exception exc)
                     {
+                        FavouritePictureBox.Visible = true;
+
                         MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print cocktail");
                     }
                 }
@@ -144,26 +164,28 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                try
+                ScreenCapturePath = dialog.SelectedPath;
+
+                var select = CocktailsListBox.SelectedValue;
+                var search = SearchBar.Text;
+                var avaCheck = AvailableCheckBox.Checked;
+                var favCheck = FavouriteCheckBox.Checked;
+
+                FilterListBox("", false, true);
+
+                var n = CocktailsListBox.Items.Count;
+                var filename = "Cocktail_menu_" + DateTime.Now.ToString("d") + ".pdf";
+
+                if (n == 0)
                 {
-                    ScreenCapturePath = dialog.SelectedPath;
-
-                    var select = CocktailsListBox.SelectedValue;
-                    var search = SearchBar.Text;
-                    var avaCheck = AvailableCheckBox.Checked;
-                    var favCheck = FavouriteCheckBox.Checked;
-
-                    FilterListBox("", false, true);
-
-                    var n = CocktailsListBox.Items.Count;
-                    var filename = "Cocktail_menu_" + DateTime.Now.ToString("d") + ".pdf";
-
-                    if (n == 0)
+                    MessageBox.Show("No cocktails favourited.", "Print cocktail");
+                }
+                else
+                {
+                    try
                     {
-                        MessageBox.Show("No cocktails favourited.", "Print cocktail");
-                    }
-                    else
-                    {
+                        FavouritePictureBox.Visible = false;
+
                         using (PdfDocument doc = new PdfDocument())
                         {
                             for (int i = 0; i < n; i++)
@@ -185,22 +207,26 @@ namespace CocktailApp.Forms
                                 }
                             }
                             doc.Save(Path.Combine(dialog.SelectedPath, filename));
-
-                            MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
-                                            "\r\nFile name: " + filename, "Print cocktail");
                         }
+
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
+                                        "\r\nFile name: " + filename, "Print cocktail");
                     }
-
-                    FilterListBox(search, avaCheck, favCheck);
-
-                    if (CocktailsListBox.Items.Count > 0)
+                    catch (Exception exc)
                     {
-                        CocktailsListBox.SelectedValue = select;
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print menu");
                     }
                 }
-                catch (Exception exc)
+
+                FilterListBox(search, avaCheck, favCheck);
+
+                if (CocktailsListBox.Items.Count > 0)
                 {
-                    MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print menu");
+                    CocktailsListBox.SelectedValue = select;
                 }
             }
         }

@@ -84,7 +84,7 @@
             this.SearchButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
             this.SearchButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
             this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SearchButton.Font = new System.Drawing.Font("Arial", 14F);
             this.SearchButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.SearchButton.Location = new System.Drawing.Point(287, 176);
             this.SearchButton.Name = "SearchButton";
@@ -168,11 +168,9 @@
             // 
             // CocktailNameLabel
             // 
-            this.CocktailNameLabel.Font = new System.Drawing.Font("Arial", 19F, System.Drawing.FontStyle.Bold);
-            this.CocktailNameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.CocktailNameLabel.Location = new System.Drawing.Point(10, 10);
+            this.CocktailNameLabel.Location = new System.Drawing.Point(45, 10);
             this.CocktailNameLabel.Name = "CocktailNameLabel";
-            this.CocktailNameLabel.Size = new System.Drawing.Size(460, 40);
+            this.CocktailNameLabel.Size = new System.Drawing.Size(430, 40);
             this.CocktailNameLabel.TabIndex = 17;
             this.CocktailNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.CocktailNameLabel.UseMnemonic = false;
