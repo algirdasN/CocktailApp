@@ -1,13 +1,21 @@
 ﻿using CocktailApp.Properties;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Forms
 {
-    public partial class CocktailsForm : Form
+    public partial class CocktailsForm : BaseForm
     {
         private bool Favourite;
+
+        private string ScreenCapturePath;
         public CocktailsForm()
         {
             InitializeComponent();
@@ -17,32 +25,6 @@ namespace CocktailApp
             Data.GetCocktails();
 
             RefreshListContent();
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            var mainMenu = (MainMenu)Tag;
-            mainMenu.Show();
-            mainMenu.Location = Location;
-            Close();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Cocktails_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            /*
-             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
-             * Otherwise the application process would continue to run.
-             */
-
-            if (!((sender as Form).ActiveControl is Button))
-            {
-                Application.Exit();
-            }
         }
 
         private void FilterCheckBoxes_CheckedChanged(object sender, EventArgs e)
@@ -80,6 +62,19 @@ namespace CocktailApp
             {
                 Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == CocktailsListBox.SelectedValue.ToString());
 
+                if (selectedCocktail.Name.Length > 25)
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 18F, FontStyle.Bold);
+                }
+                else if (selectedCocktail.Name.Length > 20)
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 19F, FontStyle.Bold);
+                }
+                else
+                {
+                    CocktailNameLabel.Font = new Font("Arial", 20F, FontStyle.Bold);
+                }
+
                 CocktailNameLabel.Text = selectedCocktail.Name.ToUpper();
                 IngredientsTextBox.Text = selectedCocktail.FullIngredientInfo;
                 RecipeTextBox.Text = selectedCocktail.Recipe;
@@ -103,7 +98,7 @@ namespace CocktailApp
 
                 Data.FavouriteCocktail(select.ToString(), Favourite);
 
-                SearchButton_Click(sender, e);
+                SearchButton.PerformClick();
 
                 if (FavouriteCheckBox.Checked)
                 {
@@ -115,6 +110,124 @@ namespace CocktailApp
                 }
 
                 SwitchFavouriteImage();
+            }
+        }
+
+        private void PrintCocktailButton_Click(object sender, EventArgs e)
+        {
+            /*
+             * Screenshots InfoPanel and exports it as .png image.
+             */
+
+            if (CocktailsListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("No cocktail selected.", "Print cocktail");
+            }
+            else
+            {
+                var dialog = new FolderBrowserDialog() { SelectedPath = ScreenCapturePath };
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        FavouritePictureBox.Visible = false;
+
+                        ScreenCapturePath = dialog.SelectedPath;
+
+                        var filename = Format.SanitizeName(CocktailNameLabel.Text) + ".png";
+
+                        CaptureInfoPanel().Save(Path.Combine(dialog.SelectedPath, filename), ImageFormat.Png);
+
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
+                                    "\r\nFile name: " + filename, "Print cocktail");
+                    }
+                    catch (Exception exc)
+                    {
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print cocktail");
+                    }
+                }
+            }
+        }
+
+        private void PrintMenuButton_Click(object sender, EventArgs e)
+        {
+            /*
+             * Selects each favourited cocktail, screenshots the InfoPanel and combines them it into .pdf file.
+             */
+
+            var dialog = new FolderBrowserDialog() { SelectedPath = ScreenCapturePath };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                ScreenCapturePath = dialog.SelectedPath;
+
+                var select = CocktailsListBox.SelectedValue;
+                var search = SearchBar.Text;
+                var avaCheck = AvailableCheckBox.Checked;
+                var favCheck = FavouriteCheckBox.Checked;
+
+                FilterListBox("", false, true);
+
+                var n = CocktailsListBox.Items.Count;
+                var filename = "Cocktail_menu_" + DateTime.Now.ToString("d") + ".pdf";
+
+                if (n == 0)
+                {
+                    MessageBox.Show("No cocktails favourited.", "Print cocktail");
+                }
+                else
+                {
+                    try
+                    {
+                        FavouritePictureBox.Visible = false;
+
+                        using (PdfDocument doc = new PdfDocument())
+                        {
+                            for (int i = 0; i < n; i++)
+                            {
+                                CocktailsListBox.SelectedIndex = i;
+
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    CaptureInfoPanel().Save(ms, ImageFormat.Png);
+
+                                    var page = doc.Pages.Add(new PdfPage());
+
+                                    XImage ximg = XImage.FromStream(ms);
+                                    page.Width = ximg.PointWidth;
+                                    page.Height = ximg.PointHeight;
+
+                                    XGraphics xgr = XGraphics.FromPdfPage(page);
+                                    xgr.DrawImage(ximg, 0, 0);
+                                }
+                            }
+                            doc.Save(Path.Combine(dialog.SelectedPath, filename));
+                        }
+
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
+                                        "\r\nFile name: " + filename, "Print cocktail");
+                    }
+                    catch (Exception exc)
+                    {
+                        FavouritePictureBox.Visible = true;
+
+                        MessageBox.Show("Error occured\r\n\r\n" + exc.Message, "Print menu");
+                    }
+                }
+
+                FilterListBox(search, avaCheck, favCheck);
+
+                if (CocktailsListBox.Items.Count > 0)
+                {
+                    CocktailsListBox.SelectedValue = select;
+                }
             }
         }
 
@@ -139,6 +252,26 @@ namespace CocktailApp
             IngredientsTextBox.Text = "";
             RecipeTextBox.Text = "";
             CocktailImageBox.Image = CocktailImageBox.InitialImage;
+        }
+
+        private Bitmap CaptureInfoPanel()
+        {
+            int width = InfoPanel.Width;
+            int height = InfoPanel.Height;
+
+            var bmp = new Bitmap(width, height);
+            InfoPanel.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+
+            return bmp;
+        }
+
+        private void FilterListBox(string search, bool avaCheck, bool favCheck)
+        {
+            SearchBar.Text = search;
+            AvailableCheckBox.Checked = avaCheck;
+            FavouriteCheckBox.Checked = favCheck;
+
+            SearchButton.PerformClick();
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Forms
 {
-    public partial class MainMenu : Form
+    public partial class MainForm : Form
     {
-        public MainMenu()
+        public MainForm()
         {
             InitializeComponent();
         }

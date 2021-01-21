@@ -1,4 +1,4 @@
-﻿namespace CocktailApp
+﻿namespace CocktailApp.Forms
 {
     partial class EditCocktailsForm
     {
@@ -28,10 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditCocktailsForm));
             this.label1 = new System.Windows.Forms.Label();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.BackButton = new System.Windows.Forms.Button();
             this.SearchByIngredientRadioButton = new System.Windows.Forms.RadioButton();
             this.SearchByNameRadioButton = new System.Windows.Forms.RadioButton();
             this.SearchBar = new System.Windows.Forms.TextBox();
@@ -76,45 +73,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 48F);
-            this.label1.Location = new System.Drawing.Point(252, 52);
+            this.label1.Location = new System.Drawing.Point(256, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(453, 75);
             this.label1.TabIndex = 14;
             this.label1.Text = "Edit cocktails";
-            // 
-            // ExitButton
-            // 
-            this.ExitButton.BackColor = System.Drawing.Color.SandyBrown;
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
-            this.ExitButton.FlatAppearance.BorderSize = 3;
-            this.ExitButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
-            this.ExitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
-            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ExitButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExitButton.Location = new System.Drawing.Point(832, 22);
-            this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(100, 60);
-            this.ExitButton.TabIndex = 22;
-            this.ExitButton.Text = "Exit";
-            this.ExitButton.UseVisualStyleBackColor = false;
-            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
-            // 
-            // BackButton
-            // 
-            this.BackButton.BackColor = System.Drawing.Color.SandyBrown;
-            this.BackButton.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
-            this.BackButton.FlatAppearance.BorderSize = 3;
-            this.BackButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SandyBrown;
-            this.BackButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
-            this.BackButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BackButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BackButton.Location = new System.Drawing.Point(27, 22);
-            this.BackButton.Name = "BackButton";
-            this.BackButton.Size = new System.Drawing.Size(100, 60);
-            this.BackButton.TabIndex = 21;
-            this.BackButton.Text = "Back";
-            this.BackButton.UseVisualStyleBackColor = false;
-            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // SearchByIngredientRadioButton
             // 
@@ -541,13 +504,11 @@
             this.ImportButton.UseVisualStyleBackColor = false;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
             // 
-            // EditCocktails
+            // EditCocktailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.NavajoWhite;
-            this.ClientSize = new System.Drawing.Size(960, 720);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(954, 714);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.ImportButton);
             this.Controls.Add(this.RecipePanel);
@@ -565,15 +526,24 @@
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.CocktailsListBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ExitButton);
-            this.Controls.Add(this.BackButton);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(960, 720);
-            this.MinimumSize = new System.Drawing.Size(960, 720);
-            this.Name = "EditCocktails";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditCocktails_FormClosing);
+            this.Name = "EditCocktailsForm";
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.CocktailsListBox, 0);
+            this.Controls.SetChildIndex(this.SearchButton, 0);
+            this.Controls.SetChildIndex(this.SearchBar, 0);
+            this.Controls.SetChildIndex(this.SearchByNameRadioButton, 0);
+            this.Controls.SetChildIndex(this.SearchByIngredientRadioButton, 0);
+            this.Controls.SetChildIndex(this.AddCocktailButton, 0);
+            this.Controls.SetChildIndex(this.EditCocktailButton, 0);
+            this.Controls.SetChildIndex(this.RemoveCocktailButton, 0);
+            this.Controls.SetChildIndex(this.SuccessLabel, 0);
+            this.Controls.SetChildIndex(this.NamePanel, 0);
+            this.Controls.SetChildIndex(this.IngredientTagsPanel, 0);
+            this.Controls.SetChildIndex(this.ImagePanel, 0);
+            this.Controls.SetChildIndex(this.FullIngredientsPanel, 0);
+            this.Controls.SetChildIndex(this.RecipePanel, 0);
+            this.Controls.SetChildIndex(this.ImportButton, 0);
+            this.Controls.SetChildIndex(this.ExportButton, 0);
             this.NamePanel.ResumeLayout(false);
             this.NamePanel.PerformLayout();
             this.IngredientTagsPanel.ResumeLayout(false);
@@ -593,8 +563,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.RadioButton SearchByIngredientRadioButton;
         private System.Windows.Forms.RadioButton SearchByNameRadioButton;
         private System.Windows.Forms.TextBox SearchBar;

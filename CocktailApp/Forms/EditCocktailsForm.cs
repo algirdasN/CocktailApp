@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Forms
 {
-    public partial class EditCocktailsForm : Form
+    public partial class EditCocktailsForm : BaseForm
     {
         private BindingList<string> TagList = new BindingList<string>();
 
@@ -24,32 +24,6 @@ namespace CocktailApp
             IngredientTagsComboBox.Items.AddRange(Data.Ingredients.Select(i => i.Type).Distinct().ToArray());
 
             IngredientTagListBox.DataSource = TagList;
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            var mainMenu = (MainMenu)Tag;
-            mainMenu.Show();
-            mainMenu.Location = Location;
-            Close();
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void EditCocktails_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            /*
-             * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
-             * Otherwise the application process would continue to run.
-             */
-
-            if (!((sender as Form).ActiveControl is Button))
-            {
-                Application.Exit();
-            }
         }
 
         private void SearchBar_KeyPress(object sender, KeyPressEventArgs e)
@@ -257,7 +231,7 @@ namespace CocktailApp
             Data.GetCocktails();
 
             CocktailsListBox.DataSource = Data.Cocktails;
-            
+
             CocktailsListBox.ClearSelected();
             NameTextBox.Text = "";
             IngredientTagsComboBox.Text = "";
