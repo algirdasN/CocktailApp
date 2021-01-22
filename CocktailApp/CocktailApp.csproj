@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <MinimumRequiredVersion>1.0.0.13</MinimumRequiredVersion>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.2.5.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -131,6 +131,8 @@
     <Compile Include="Forms\IngredientsForm.Designer.cs">
       <DependentUpon>IngredientsForm.cs</DependentUpon>
     </Compile>
+    <Content Include="x64\SQLite.Interop.dll" />
+    <Content Include="x86\SQLite.Interop.dll" />
     <EmbeddedResource Include="Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,9 +158,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="CocktailApp_TemporaryKey.pfx" />
-    <None Include="Database.db">
+    <Content Include="Database.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -197,23 +199,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PublishFile Include="Database.mdf">
+    <PublishFile Include="Database.db">
       <Visible>False</Visible>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>File</FileType>
-    </PublishFile>
-    <PublishFile Include="Database_log.ldf">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Exclude</PublishState>
+      <PublishState>DataFile</PublishState>
       <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
