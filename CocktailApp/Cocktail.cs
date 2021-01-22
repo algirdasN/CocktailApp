@@ -29,7 +29,7 @@
         {
             foreach (string item in Ingredients.Split('|'))
             {
-                if (!Data.Ingredients.Exists(i => i.Type == item))
+                if (!DataAccess.Ingredients.Exists(i => i.Type == item))
                 {
                     return false;
                 }
@@ -43,7 +43,7 @@
 
             foreach (string item in Ingredients.Split('|'))
             {
-                if (!Data.Ingredients.Exists(i => i.Type == item))
+                if (!DataAccess.Ingredients.Exists(i => i.Type == item))
                 {
                     str = str.Replace(item, ">>" + item + "<<");
                 }

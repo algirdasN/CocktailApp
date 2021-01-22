@@ -77,7 +77,7 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Data.ImportIngredients(dialog.FileName);
+                DataTransfer.ImportIngredients(dialog.FileName);
 
                 PopulateIngredientsTable();
 
@@ -91,7 +91,7 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Data.ExportIngredients(dialog.SelectedPath);
+                DataTransfer.ExportIngredients(dialog.SelectedPath);
             }
         }
 
@@ -126,7 +126,7 @@ namespace CocktailApp.Forms
         {
             if (TextBoxValidation())
             {
-                Data.AddEditIngredient(
+                DataAccess.AddEditIngredient(
                   type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
                   brand: BrandTextBox.Text.Trim(),
                   volume: VolumeTextBox.Text.Trim(),
@@ -147,7 +147,7 @@ namespace CocktailApp.Forms
             }
             else if (TextBoxValidation())
             {
-                Data.AddEditIngredient(
+                DataAccess.AddEditIngredient(
                     id: IngredientsTable.SelectedCells[0].Value.ToString(),
                     type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
                     brand: BrandTextBox.Text.Trim(),
@@ -165,7 +165,7 @@ namespace CocktailApp.Forms
         {
             if (IngredientsTable.SelectedRows.Count > 0)
             {
-                Data.RemoveIngredient(IngredientsTable.SelectedCells[0].Value.ToString());
+                DataAccess.RemoveIngredient(IngredientsTable.SelectedCells[0].Value.ToString());
 
                 RefreshAfterEdit();
             }
@@ -187,17 +187,17 @@ namespace CocktailApp.Forms
 
         private void PopulateIngredientsTable()
         {
-            Data.GetIngredients();
+            DataAccess.GetIngredients();
 
             //Storing the ingredient list as instance variable to use it later for sorting.
-            IngredientList = new List<Ingredient>(Data.Ingredients);
+            IngredientList = new List<Ingredient>(DataAccess.Ingredients);
 
             IngredientsTable.DataSource = IngredientList;
         }
 
         private void PopulateComboBox()
         {
-            var arr = Data.Ingredients.Select(i => i.Type).Distinct().ToArray();
+            var arr = DataAccess.Ingredients.Select(i => i.Type).Distinct().ToArray();
 
             TypeComboBox.Items.AddRange(arr);
             FilterDropDown.Items.AddRange(arr);

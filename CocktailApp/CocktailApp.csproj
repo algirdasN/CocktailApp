@@ -26,8 +26,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <MinimumRequiredVersion>1.0.0.13</MinimumRequiredVersion>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.2.4.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.2.5.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -95,7 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cocktail.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="DataTransfer.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>

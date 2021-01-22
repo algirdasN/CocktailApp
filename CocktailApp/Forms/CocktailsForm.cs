@@ -20,9 +20,9 @@ namespace CocktailApp.Forms
         {
             InitializeComponent();
 
-            Data.GetIngredients();
+            DataAccess.GetIngredients();
 
-            Data.GetCocktails();
+            DataAccess.GetCocktails();
 
             RefreshListContent();
         }
@@ -42,7 +42,7 @@ namespace CocktailApp.Forms
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            Data.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
+            DataAccess.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
 
             RefreshListContent();
 
@@ -96,7 +96,7 @@ namespace CocktailApp.Forms
 
                 var select = CocktailsListBox.SelectedValue;
 
-                Data.FavouriteCocktail(select.ToString(), Favourite);
+                DataAccess.FavouriteCocktail(select.ToString(), Favourite);
 
                 SearchButton.PerformClick();
 
@@ -233,7 +233,7 @@ namespace CocktailApp.Forms
 
         private void RefreshListContent()
         {
-            var cocktails = AvailableCheckBox.Checked ? Data.AvailableCocktails : Data.Cocktails;
+            var cocktails = AvailableCheckBox.Checked ? DataAccess.AvailableCocktails : DataAccess.Cocktails;
 
             CocktailsListBox.DataSource = FavouriteCheckBox.Checked ?
                 cocktails.Where(c => c.Favourite).ToList() : cocktails;
