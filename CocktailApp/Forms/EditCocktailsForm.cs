@@ -176,9 +176,9 @@ namespace CocktailApp.Forms
             {
                 SuccessLabelNoSelection();
             }
-            else if (Data.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) &&
-                DialogResult.No == MessageBox.Show("This will overwrite an existing cocktail with that name.\r\n\r\nDo you want to continue?",
-                                                   "Edit cocktail", MessageBoxButtons.YesNo))
+            else if (Data.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) && DialogResult.No == 
+                MessageBox.Show("This will overwrite an existing cocktail with that name.\r\n\r\nDo you want to continue?",
+                                "Edit cocktail", MessageBoxButtons.YesNo))
             {
                 // Checks if another cocktail with that name exists and asks the user if they want to overwrite it.
                 return;

@@ -92,11 +92,6 @@ namespace CocktailApp
                 "VALUES (@Id, @Name, @Ingredients, @FullIngredients, @Recipe, @Image, " +
                 "(SELECT Favourite FROM Cocktails WHERE Id = @Id OR Name = @Name))";
 
-            //var query = "INSERT INTO Cocktails(Id, Name, Ingredients, FullIngredients, Recipe, Image) " +
-            //    "VALUES(@Id, @Name, @Ingredients, @FullIngredients, @Recipe, @Image) " +
-            //    "ON CONFLICT() DO UPDATE SET Name=@Name, Ingredients=@Ingredients, " +
-            //    "FullIngredients=@FullIngredients, Recipe=@Recipe, Image=@Image";
-
             using (IDbConnection connect = Connection)
             {
                 connect.Execute(query, new Cocktail(id, name, ingredients, fullIngredients, recipe, image));
