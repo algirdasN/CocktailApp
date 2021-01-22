@@ -169,15 +169,25 @@ namespace CocktailApp.Forms
 
         private void EditCocktailButton_Click(object sender, EventArgs e)
         {
+            string name = Format.CapitalizeEvery(NameTextBox.Text);
+            string id = CocktailsListBox.SelectedValue.ToString();
+
             if (CocktailsListBox.SelectedItems.Count == 0)
             {
                 SuccessLabelNoSelection();
             }
+            else if (Data.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) &&
+                DialogResult.No == MessageBox.Show("This will overwrite an existing cocktail with that name.\r\n\r\nDo you want to continue?",
+                                                   "Edit cocktail", MessageBoxButtons.YesNo))
+            {
+                // Checks if another cocktail with that name exists and asks the user if they want to overwrite it.
+                return;
+            }
             else if (TextBoxValidation())
             {
                 Data.AddEditCocktail(
-                    id: CocktailsListBox.SelectedValue.ToString(),
-                    name: Format.CapitalizeEvery(NameTextBox.Text),
+                    id: id,
+                    name: name,
                     ingredients: string.Join("|", TagList),
                     fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
