@@ -71,9 +71,7 @@ namespace CocktailApp.Forms
         {
             if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Cocktail selectedCocktail = Data.Cocktails.FirstOrDefault(c => c.Id == CocktailsListBox.SelectedValue.ToString());
-
-                if (selectedCocktail != null)
+                if (CocktailsListBox.SelectedItem is Cocktail selectedCocktail)
                 {
                     NameTextBox.Text = selectedCocktail.Name;
                     TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
@@ -151,8 +149,6 @@ namespace CocktailApp.Forms
             else if (TextBoxValidation())
             {
                 Data.AddEditCocktail(
-                    mode: "Add",
-                    id: "0",
                     name: name,
                     ingredients: string.Join("|", TagList),
                     fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
@@ -180,7 +176,6 @@ namespace CocktailApp.Forms
             else if (TextBoxValidation())
             {
                 Data.AddEditCocktail(
-                    mode: "Edit",
                     id: CocktailsListBox.SelectedValue.ToString(),
                     name: Format.CapitalizeEvery(NameTextBox.Text),
                     ingredients: string.Join("|", TagList),
@@ -246,8 +241,7 @@ namespace CocktailApp.Forms
         {
             return NameTextBox.Text.Trim() != ""
                 && IngredientTagListBox.Text.Trim() != ""
-                && FullIngredientInfoTextBox.Text.Trim() != ""
-                && RecipeTextBox.Text.Trim() != "";
+                && FullIngredientInfoTextBox.Text.Trim() != "";
         }
 
         private void ClearImage()
@@ -271,7 +265,7 @@ namespace CocktailApp.Forms
 
         private void SuccessLabelError()
         {
-            SuccessLabel.Text = "All fields must be filled!";
+            SuccessLabel.Text = "All required fields must be filled!";
         }
 
         private void SuccessLabelNoSelection()

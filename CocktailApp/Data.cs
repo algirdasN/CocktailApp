@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,8 +18,7 @@ namespace CocktailApp
         public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.IsAvailable()).ToList();
-        private static IDbConnection Connection =>
-            new SqlConnection($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database.mdf\";Integrated Security=True");
+        private static IDbConnection Connection => new SQLiteConnection(@"Data Source=|DataDirectory|\Database.db; Version=3;");
 
         public static void GetIngredients()
         {
@@ -46,6 +45,7 @@ namespace CocktailApp
             else
             {
                 var query = $"SELECT * FROM Cocktails WHERE {searchby} LIKE @term ORDER BY Name";
+
                 using (IDbConnection connect = Connection)
                 {
                     Cocktails = connect.Query<Cocktail>(query, new { term = '%' + term + '%' }).ToList();
@@ -55,103 +55,61 @@ namespace CocktailApp
 
         public static void FavouriteCocktail(string id, bool check)
         {
-            var query = $"UPDATE Cocktails SET Favourite = {(check ? 1 : 0)} WHERE Id = {id}";
+            var query = $"UPDATE Cocktails SET Favourite = {check} WHERE Id = @Id";
 
             using (IDbConnection connect = Connection)
             {
-                connect.Open();
-                using (var sqlCmd = new SqlCommand(query, (SqlConnection)connect))
-                {
-                    sqlCmd.ExecuteNonQuery();
-                }
-                connect.Close();
+                connect.Execute(query, new { Id = id });
             }
         }
 
-        public static void AddEditIngredient(
-            string mode, string id, string type, string brand, string volume, string level)
+        public static void AddEditIngredient(string type, string brand, string volume, string level, string id = null)
         {
+            var query = "INSERT OR REPLACE INTO Ingredients(Id, Type, Brand, Volume, Level) " +
+                "VALUES(@Id, @Type, @Brand, @Volume, @Level)";
+
             using (IDbConnection connect = Connection)
             {
-                connect.Open();
-                using (var sqlCmd = new SqlCommand($"Ingredient{mode}", (SqlConnection)connect))
-                {
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-
-                    sqlCmd.Parameters.AddWithValue("@Id", id);
-                    sqlCmd.Parameters.AddWithValue("@Type", type);
-                    sqlCmd.Parameters.AddWithValue("@Brand", brand);
-                    sqlCmd.Parameters.AddWithValue("@Volume", volume);
-                    sqlCmd.Parameters.AddWithValue("@Level", level);
-
-                    sqlCmd.ExecuteNonQuery();
-                }
-                connect.Close();
+                connect.Execute(query, new Ingredient(id, type, brand, volume, level));
             }
         }
 
         public static void RemoveIngredient(string id)
         {
+            var query = "DELETE FROM Ingredients WHERE Id = @Id";
+
             using (IDbConnection connect = Connection)
             {
-                connect.Open();
-                using (var sqlCmd = new SqlCommand("IngredientDelete", (SqlConnection)connect))
-                {
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-
-                    sqlCmd.Parameters.AddWithValue("@Id", id);
-
-                    sqlCmd.ExecuteNonQuery();
-                }
-                connect.Close();
+                connect.Execute(query, new { Id = id });
             }
         }
 
         public static void AddEditCocktail(
-            string mode, string id, string name, string ingredients, string fullIngredients, string recipe, byte[] image)
+            string name, string ingredients, string fullIngredients, string recipe, byte[] image, string id = null)
         {
+            // This query preserves the Favourite status if record is replaced.
+            var query = "INSERT OR REPLACE INTO Cocktails (Id, Name, Ingredients, FullIngredients, Recipe, Image, Favourite) " +
+                "VALUES (@Id, @Name, @Ingredients, @FullIngredients, @Recipe, @Image, " +
+                "(SELECT Favourite FROM Cocktails WHERE Id = @Id OR Name = @Name))";
+
+            //var query = "INSERT INTO Cocktails(Id, Name, Ingredients, FullIngredients, Recipe, Image) " +
+            //    "VALUES(@Id, @Name, @Ingredients, @FullIngredients, @Recipe, @Image) " +
+            //    "ON CONFLICT() DO UPDATE SET Name=@Name, Ingredients=@Ingredients, " +
+            //    "FullIngredients=@FullIngredients, Recipe=@Recipe, Image=@Image";
+
             using (IDbConnection connect = Connection)
             {
-                connect.Open();
-                using (var sqlCmd = new SqlCommand($"Cocktail{mode}", (SqlConnection)connect))
-                {
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-
-                    sqlCmd.Parameters.AddWithValue("@Id", id);
-                    sqlCmd.Parameters.AddWithValue("@Name", name);
-                    sqlCmd.Parameters.AddWithValue("@Ingredients", ingredients);
-                    sqlCmd.Parameters.AddWithValue("@FullIngredients", fullIngredients);
-                    sqlCmd.Parameters.AddWithValue("@Recipe", recipe);
-
-                    if (image == null)
-                    {
-                        sqlCmd.Parameters.Add(new SqlParameter("@Image", SqlDbType.Image) { Value = DBNull.Value });
-                    }
-                    else
-                    {
-                        sqlCmd.Parameters.AddWithValue("@Image", image);
-                    }
-
-                    sqlCmd.ExecuteNonQuery();
-                }
-                connect.Close();
+                connect.Execute(query, new Cocktail(id, name, ingredients, fullIngredients, recipe, image));
             }
         }
 
         public static void RemoveCocktail(string id)
         {
+            var query = "DELETE FROM Cocktails WHERE Id = @Id";
+
             using (IDbConnection connect = Connection)
             {
-                connect.Open();
-                using (var sqlCmd = new SqlCommand("CocktailDelete", (SqlConnection)connect))
-                {
-                    sqlCmd.CommandType = CommandType.StoredProcedure;
-
-                    sqlCmd.Parameters.AddWithValue("@Id", id);
-
-                    sqlCmd.ExecuteNonQuery();
-                }
-                connect.Close();
+                connect.Execute(query, new { Id = id });
             }
         }
 
@@ -170,7 +128,7 @@ namespace CocktailApp
 
                         if (headers == true)
                         {
-                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" || 
+                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" ||
                                 currentRow[2] != "Volume" || currentRow[3] != "Level")
                             {
                                 MessageBox.Show("Incorrect CSV file headers.", "Data import");
@@ -184,8 +142,6 @@ namespace CocktailApp
                         else
                         {
                             AddEditIngredient(
-                                mode: "Add",
-                                id: "0",
                                 type: currentRow[0],
                                 brand: currentRow[1],
                                 volume: currentRow[2],
@@ -212,7 +168,7 @@ namespace CocktailApp
                 using (var csvFile = new StreamWriter(filePath + "\\" + fileName))
                 {
                     connect.Open();
-                    using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
+                    using (var reader = new SQLiteCommand(query, (SQLiteConnection)connect).ExecuteReader())
                     {
                         csvFile.WriteLine("{0};{1};{2};{3}",
                             reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3));
@@ -266,13 +222,9 @@ namespace CocktailApp
                         }
                         else
                         {
-                            var currentCocktail = Cocktails.FirstOrDefault(c => c.Name == currentRow[0]);
-                            
                             byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
 
                             AddEditCocktail(
-                                mode: currentCocktail == null ? "Add" : "Edit",
-                                id: currentCocktail == null ? "0" : currentCocktail.Id,
                                 name: currentRow[0],
                                 ingredients: currentRow[1],
                                 fullIngredients: currentRow[2],
@@ -300,7 +252,7 @@ namespace CocktailApp
                 using (var csvFile = new StreamWriter(filePath + "\\" + fileName))
                 {
                     connect.Open();
-                    using (var reader = new SqlCommand(query, (SqlConnection)connect).ExecuteReader())
+                    using (var reader = new SQLiteCommand(query, (SQLiteConnection)connect).ExecuteReader())
                     {
                         csvFile.WriteLine("{0};{1};{2};{3};{4}",
                             reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4));

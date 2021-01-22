@@ -127,13 +127,11 @@ namespace CocktailApp.Forms
             if (TextBoxValidation())
             {
                 Data.AddEditIngredient(
-                  mode: "Add",
-                  id: "0",
                   type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
                   brand: BrandTextBox.Text.Trim(),
                   volume: VolumeTextBox.Text.Trim(),
-                  level: FullRadioButton.Checked ? "full" :
-                      HalfRadioButton.Checked ? "half" : "quarter");
+                  level: FullRadioButton.Checked ? "3" :
+                      HalfRadioButton.Checked ? "2" : "1");
 
                 AddToComboBox();
 
@@ -150,13 +148,12 @@ namespace CocktailApp.Forms
             else if (TextBoxValidation())
             {
                 Data.AddEditIngredient(
-                mode: "Edit",
-                id: IngredientsTable.SelectedCells[0].Value.ToString(),
-                type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
-                brand: BrandTextBox.Text.Trim(),
-                volume: VolumeTextBox.Text.Trim(),
-                level: FullRadioButton.Checked ? "full" :
-                    HalfRadioButton.Checked ? "half" : "quarter");
+                    id: IngredientsTable.SelectedCells[0].Value.ToString(),
+                    type: Format.CapitalizeFirst(TypeComboBox.Text.Trim()),
+                    brand: BrandTextBox.Text.Trim(),
+                    volume: VolumeTextBox.Text.Trim(),
+                    level: FullRadioButton.Checked ? "3" :
+                        HalfRadioButton.Checked ? "2" : "1");
 
                 AddToComboBox();
 
@@ -214,15 +211,15 @@ namespace CocktailApp.Forms
                 BrandTextBox.Text = IngredientsTable.SelectedCells[2].Value.ToString();
                 VolumeTextBox.Text = IngredientsTable.SelectedCells[3].Value.ToString();
 
-                switch (IngredientsTable.SelectedCells[4].Value.ToString())
+                switch (IngredientsTable.SelectedCells[4].Value)
                 {
-                    case "full":
+                    case 3:
                         FullRadioButton.Checked = true;
                         break;
-                    case "half":
+                    case 2:
                         HalfRadioButton.Checked = true;
                         break;
-                    case "quarter":
+                    case 1:
                         QuarterRadioButton.Checked = true;
                         break;
                 }

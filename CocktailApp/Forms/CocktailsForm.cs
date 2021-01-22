@@ -60,7 +60,7 @@ namespace CocktailApp.Forms
         {
             if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Cocktail selectedCocktail = Data.Cocktails.First(c => c.Id == CocktailsListBox.SelectedValue.ToString());
+                Cocktail selectedCocktail = CocktailsListBox.SelectedItem as Cocktail;
 
                 if (selectedCocktail.Name.Length > 25)
                 {

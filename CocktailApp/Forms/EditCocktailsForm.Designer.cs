@@ -422,11 +422,11 @@
             // 
             this.ImageLabel.AutoSize = true;
             this.ImageLabel.Font = new System.Drawing.Font("Arial", 14F);
-            this.ImageLabel.Location = new System.Drawing.Point(83, 5);
+            this.ImageLabel.Location = new System.Drawing.Point(42, 5);
             this.ImageLabel.Name = "ImageLabel";
-            this.ImageLabel.Size = new System.Drawing.Size(64, 22);
+            this.ImageLabel.Size = new System.Drawing.Size(147, 22);
             this.ImageLabel.TabIndex = 34;
-            this.ImageLabel.Text = "Image";
+            this.ImageLabel.Text = "Image (optional)";
             // 
             // FullIngredientsPanel
             // 
@@ -464,11 +464,11 @@
             // 
             this.RecipeLabel.AutoSize = true;
             this.RecipeLabel.Font = new System.Drawing.Font("Arial", 14F);
-            this.RecipeLabel.Location = new System.Drawing.Point(114, 5);
+            this.RecipeLabel.Location = new System.Drawing.Point(73, 5);
             this.RecipeLabel.Name = "RecipeLabel";
-            this.RecipeLabel.Size = new System.Drawing.Size(71, 22);
+            this.RecipeLabel.Size = new System.Drawing.Size(154, 22);
             this.RecipeLabel.TabIndex = 34;
-            this.RecipeLabel.Text = "Recipe";
+            this.RecipeLabel.Text = "Recipe (optional)";
             // 
             // ExportButton
             // 
