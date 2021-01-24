@@ -46,12 +46,12 @@ namespace CocktailApp
                                 level: currentRow[3]);
                         }
                     }
-                    MessageBox.Show("Ingredients imported successfully.", "Data import");
+                    MsgBox.ShowAsync("Ingredients imported successfully.", "Data import");
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data import");
+                MsgBox.ShowAsync("Error occured\r\n\r\n" + e.Message, "Data import");
             }
         }
 
@@ -77,7 +77,7 @@ namespace CocktailApp
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data export");
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message , "Data export");
             }
         }
 
@@ -89,7 +89,7 @@ namespace CocktailApp
                 {
                     bool headers = true;
                     string line;
-
+                    
                     while ((line = reader.ReadLine()) != null)
                     {
                         var currentRow = line.Split(';');
@@ -122,12 +122,12 @@ namespace CocktailApp
                                 image: image);
                         }
                     }
-                    MessageBox.Show("Cocktails imported successfully.", "Data import");
+                    MsgBox.ShowAsync("Cocktails imported successfully.", "Data import");
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data import");
+                MsgBox.ShowAsync($"Error occured\r\n\r\n" + e.Message, "Data import");
             }
         }
 
