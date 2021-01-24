@@ -13,50 +13,47 @@ namespace CocktailApp
 
         public static void ImportIngredients(string fileName)
         {
+            string line;
+            var count = 0;
+
             try
             {
                 using (var reader = new StreamReader(fileName))
                 {
-                    bool headers = true;
-                    string line;
+                    var currentRow = reader.ReadLine().Split(';');
+
+                    if (currentRow[0] != "Type" || currentRow[1] != "Brand" ||
+                        currentRow[2] != "Volume" || currentRow[3] != "Level")
+                    {
+                        MessageBox.Show("Incorrect CSV file headers.", "Data import");
+                        return;
+                    }
 
                     while ((line = reader.ReadLine()) != null)
                     {
-                        var currentRow = line.Split(';');
+                        currentRow = line.Split(';');
 
-                        if (headers == true)
-                        {
-                            if (currentRow[0] != "Type" || currentRow[1] != "Brand" ||
-                                currentRow[2] != "Volume" || currentRow[3] != "Level")
-                            {
-                                MessageBox.Show("Incorrect CSV file headers.", "Data import");
-                                return;
-                            }
-                            else
-                            {
-                                headers = false;
-                            }
-                        }
-                        else
-                        {
-                            DataAccess.AddEditIngredient(
-                                type: currentRow[0],
-                                brand: currentRow[1],
-                                volume: currentRow[2],
-                                level: currentRow[3]);
-                        }
+                        count++;
+
+                        DataAccess.AddEditIngredient(
+                            type: currentRow[0],
+                            brand: currentRow[1],
+                            volume: currentRow[2],
+                            level: currentRow[3]);
                     }
-                    MsgBox.ShowAsync("Ingredients imported successfully.", "Data import");
+                    MsgBox.ShowAsync($"Ingredients imported successfully.\r\n\r\n{count} rows were added.", "Data import");
                 }
             }
             catch (Exception e)
             {
-                MsgBox.ShowAsync("Error occured\r\n\r\n" + e.Message, "Data import");
+                MsgBox.ShowAsync($"Error occured on row #{count}\r\n\r\n{e.Message}.", "Data import");
             }
         }
 
         public static void ExportIngredients(string filePath)
         {
+            DataAccess.GetIngredients();
+
             var fileName = DateTime.Now.ToString("d") + "_Ingredients.csv";
 
             try
@@ -77,41 +74,41 @@ namespace CocktailApp
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error occured\r\n\r\n" + e.Message , "Data export");
+                MessageBox.Show("Error occured\r\n\r\n" + e.Message, "Data export");
             }
         }
 
-        public static void ImportCocktails(string fileName)
+        public static void ImportCocktails(string fileName, bool overwrite)
         {
+            string line;
+            var count = 0;
+            var nameList = DataAccess.Cocktails.Select(c => c.Name);
+
             try
             {
                 using (var reader = new StreamReader(fileName))
                 {
-                    bool headers = true;
-                    string line;
-                    
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        var currentRow = line.Split(';');
+                    var currentRow = reader.ReadLine().Split(';');
 
-                        if (headers == true)
-                        {
-                            if (currentRow[0] != "Name" ||
+                    if (currentRow[0] != "Name" ||
                                 currentRow[1] != "Ingredients" ||
                                 currentRow[2] != "FullIngredients" ||
                                 currentRow[3] != "Recipe" ||
                                 currentRow[4] != "Image")
-                            {
-                                MessageBox.Show("Incorrect CSV file headers.", "Data import");
-                                return;
-                            }
-                            else
-                            {
-                                headers = false;
-                            }
-                        }
-                        else
+                    {
+                        MessageBox.Show("Incorrect CSV file headers.", "Data import");
+                        return;
+                    }
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        currentRow = line.Split(';');
+                        bool exists = nameList.Contains(currentRow[0]);
+
+                        if (overwrite || !exists)
                         {
+                            count++;
+
                             byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
 
                             DataAccess.AddEditCocktail(
@@ -121,13 +118,15 @@ namespace CocktailApp
                                 recipe: currentRow[3],
                                 image: image);
                         }
+
                     }
-                    MsgBox.ShowAsync("Cocktails imported successfully.", "Data import");
+                    MsgBox.ShowAsync($"Cocktails imported successfully.\r\n\r\n{count} rows were added/updated.",
+                                     "Data import");
                 }
             }
             catch (Exception e)
             {
-                MsgBox.ShowAsync($"Error occured\r\n\r\n" + e.Message, "Data import");
+                MsgBox.ShowAsync($"Error occured on row #{count}\r\n\r\n{e.Message}.", "Data import");
             }
         }
 
@@ -145,7 +144,7 @@ namespace CocktailApp
 
                     foreach (var item in DataAccess.Cocktails)
                     {
-                        csvFile.WriteLine("{0};{1};{2};{3};{4}", item.Name, item.Ingredients, item.FullIngredients, item.Recipe, 
+                        csvFile.WriteLine("{0};{1};{2};{3};{4}", item.Name, item.Ingredients, item.FullIngredients, item.Recipe,
                             item.Image != null ? Convert.ToBase64String(item.Image) : "");
                     }
 
