@@ -17,11 +17,11 @@ namespace CocktailApp.Forms
         {
             InitializeComponent();
 
-            Data.GetIngredients();
+            DataAccess.GetIngredients();
 
             RefreshListContent();
 
-            IngredientTagsComboBox.Items.AddRange(Data.Ingredients.Select(i => i.Type).Distinct().ToArray());
+            IngredientTagsComboBox.Items.AddRange(DataAccess.Ingredients.Select(i => i.Type).Distinct().ToArray());
 
             IngredientTagListBox.DataSource = TagList;
         }
@@ -37,9 +37,9 @@ namespace CocktailApp.Forms
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            Data.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
+            DataAccess.SearchCocktails(SearchBar.Text, SearchByNameRadioButton.Checked ? "Name" : "Ingredients");
 
-            CocktailsListBox.DataSource = Data.Cocktails;
+            CocktailsListBox.DataSource = DataAccess.Cocktails;
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Data.ImportCocktails(dialog.FileName);
+                DataTransfer.ImportCocktails(dialog.FileName);
 
                 RefreshListContent();
             }
@@ -63,7 +63,7 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Data.ExportCocktails(dialog.SelectedPath);
+                DataTransfer.ExportCocktails(dialog.SelectedPath);
             }
         }
 
@@ -71,9 +71,7 @@ namespace CocktailApp.Forms
         {
             if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Cocktail selectedCocktail = Data.Cocktails.FirstOrDefault(c => c.Id == CocktailsListBox.SelectedValue.ToString());
-
-                if (selectedCocktail != null)
+                if (CocktailsListBox.SelectedItem is Cocktail selectedCocktail)
                 {
                     NameTextBox.Text = selectedCocktail.Name;
                     TagList = new BindingList<string>(selectedCocktail.Ingredients.Split('|').ToList());
@@ -144,15 +142,13 @@ namespace CocktailApp.Forms
         {
             string name = Format.CapitalizeEvery(NameTextBox.Text);
 
-            if (Data.Cocktails.Select(c => c.Name).Contains(name))
+            if (DataAccess.Cocktails.Select(c => c.Name).Contains(name))
             {
                 SuccessLabelNotUnique();
             }
             else if (TextBoxValidation())
             {
-                Data.AddEditCocktail(
-                    mode: "Add",
-                    id: "0",
+                DataAccess.AddEditCocktail(
                     name: name,
                     ingredients: string.Join("|", TagList),
                     fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
@@ -173,16 +169,25 @@ namespace CocktailApp.Forms
 
         private void EditCocktailButton_Click(object sender, EventArgs e)
         {
+            string name = Format.CapitalizeEvery(NameTextBox.Text);
+            string id = CocktailsListBox.SelectedValue.ToString();
+
             if (CocktailsListBox.SelectedItems.Count == 0)
             {
                 SuccessLabelNoSelection();
             }
+            else if (DataAccess.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) && DialogResult.No == 
+                MessageBox.Show("This will overwrite an existing cocktail with that name.\r\n\r\nDo you want to continue?",
+                                "Edit cocktail", MessageBoxButtons.YesNo))
+            {
+                // Checks if another cocktail with that name exists and asks the user if they want to overwrite it.
+                return;
+            }
             else if (TextBoxValidation())
             {
-                Data.AddEditCocktail(
-                    mode: "Edit",
-                    id: CocktailsListBox.SelectedValue.ToString(),
-                    name: Format.CapitalizeEvery(NameTextBox.Text),
+                DataAccess.AddEditCocktail(
+                    id: id,
+                    name: name,
                     ingredients: string.Join("|", TagList),
                     fullIngredients: string.Join("|", FullIngredientInfoTextBox.Text
                                                         .Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries)
@@ -204,7 +209,7 @@ namespace CocktailApp.Forms
         {
             if (CocktailsListBox.SelectedItems.Count > 0)
             {
-                Data.RemoveCocktail(CocktailsListBox.SelectedValue.ToString());
+                DataAccess.RemoveCocktail(CocktailsListBox.SelectedValue.ToString());
 
                 RefreshListContent();
 
@@ -228,9 +233,9 @@ namespace CocktailApp.Forms
 
         private void RefreshListContent()
         {
-            Data.GetCocktails();
+            DataAccess.GetCocktails();
 
-            CocktailsListBox.DataSource = Data.Cocktails;
+            CocktailsListBox.DataSource = DataAccess.Cocktails;
 
             CocktailsListBox.ClearSelected();
             NameTextBox.Text = "";
@@ -246,8 +251,7 @@ namespace CocktailApp.Forms
         {
             return NameTextBox.Text.Trim() != ""
                 && IngredientTagListBox.Text.Trim() != ""
-                && FullIngredientInfoTextBox.Text.Trim() != ""
-                && RecipeTextBox.Text.Trim() != "";
+                && FullIngredientInfoTextBox.Text.Trim() != "";
         }
 
         private void ClearImage()
@@ -271,7 +275,7 @@ namespace CocktailApp.Forms
 
         private void SuccessLabelError()
         {
-            SuccessLabel.Text = "All fields must be filled!";
+            SuccessLabel.Text = "All required fields must be filled!";
         }
 
         private void SuccessLabelNoSelection()

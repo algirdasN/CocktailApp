@@ -2,7 +2,7 @@
 {
     public class Cocktail
     {
-        public string Id { get; private set; }
+        public int? Id { get; private set; }
         public string Name { get; private set; }
         public string Ingredients { get; private set; }
         public string FullIngredients { get; private set; }
@@ -13,11 +13,23 @@
         public string InfoAvailable => GetInfoAvailable();
         public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
 
+        public Cocktail() { }
+
+        public Cocktail(string id, string name, string ingredients, string fullIngredients, string recipe, byte[] image)
+        {
+            Id = int.TryParse(id, out var i) ? (int?)i : null;
+            Name = name;
+            Ingredients = ingredients;
+            FullIngredients = fullIngredients;
+            Recipe = recipe;
+            Image = image;
+        }
+
         public bool IsAvailable()
         {
             foreach (string item in Ingredients.Split('|'))
             {
-                if (!Data.Ingredients.Exists(i => i.Type == item))
+                if (!DataAccess.Ingredients.Exists(i => i.Type == item))
                 {
                     return false;
                 }
@@ -31,7 +43,7 @@
 
             foreach (string item in Ingredients.Split('|'))
             {
-                if (!Data.Ingredients.Exists(i => i.Type == item))
+                if (!DataAccess.Ingredients.Exists(i => i.Type == item))
                 {
                     str = str.Replace(item, ">>" + item + "<<");
                 }
