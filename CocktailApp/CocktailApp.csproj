@@ -26,8 +26,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <MinimumRequiredVersion>1.0.0.13</MinimumRequiredVersion>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>1.2.5.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.2.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -64,7 +64,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>placeholderimage_I5m_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\placeholderimage_I5m_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -116,6 +116,12 @@
     <Compile Include="Forms\CocktailsForm.Designer.cs">
       <DependentUpon>CocktailsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OverwritePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OverwritePrompt.Designer.cs">
+      <DependentUpon>OverwritePrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ingredient.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -148,6 +154,9 @@
     <EmbeddedResource Include="Forms\CocktailsForm.resx">
       <DependentUpon>CocktailsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OverwritePrompt.resx">
+      <DependentUpon>OverwritePrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -182,7 +191,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="placeholderimage_I5m_icon.ico" />
+    <Content Include="Resources\placeholderimage_I5m_icon.ico" />
     <None Include="Resources\filled_star.png" />
     <None Include="Resources\empty_star.png" />
     <None Include="Resources\placeholder_image.jpg" />

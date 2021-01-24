@@ -176,7 +176,7 @@
             this.pictureBox4.TabIndex = 8;
             this.pictureBox4.TabStop = false;
             // 
-            // MainMenu
+            // MainForm
             // 
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(944, 681);
@@ -194,7 +194,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
-            this.Name = "MainMenu";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CocktailApp";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -51,22 +51,7 @@ namespace CocktailApp.Forms
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                bool overwrite;
-
-                switch (MessageBox.Show("Should existing cocktails with the same name be overwritten on import?",
-                                        "Cocktail import", MessageBoxButtons.YesNoCancel))
-                {
-                    case DialogResult.Yes: 
-                        overwrite = true; 
-                        break;
-                    case DialogResult.No:
-                        overwrite = false;
-                        break;
-                    default:
-                        return;
-                }
-
-                DataTransfer.ImportCocktails(dialog.FileName, overwrite);
+                DataTransfer.ImportCocktails(dialog.FileName);
 
                 RefreshListContent();
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CocktailApp.Forms;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -31,9 +32,8 @@ namespace CocktailApp
 
                     while ((line = reader.ReadLine()) != null)
                     {
-                        currentRow = line.Split(';');
-
                         count++;
+                        currentRow = line.Split(';');
 
                         DataAccess.AddEditIngredient(
                             type: currentRow[0],
@@ -46,7 +46,8 @@ namespace CocktailApp
             }
             catch (Exception e)
             {
-                MsgBox.ShowAsync($"Error occured on row #{count}\r\n\r\n{e.Message}.", "Data import");
+                MsgBox.ShowAsync($"Error occured on row #{count} ({count - 1} rows were added).\r\n\r\n{e.Message}.", 
+                                 "Data import");
             }
         }
 
@@ -78,10 +79,12 @@ namespace CocktailApp
             }
         }
 
-        public static void ImportCocktails(string fileName, bool overwrite)
+        public static void ImportCocktails(string fileName)
         {
+            TriState overwrite = TriState.Undefined;
             string line;
-            var count = 0;
+            var addCount = 0;
+            var totCount = 0;
             var nameList = DataAccess.Cocktails.Select(c => c.Name);
 
             try
@@ -102,31 +105,55 @@ namespace CocktailApp
 
                     while ((line = reader.ReadLine()) != null)
                     {
+                        totCount++;
                         currentRow = line.Split(';');
                         bool exists = nameList.Contains(currentRow[0]);
 
-                        if (overwrite || !exists)
+                        switch (overwrite)
                         {
-                            count++;
-
-                            byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
-
-                            DataAccess.AddEditCocktail(
-                                name: currentRow[0],
-                                ingredients: currentRow[1],
-                                fullIngredients: currentRow[2],
-                                recipe: currentRow[3],
-                                image: image);
+                            case TriState.Yes:
+                                break;
+                            case TriState.No:
+                                if (exists)
+                                {
+                                    continue;
+                                }
+                                break;
+                            case TriState.Undefined:
+                                if (exists)
+                                {
+                                    using (var owPrompt = new OverwritePrompt(currentRow[0]))
+                                    {
+                                        owPrompt.ShowDialog();
+                                        overwrite = owPrompt.Overwrite;
+                                        if (owPrompt.DialogResult == DialogResult.No)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                break;
                         }
 
+                        byte[] image = currentRow[4].Any() ? Convert.FromBase64String(currentRow[4]) : null;
+
+                        DataAccess.AddEditCocktail(
+                            name: currentRow[0],
+                            ingredients: currentRow[1],
+                            fullIngredients: currentRow[2],
+                            recipe: currentRow[3],
+                            image: image);
+
+                        addCount++;
                     }
-                    MsgBox.ShowAsync($"Cocktails imported successfully.\r\n\r\n{count} rows were added/updated.",
+                    MsgBox.ShowAsync($"Cocktails imported successfully.\r\n\r\n{addCount} rows were added/updated.",
                                      "Data import");
                 }
             }
             catch (Exception e)
             {
-                MsgBox.ShowAsync($"Error occured on row #{count}\r\n\r\n{e.Message}.", "Data import");
+                MsgBox.ShowAsync($"Error occured on row #{totCount} ({addCount} rows were added/updated).\r\n\r\n{e.Message}.",
+                                 "Data import");
             }
         }
 
