@@ -94,10 +94,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cocktail.cs" />
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="DataTransfer.cs" />
-    <Compile Include="Format.cs" />
+    <Compile Include="Data\Cocktail.cs" />
+    <Compile Include="Data\DataAccess.cs" />
+    <Compile Include="Data\DataTransfer.cs" />
+    <Compile Include="Tools\Format.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,15 +122,15 @@
     <Compile Include="Forms\OverwritePrompt.Designer.cs">
       <DependentUpon>OverwritePrompt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ingredient.cs" />
+    <Compile Include="Data\Ingredient.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MsgBox.cs" />
-    <Compile Include="MyDataGridView.cs">
+    <Compile Include="Tools\MsgBox.cs" />
+    <Compile Include="Tools\MyDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -171,7 +171,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="CocktailApp_TemporaryKey.pfx" />
-    <Content Include="Database.db">
+    <Content Include="Data\Database.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

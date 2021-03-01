@@ -1,4 +1,6 @@
-﻿namespace CocktailApp
+﻿using CocktailApp.Data;
+
+namespace CocktailApp.Data
 {
     public class Cocktail
     {

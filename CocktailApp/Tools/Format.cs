@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace CocktailApp
+namespace CocktailApp.Tools
 {
     public static class Format
     {

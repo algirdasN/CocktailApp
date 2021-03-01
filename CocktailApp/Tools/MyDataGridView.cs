@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Tools
 {
     public class MyDataGridView : DataGridView
     {

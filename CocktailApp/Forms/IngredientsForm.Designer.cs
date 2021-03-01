@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using CocktailApp.Tools;
+using System.Windows.Forms;
 
 namespace CocktailApp.Forms
 {
@@ -56,7 +57,7 @@ namespace CocktailApp.Forms
             this.FilterLabel = new System.Windows.Forms.Label();
             this.ImportButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
-            this.IngredientsTable = new CocktailApp.MyDataGridView();
+            this.IngredientsTable = new MyDataGridView();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Brand = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VolumeInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CocktailApp
+namespace CocktailApp.Tools
 {
     public static class MsgBox
     {
