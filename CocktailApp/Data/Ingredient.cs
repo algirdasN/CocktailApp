@@ -1,4 +1,4 @@
-﻿namespace CocktailApp
+﻿namespace CocktailApp.Data
 {
     public class Ingredient
     {

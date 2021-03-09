@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 
-namespace CocktailApp
+namespace CocktailApp.Data
 {
     public static class DataAccess
     {
@@ -15,7 +15,7 @@ namespace CocktailApp
         public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.IsAvailable()).ToList();
-        private static IDbConnection Connection => new SQLiteConnection(@"Data Source=|DataDirectory|\Database.db; Version=3;");
+        private static IDbConnection Connection => new SQLiteConnection(@"Data Source=|DataDirectory|\Data\Database.db; Version=3;");
 
         public static void GetIngredients()
         {

@@ -1,4 +1,6 @@
-﻿using CocktailApp.Properties;
+﻿using CocktailApp.Data;
+using CocktailApp.Properties;
+using CocktailApp.Tools;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CocktailApp.Data;
+using CocktailApp.Tools;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -10,8 +12,6 @@ namespace CocktailApp.Forms
     public partial class IngredientsForm : BaseForm
     {
         private List<Ingredient> IngredientList;
-
-        private string SelectedId;
 
         private bool SortAsc = true;
 
@@ -26,14 +26,11 @@ namespace CocktailApp.Forms
             PopulateComboBox();
         }
 
-        private void IngredientsTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void IngredientsTable_SelectionChanged(object sender, EventArgs e)
         {
-            if (EditModeCheckBox.Checked && e.RowIndex != -1)
+            if (EditModeCheckBox.Checked)
             {
                 FillTextBoxes();
-
-                //Stores the selected ingredient ID to have it reselected after sorting
-                SelectedId = IngredientsTable.SelectedCells[0].Value.ToString();
             }
         }
 
@@ -55,12 +52,10 @@ namespace CocktailApp.Forms
 
             FilterIngredients();
 
-            IngredientsTable.ClearSelection();
-
-            //Selects the ingredient with ID set by the most recent selection.
+            // Selects the ingredient with ID stored before sorting.
             foreach (DataGridViewRow row in IngredientsTable.Rows)
             {
-                if (row.Cells[0].Value.ToString() == SelectedId)
+                if (row.Cells[0].Value.ToString() == IngredientsTable.SelectedId)
                 {
                     row.Selected = true;
                     break;
@@ -110,13 +105,11 @@ namespace CocktailApp.Forms
 
             if (check)
             {
-                IngredientsTable.ClearSelection();
-
                 FillTextBoxes();
             }
             else
             {
-                Unselect();
+                ClearTextBoxes();
 
                 SuccessLabelClear();
             }
@@ -262,12 +255,8 @@ namespace CocktailApp.Forms
                     break;
             }
         }
-        private void Unselect()
+        private void ClearTextBoxes()
         {
-            IngredientsTable.ClearSelection();
-
-            SelectedId = null;
-
             TypeComboBox.Text = "";
             BrandTextBox.Text = "";
             VolumeTextBox.Text = "";
@@ -310,7 +299,9 @@ namespace CocktailApp.Forms
         {
             PopulateIngredientsTable();
 
-            Unselect();
+            IngredientsTable.ClearSelection();
+            
+            ClearTextBoxes();
 
             SuccessLabelSuccess();
         }
