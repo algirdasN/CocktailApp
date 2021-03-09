@@ -105,13 +105,11 @@ namespace CocktailApp.Forms
 
             if (check)
             {
-                IngredientsTable.ClearSelection();
-
                 FillTextBoxes();
             }
             else
             {
-                Unselect();
+                ClearTextBoxes();
 
                 SuccessLabelClear();
             }
@@ -257,10 +255,8 @@ namespace CocktailApp.Forms
                     break;
             }
         }
-        private void Unselect()
+        private void ClearTextBoxes()
         {
-            IngredientsTable.ClearSelection();
-
             TypeComboBox.Text = "";
             BrandTextBox.Text = "";
             VolumeTextBox.Text = "";
@@ -303,7 +299,9 @@ namespace CocktailApp.Forms
         {
             PopulateIngredientsTable();
 
-            Unselect();
+            IngredientsTable.ClearSelection();
+            
+            ClearTextBoxes();
 
             SuccessLabelSuccess();
         }
