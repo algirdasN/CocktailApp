@@ -299,6 +299,8 @@ namespace CocktailApp.Forms
         {
             PopulateIngredientsTable();
 
+            FilterIngredients();
+
             IngredientsTable.ClearSelection();
             
             ClearTextBoxes();
