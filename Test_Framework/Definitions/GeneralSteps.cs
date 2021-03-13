@@ -5,10 +5,8 @@ using Test_Framework.Forms;
 
 namespace Test_Framework.Definitions
 {
-
-
     [Binding]
-    class GeneralSteps
+    public class GeneralSteps
     {
         private WindowsDriver<WindowsElement> driver;
 

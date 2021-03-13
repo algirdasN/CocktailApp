@@ -4,23 +4,38 @@ using OpenQA.Selenium.Appium.Windows;
 
 namespace Test_Framework.Forms
 {
-    abstract class BaseForm
+    public abstract class BaseForm
     {
-        protected delegate void ClickButton();
-        protected abstract string ID { get; }
-        
         protected WindowsDriver<WindowsElement> driver;
 
         protected Wait wait;
-
-        protected WindowsElement backButton => driver.FindElementByAccessibilityId("BackButton");
-        protected WindowsElement exitButton => driver.FindElementByAccessibilityId("ExitButton");
 
         protected BaseForm(WindowsDriver<WindowsElement> driver)
         {
             this.driver = driver;
 
             wait = new Wait(driver);
+        }
+
+        protected delegate void ClickButton();
+
+        protected abstract string ID { get; }
+        protected WindowsElement backButton => driver.FindElementByAccessibilityId("BackButton");
+        protected WindowsElement exitButton => driver.FindElementByAccessibilityId("ExitButton");
+
+        public void AssertWindowChange()
+        {
+            Assert.IsTrue(driver.FindElementByAccessibilityId(ID).Displayed);
+        }
+
+        public void ClickBackButton()
+        {
+            ClickButtonAndSwitchWindow(backButton.Click);
+        }
+
+        public void ClickExitButton()
+        {
+            exitButton.Click();
         }
 
         protected void ClickButtonAndSwitchWindow(ClickButton clickButton)
@@ -37,23 +52,8 @@ namespace Test_Framework.Forms
             {
                 Assert.Fail("Origin form did not hide");
             }
-            
+
             driver.SwitchTo().Window(driver.WindowHandles[0]);
-        }
-
-        public void AssertWindowChange()
-        {
-            Assert.IsTrue(driver.FindElementByAccessibilityId(ID).Displayed);
-        }
-
-        public void ClickBackButton()
-        {
-            ClickButtonAndSwitchWindow(backButton.Click);
-        }
-
-        public void ClickExitButton()
-        {
-            exitButton.Click();
         }
     }
 }

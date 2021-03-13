@@ -1,13 +1,15 @@
-﻿using OpenQA.Selenium.Appium.Windows;
+﻿using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Windows;
+using System.Collections.Generic;
 
 namespace Test_Framework.Forms
 {
-    class IngredientsForm : BaseForm
+    public class IngredientsForm : BaseForm
     {
-        protected override string ID => "IngredientsForm";
         public IngredientsForm(WindowsDriver<WindowsElement> driver) : base(driver)
         {
-
         }
+
+        protected override string ID => "IngredientsForm";
     }
 }

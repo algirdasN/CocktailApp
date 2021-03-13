@@ -1,6 +1,6 @@
 ﻿@Main
 Feature: Main form
-	Testing functionality of Main form buttons
+	Testing of Main form buttons functionality
 
 @Cocktails
 Scenario: Open Cocktails window

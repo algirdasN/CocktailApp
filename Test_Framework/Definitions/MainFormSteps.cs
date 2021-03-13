@@ -23,7 +23,6 @@ namespace Test_Framework.Definitions
             mainForm = new MainForm(driver);
         }
 
-
         [When(@"I click Cocktails button")]
         public void WhenIClickCocktailsButton()
         {

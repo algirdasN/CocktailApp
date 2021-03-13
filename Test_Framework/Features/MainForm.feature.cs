@@ -37,7 +37,7 @@ namespace Test_Framework.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Main form", "\tTesting functionality of Main form buttons", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Main form", "\tTesting of Main form buttons functionality", ProgrammingLanguage.CSharp, new string[] {
                         "Main"});
             testRunner.OnFeatureStart(featureInfo);
         }

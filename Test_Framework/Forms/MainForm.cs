@@ -2,37 +2,30 @@
 
 namespace Test_Framework.Forms
 {
-    class MainForm : BaseForm
+    public class MainForm : BaseForm
     {
+        public MainForm(WindowsDriver<WindowsElement> driver) : base(driver)
+        {
+        }
+
         protected override string ID => "MainForm";
         private WindowsElement cocktailsButton => driver.FindElementByAccessibilityId("CocktailsButton");
         private WindowsElement ingredientsButton => driver.FindElementByAccessibilityId("IngredientsButton");
         private WindowsElement editCocktailsButton => driver.FindElementByAccessibilityId("EditCocktailsButton");
 
-        public MainForm(WindowsDriver<WindowsElement> driver) : base(driver)
-        {
-
-        }
-
-        public CocktailsForm ClickCocktailsButton()
+        public void ClickCocktailsButton()
         {
             ClickButtonAndSwitchWindow(cocktailsButton.Click);
-
-            return new CocktailsForm(driver);
         }
 
-        public IngredientsForm ClickIngredientsButton()
+        public void ClickIngredientsButton()
         {
             ClickButtonAndSwitchWindow(ingredientsButton.Click);
-
-            return new IngredientsForm(driver);
         }
 
-        public EditCocktailsForm ClickEditCocktailButton()
+        public void ClickEditCocktailButton()
         {
             ClickButtonAndSwitchWindow(editCocktailsButton.Click);
-
-            return new EditCocktailsForm(driver);
         }
     }
 }
