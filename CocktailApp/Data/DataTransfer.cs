@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CocktailApp.Data
 {
-    class DataTransfer
+    public static class DataTransfer
     {
         /*
          * This class is used for data transfer to and from .csv files.
@@ -47,7 +47,7 @@ namespace CocktailApp.Data
             }
             catch (Exception e)
             {
-                MsgBox.ShowAsync($"Error occured on row #{count} ({count - 1} rows were added).\r\n\r\n{e.Message}.", 
+                MsgBox.ShowAsync($"Error occured on row #{count} ({count - 1} rows were added).\r\n\r\n{e.Message}.",
                                  "Data import");
             }
         }
@@ -114,12 +114,14 @@ namespace CocktailApp.Data
                         {
                             case TriState.Yes:
                                 break;
+
                             case TriState.No:
                                 if (exists)
                                 {
                                     continue;
                                 }
                                 break;
+
                             case TriState.Undefined:
                                 if (exists)
                                 {

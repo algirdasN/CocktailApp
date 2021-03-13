@@ -2,18 +2,9 @@
 {
     public class Cocktail
     {
-        public int? Id { get; private set; }
-        public string Name { get; private set; }
-        public string Ingredients { get; private set; }
-        public string FullIngredients { get; private set; }
-        public string Recipe { get; private set; }
-        public byte[] Image { get; private set; }
-        public bool Favourite { get; private set; }
-        public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
-        public string InfoAvailable => GetInfoAvailable();
-        public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
-
-        public Cocktail() { }
+        public Cocktail()
+        {
+        }
 
         public Cocktail(string id, string name, string ingredients, string fullIngredients, string recipe, byte[] image)
         {
@@ -24,6 +15,17 @@
             Recipe = recipe;
             Image = image;
         }
+
+        public int? Id { get; private set; }
+        public string Name { get; private set; }
+        public string Ingredients { get; private set; }
+        public string FullIngredients { get; private set; }
+        public string Recipe { get; private set; }
+        public byte[] Image { get; private set; }
+        public bool Favourite { get; private set; }
+        public string FullIngredientInfo => "○ " + FullIngredients.Replace("|", "\r\n○ ");
+        public string InfoAvailable => GetInfoAvailable();
+        public string Info => Name.ToUpper() + " - " + Ingredients.Replace("|", ", ");
 
         public bool IsAvailable()
         {

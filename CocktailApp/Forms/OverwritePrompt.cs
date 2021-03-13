@@ -8,6 +8,7 @@ namespace CocktailApp.Forms
     public partial class OverwritePrompt : Form
     {
         public TriState Overwrite = TriState.Undefined;
+
         public OverwritePrompt(string cocktail)
         {
             InitializeComponent();

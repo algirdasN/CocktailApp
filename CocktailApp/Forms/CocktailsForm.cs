@@ -18,6 +18,7 @@ namespace CocktailApp.Forms
         private bool Favourite;
 
         private string ScreenCapturePath;
+
         public CocktailsForm()
         {
             InitializeComponent();
@@ -56,6 +57,24 @@ namespace CocktailApp.Forms
             {
                 ClearTextBoxes();
             }
+        }
+
+        private void RefreshListContent()
+        {
+            var cocktails = AvailableCheckBox.Checked ? DataAccess.AvailableCocktails : DataAccess.Cocktails;
+
+            CocktailsListBox.DataSource = FavouriteCheckBox.Checked ?
+                cocktails.Where(c => c.Favourite).ToList() : cocktails;
+        }
+
+        private void ClearTextBoxes()
+        {
+            CocktailsListBox.ClearSelected();
+
+            CocktailNameLabel.Text = "";
+            IngredientsTextBox.Text = "";
+            RecipeTextBox.Text = "";
+            CocktailImageBox.Image = CocktailImageBox.InitialImage;
         }
 
         private void CocktailsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,6 +132,11 @@ namespace CocktailApp.Forms
 
                 SwitchFavouriteImage();
             }
+        }
+
+        private void SwitchFavouriteImage()
+        {
+            FavouritePictureBox.Image = Favourite ? Resources.filled_star : Resources.empty_star;
         }
 
         private void PrintCocktailButton_Click(object sender, EventArgs e)
@@ -225,29 +249,6 @@ namespace CocktailApp.Forms
                     CocktailsListBox.SelectedValue = select;
                 }
             }
-        }
-
-        private void RefreshListContent()
-        {
-            var cocktails = AvailableCheckBox.Checked ? DataAccess.AvailableCocktails : DataAccess.Cocktails;
-
-            CocktailsListBox.DataSource = FavouriteCheckBox.Checked ?
-                cocktails.Where(c => c.Favourite).ToList() : cocktails;
-        }
-
-        private void SwitchFavouriteImage()
-        {
-            FavouritePictureBox.Image = Favourite ? Resources.filled_star : Resources.empty_star;
-        }
-
-        private void ClearTextBoxes()
-        {
-            CocktailsListBox.ClearSelected();
-
-            CocktailNameLabel.Text = "";
-            IngredientsTextBox.Text = "";
-            RecipeTextBox.Text = "";
-            CocktailImageBox.Image = CocktailImageBox.InitialImage;
         }
 
         private Bitmap CaptureInfoPanel()
