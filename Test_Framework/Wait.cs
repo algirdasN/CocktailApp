@@ -27,7 +27,7 @@ namespace Test_Framework
         {
             var wait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
             {
-                PollingInterval = TimeSpan.FromMilliseconds(200),
+                PollingInterval = TimeSpan.FromMilliseconds(100),
                 Timeout = TimeSpan.FromMilliseconds(time_ms)
             };
 

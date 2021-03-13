@@ -20,25 +20,25 @@ namespace Test_Framework.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.7.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Main form")]
-    [NUnit.Framework.CategoryAttribute("Main")]
-    public partial class MainFormFeature
+    [NUnit.Framework.DescriptionAttribute("Cocktails form")]
+    [NUnit.Framework.CategoryAttribute("Cocktails")]
+    public partial class CocktailsFormFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private string[] _featureTags = new string[] {
-                "Main"};
+                "Cocktails"};
         
-#line 1 "MainForm.feature"
+#line 1 "CocktailsForm.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Main form", "\tTesting functionality of Main form buttons", ProgrammingLanguage.CSharp, new string[] {
-                        "Main"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Cocktails form", "\tTesting functionality of Cocktails form", ProgrammingLanguage.CSharp, new string[] {
+                        "Cocktails"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -77,14 +77,14 @@ namespace Test_Framework.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open Cocktails window")]
-        [NUnit.Framework.CategoryAttribute("Cocktails")]
-        public virtual void OpenCocktailsWindow()
+        [NUnit.Framework.DescriptionAttribute("Go back to Main window")]
+        [NUnit.Framework.CategoryAttribute("Back")]
+        public virtual void GoBackToMainWindow()
         {
             string[] tagsOfScenario = new string[] {
-                    "Cocktails"};
+                    "Back"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open Cocktails window", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Go back to Main window", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -106,88 +106,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.When("I click Cocktails button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I navigated to Cocktails window", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.Then("Only Cocktails window should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I click Back button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open Ingredients window")]
-        [NUnit.Framework.CategoryAttribute("Ingredients")]
-        public virtual void OpenIngredientsWindow()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "Ingredients"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open Ingredients window", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 11
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 12
- testRunner.When("I click Ingredients button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 13
- testRunner.Then("Only Ingredients window should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Open Edit Cocktails window")]
-        [NUnit.Framework.CategoryAttribute("EditIngredients")]
-        public virtual void OpenEditCocktailsWindow()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "EditIngredients"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Open Edit Cocktails window", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 16
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 17
- testRunner.When("I click Edit Cocktails button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 18
- testRunner.Then("Only Edit Cocktails window should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 9
+ testRunner.Then("Only Main window should be displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -202,7 +127,7 @@ this.ScenarioInitialize(scenarioInfo);
                     "Exit"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Exit the application", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 21
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -222,10 +147,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 22
+#line 13
+ testRunner.Given("I navigated to Cocktails window", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 14
  testRunner.When("I click Exit button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 15
  testRunner.Then("Application should close", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

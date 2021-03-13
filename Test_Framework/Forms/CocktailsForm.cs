@@ -4,14 +4,12 @@ namespace Test_Framework.Forms
 {
     class CocktailsForm : BaseForm
     {
+        protected override string ID => "CocktailsForm";
+
         public CocktailsForm(WindowsDriver<WindowsElement> driver) : base(driver)
         {
 
         }
 
-        public void AssertWindowChange()
-        {
-            base.AssertWindowChange("CocktailsForm");
-        }
     }
 }

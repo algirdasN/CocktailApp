@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using TechTalk.SpecFlow;
 
-namespace Test_Framework
+namespace Test_Framework.Definitions
 {
     [Binding]
     public sealed class Hooks

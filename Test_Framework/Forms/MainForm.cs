@@ -4,6 +4,7 @@ namespace Test_Framework.Forms
 {
     class MainForm : BaseForm
     {
+        protected override string ID => "MainForm";
         private WindowsElement cocktailsButton => driver.FindElementByAccessibilityId("CocktailsButton");
         private WindowsElement ingredientsButton => driver.FindElementByAccessibilityId("IngredientsButton");
         private WindowsElement editCocktailsButton => driver.FindElementByAccessibilityId("EditCocktailsButton");
@@ -13,41 +14,25 @@ namespace Test_Framework.Forms
 
         }
 
-        public void AssertWindowChange()
+        public CocktailsForm ClickCocktailsButton()
         {
-            base.AssertWindowChange("MainForm");
+            ClickButtonAndSwitchWindow(cocktailsButton.Click);
+
+            return new CocktailsForm(driver);
         }
 
-        public void ClickCocktailsButton()
+        public IngredientsForm ClickIngredientsButton()
         {
-            string winHandle = driver.CurrentWindowHandle;
+            ClickButtonAndSwitchWindow(ingredientsButton.Click);
 
-            cocktailsButton.Click();
-
-            SwitchDriverToActiveWindow(winHandle);
+            return new IngredientsForm(driver);
         }
 
-        public void ClickIngredientsButton()
+        public EditCocktailsForm ClickEditCocktailButton()
         {
-            string winHandle = driver.CurrentWindowHandle;
+            ClickButtonAndSwitchWindow(editCocktailsButton.Click);
 
-            ingredientsButton.Click();
-
-            SwitchDriverToActiveWindow(winHandle);
-        }
-
-        public void ClickEditCocktailButton()
-        {
-            string winHandle = driver.CurrentWindowHandle;
-
-            editCocktailsButton.Click();
-
-            SwitchDriverToActiveWindow(winHandle);
-        }
-
-        public void ClickExitButton()
-        {
-            exitButton.Click();
+            return new EditCocktailsForm(driver);
         }
     }
 }

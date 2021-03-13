@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Appium.Windows;
-using System.Diagnostics;
 using TechTalk.SpecFlow;
 using Test_Framework.Forms;
 
@@ -21,7 +20,7 @@ namespace Test_Framework.Definitions
         public GeneralSteps(WindowsDriver<WindowsElement> driver)
         {
             this.driver = driver;
-            
+
             InitiateForms();
         }
 
@@ -31,6 +30,24 @@ namespace Test_Framework.Definitions
             cocktailsForm = new CocktailsForm(driver);
             ingredientsForm = new IngredientsForm(driver);
             editCocktailsForm = new EditCocktailsForm(driver);
+        }
+
+        [When(@"I click Back button")]
+        public void WhenIClickBackButton()
+        {
+            mainForm.ClickBackButton();
+        }
+
+        [When(@"I click Exit button")]
+        public void WhenIClickExitButton()
+        {
+            mainForm.ClickExitButton();
+        }
+
+        [Then(@"Only Main window should be displayed")]
+        public void ThenOnlyMainWindowShouldBeDisplayed()
+        {
+            mainForm.AssertWindowChange();
         }
 
         [Then(@"Only Cocktails window should be displayed")]
@@ -54,7 +71,7 @@ namespace Test_Framework.Definitions
         [Then(@"Application should close")]
         public void ThenApplicationShouldClose()
         {
-            Assert.IsTrue(Process.GetProcessesByName("CocktailApp").Length == 0);
+            Assert.IsEmpty(driver.WindowHandles);
         }
     }
 }

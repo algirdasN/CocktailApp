@@ -6,9 +6,13 @@ namespace Test_Framework.Forms
 {
     abstract class BaseForm
     {
+        protected delegate void ClickButton();
+        protected abstract string ID { get; }
+        
         protected WindowsDriver<WindowsElement> driver;
 
         protected Wait wait;
+
         protected WindowsElement backButton => driver.FindElementByAccessibilityId("BackButton");
         protected WindowsElement exitButton => driver.FindElementByAccessibilityId("ExitButton");
 
@@ -19,23 +23,37 @@ namespace Test_Framework.Forms
             wait = new Wait(driver);
         }
 
-        protected void SwitchDriverToActiveWindow(string winHandle)
+        protected void ClickButtonAndSwitchWindow(ClickButton clickButton)
         {
+            string winHandle = driver.CurrentWindowHandle;
+
+            clickButton();
+
             try
             {
                 wait.Explicit(1000).Until(d => !d.WindowHandles.Contains(winHandle));
             }
             catch (WebDriverTimeoutException)
             {
-                Assert.Fail("Main form did not hide");
+                Assert.Fail("Origin form did not hide");
             }
             
             driver.SwitchTo().Window(driver.WindowHandles[0]);
         }
 
-        protected virtual void AssertWindowChange(string accessId)
+        public void AssertWindowChange()
         {
-            Assert.IsTrue(driver.FindElementByAccessibilityId(accessId).Displayed);
+            Assert.IsTrue(driver.FindElementByAccessibilityId(ID).Displayed);
+        }
+
+        public void ClickBackButton()
+        {
+            ClickButtonAndSwitchWindow(backButton.Click);
+        }
+
+        public void ClickExitButton()
+        {
+            exitButton.Click();
         }
     }
 }

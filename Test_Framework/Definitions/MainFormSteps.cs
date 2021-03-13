@@ -41,11 +41,5 @@ namespace Test_Framework.Definitions
         {
             mainForm.ClickEditCocktailButton();
         }
-
-        [When(@"I click Exit button")]
-        public void WhenIClickExitButton()
-        {
-            mainForm.ClickExitButton();
-        }
     }
 }
