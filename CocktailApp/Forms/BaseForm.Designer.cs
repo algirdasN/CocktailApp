@@ -83,6 +83,7 @@
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimumSize = new System.Drawing.Size(960, 720);
             this.Name = "BaseForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormClose);
             this.ResumeLayout(false);
 

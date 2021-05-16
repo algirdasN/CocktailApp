@@ -233,7 +233,7 @@ namespace CocktailApp.Forms
                     }
 
                     MsgBox.ShowAsync("Success!\r\n\r\nFile location: " + dialog.SelectedPath +
-                                    "\r\nFile name: " + filename, "Print cocktail");
+                                    "\r\nFile name: " + filename, "Print menu");
                 }
                 catch (Exception exc)
                 {
@@ -243,7 +243,7 @@ namespace CocktailApp.Forms
                 FavouritePictureBox.Visible = true;
 
                 FilterListBox(search, avaCheck, favCheck);
-
+                    
                 if (CocktailsListBox.Items.Count > 0)
                 {
                     CocktailsListBox.SelectedValue = select;

@@ -30,7 +30,7 @@ namespace CocktailApp.Forms
              * Otherwise the application process would continue to run.
              */
 
-            if (!((sender as Form).ActiveControl is Button))
+            if ((sender as Form).ActiveControl != BackButton)
             {
                 Application.Exit();
             }
