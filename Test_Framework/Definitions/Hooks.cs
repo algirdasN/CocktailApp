@@ -26,12 +26,6 @@ namespace Test_Framework.Definitions
             Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
         }
 
-        [AfterTestRun]
-        public static void KillWinAppDriver()
-        {
-            Array.ForEach(Process.GetProcessesByName("WinAppDriver"), p => p.Kill());
-        }
-
         [BeforeScenario]
         public void OpenApplication()
         {
@@ -49,6 +43,13 @@ namespace Test_Framework.Definitions
         public void CloseApplication()
         {
             driver.Quit();
+        }
+
+        [AfterTestRun]
+        public static void KillWinAppDriver()
+        {
+            Array.ForEach(Process.GetProcessesByName("CocktailApp"), p => p.Kill());
+            Array.ForEach(Process.GetProcessesByName("WinAppDriver"), p => p.Kill());
         }
     }
 }

@@ -4,26 +4,14 @@ using System;
 
 namespace Test_Framework
 {
-    public class Wait
+    public static class Wait
     {
-        private WindowsDriver<WindowsElement> driver;
-
-        public Wait(WindowsDriver<WindowsElement> driver)
+        public static void Implicit(WindowsDriver<WindowsElement> driver, int time_sec)
         {
-            this.driver = driver;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time_sec);
         }
 
-        public void ImplicitZero()
-        {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
-        }
-
-        public void ImplicitFiveSeconds()
-        {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-        }
-
-        public DefaultWait<WindowsDriver<WindowsElement>> Explicit(int time_ms)
+        public static DefaultWait<WindowsDriver<WindowsElement>> Explicit(WindowsDriver<WindowsElement> driver, int time_ms)
         {
             var wait = new DefaultWait<WindowsDriver<WindowsElement>>(driver)
             {
