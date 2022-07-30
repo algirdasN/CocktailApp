@@ -5,9 +5,9 @@ namespace CocktailApp.Tools
 {
     public static class MsgBox
     {
-        public static async void ShowAsync(string text, string caption)
+        public static void ShowAsync(string text, string caption)
         {
-            await Task.Run(() => MessageBox.Show(text, caption));
+             Task.Run(() => MessageBox.Show(text, caption));
         }
     }
 }

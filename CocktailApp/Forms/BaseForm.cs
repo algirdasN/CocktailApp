@@ -13,8 +13,8 @@ namespace CocktailApp.Forms
         protected void BackButton_Click(object sender, EventArgs e)
         {
             var mainMenu = (MainForm)Tag;
-            mainMenu.Show();
             mainMenu.Location = Location;
+            mainMenu.Show();
             Close();
         }
 
