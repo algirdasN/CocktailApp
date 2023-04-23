@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace Test_Framework.Forms
 {
@@ -12,8 +13,6 @@ namespace Test_Framework.Forms
         {
             this.driver = driver;
         }
-
-        protected delegate void ClickButton();
 
         protected abstract string ID { get; }
         protected WindowsElement backButton => driver.FindElementByAccessibilityId("BackButton");
@@ -29,7 +28,7 @@ namespace Test_Framework.Forms
             exitButton.Click();
         }
 
-        protected void ClickButtonAndSwitchWindow(ClickButton clickButton)
+        protected void ClickButtonAndSwitchWindow(Action clickButton)
         {
             string winHandle = driver.CurrentWindowHandle;
 
@@ -37,11 +36,11 @@ namespace Test_Framework.Forms
 
             try
             {
-                Wait.Explicit(driver, 1000).Until(d => !d.WindowHandles.Contains(winHandle));
+                Wait.Explicit(driver, 10).Until(d => !d.WindowHandles.Contains(winHandle));
             }
-            catch (WebDriverTimeoutException)
+            catch (WebDriverTimeoutException ex)
             {
-                Assert.Fail("Origin form did not hide");
+                throw new WebDriverTimeoutException("Origin form did not hide", ex);
             }
 
             SwitchToActiveWindow();

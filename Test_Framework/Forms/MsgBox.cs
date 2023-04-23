@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium.Appium.Windows;
+﻿using OpenQA.Selenium.Appium.Windows;
 
 namespace Test_Framework.Forms
 {
@@ -28,14 +27,14 @@ namespace Test_Framework.Forms
             okButton.Click();
         }
 
-        public void AssertMessageBoxText(string title, params string[] text)
+        public string GetMessageTitle()
         {
-            Assert.AreEqual(title, messageTitle.Text);
+            return messageTitle.Text;
+        }
 
-            foreach (var item in text)
-            {
-                Assert.IsTrue(messageText.Text.Contains(item));
-            }
+        public string GetMessageText()
+        {
+            return messageText.Text;
         }
     }
 }

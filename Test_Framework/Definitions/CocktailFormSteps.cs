@@ -160,7 +160,7 @@ namespace Test_Framework.Definitions
 
             string title = menuName == null ? "Print cocktail" : "Print menu";
 
-            msgBox.AssertMessageBoxText(title, "Success!", destinationPath, fileName);
+            AssertMessageBoxText(title, "Success!", destinationPath, fileName);
 
             msgBox.ClickOkButton();
 
@@ -197,9 +197,19 @@ namespace Test_Framework.Definitions
         [Then(@"Error message box should be displayed")]
         public void ThenErrorMessageBoxShouldBeDisplayed()
         {
-            msgBox.AssertMessageBoxText("Print cocktail", "No cocktails favourited.");
+            AssertMessageBoxText("Print cocktail", "No cocktails favourited.");
 
             msgBox.ClickOkButton();
+        }
+
+        public void AssertMessageBoxText(string title, params string[] text)
+        {
+            Assert.AreEqual(title, msgBox.GetMessageTitle());
+
+            foreach (var item in text)
+            {
+                Assert.IsTrue(msgBox.GetMessageText().Contains(item));
+            }
         }
     }
 }
