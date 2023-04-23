@@ -13,24 +13,24 @@ namespace CocktailApp.Forms
         private void IngredientsButton_Click(object sender, EventArgs e)
         {
             var form = new IngredientsForm { Tag = this };
-            form.Show();
             form.Location = Location;
+            form.Show();
             Hide();
         }
 
         private void CocktailsButton_Click(object sender, EventArgs e)
         {
             var form = new CocktailsForm { Tag = this };
-            form.Show();
             form.Location = Location;
+            form.Show();
             Hide();
         }
 
         private void EditCocktailsButton_Click(object sender, EventArgs e)
         {
             var form = new EditCocktailsForm { Tag = this };
-            form.Show();
             form.Location = Location;
+            form.Show();
             Hide();
         }
 

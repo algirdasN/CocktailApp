@@ -10,27 +10,27 @@ namespace CocktailApp.Forms
             InitializeComponent();
         }
 
-        public void BackButton_Click(object sender, EventArgs e)
+        protected void BackButton_Click(object sender, EventArgs e)
         {
             var mainMenu = (MainForm)Tag;
-            mainMenu.Show();
             mainMenu.Location = Location;
+            mainMenu.Show();
             Close();
         }
 
-        public void ExitButton_Click(object sender, EventArgs e)
+        protected void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        public void FormClose(object sender, FormClosingEventArgs e)
+        protected void FormClose(object sender, FormClosingEventArgs e)
         {
             /*
              * Closes the application if secondary form is closed by any means other than pressing the buttons on form.
              * Otherwise the application process would continue to run.
              */
 
-            if (!((sender as Form).ActiveControl is Button))
+            if ((sender as Form).ActiveControl != BackButton)
             {
                 Application.Exit();
             }

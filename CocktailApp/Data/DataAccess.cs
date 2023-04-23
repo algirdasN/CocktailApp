@@ -12,8 +12,8 @@ namespace CocktailApp.Data
          * This class is used for data transfer to and from the database.
          */
 
-        public static List<Cocktail> Cocktails { get; private set; }
         public static List<Ingredient> Ingredients { get; private set; }
+        public static List<Cocktail> Cocktails { get; private set; }
         public static List<Cocktail> AvailableCocktails => Cocktails.Where(c => c.IsAvailable()).ToList();
         private static IDbConnection Connection => new SQLiteConnection(@"Data Source=|DataDirectory|\Data\Database.db; Version=3;");
 

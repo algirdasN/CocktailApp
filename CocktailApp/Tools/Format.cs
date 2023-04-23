@@ -32,7 +32,7 @@ namespace CocktailApp.Tools
 
         public static Bitmap ResizeImage(Image image)
         {
-            int size = 640; 
+            int size = 640;
 
             var destRect = new Rectangle(0, 0, size, size);
             var destImage = new Bitmap(size, size);
@@ -55,20 +55,6 @@ namespace CocktailApp.Tools
             return ReplaceTransparency(destImage);
         }
 
-        private static Bitmap ReplaceTransparency(Bitmap image)
-        {
-            var result = new Bitmap(image.Size.Width, image.Size.Height, PixelFormat.Format24bppRgb);
-
-            using (var graphics = Graphics.FromImage(result))
-            {
-                graphics.Clear(Color.White);
-                graphics.CompositingMode = CompositingMode.SourceOver;
-                graphics.DrawImage(image, 0, 0);
-            }
-            
-            return result;
-        }
-
         public static byte[] GetByteArray(Image image)
         {
             using (var ms = new MemoryStream())
@@ -84,6 +70,20 @@ namespace CocktailApp.Tools
             {
                 return Image.FromStream(ms);
             }
+        }
+
+        private static Bitmap ReplaceTransparency(Bitmap image)
+        {
+            var result = new Bitmap(image.Size.Width, image.Size.Height, PixelFormat.Format24bppRgb);
+
+            using (var graphics = Graphics.FromImage(result))
+            {
+                graphics.Clear(Color.White);
+                graphics.CompositingMode = CompositingMode.SourceOver;
+                graphics.DrawImage(image, 0, 0);
+            }
+
+            return result;
         }
     }
 }

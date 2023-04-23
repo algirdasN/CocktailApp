@@ -28,6 +28,31 @@ namespace CocktailApp.Forms
             IngredientTagListBox.DataSource = TagList;
         }
 
+        private void RefreshListContent()
+        {
+            DataAccess.GetCocktails();
+
+            CocktailsListBox.DataSource = DataAccess.Cocktails;
+
+            CocktailsListBox.ClearSelected();
+            NameTextBox.Text = "";
+            IngredientTagsComboBox.Text = "";
+            TagList.Clear();
+            FullIngredientInfoTextBox.Text = "";
+            RecipeTextBox.Text = "";
+
+            ClearImage();
+        }
+
+        private void ClearImage()
+        {
+            CocktailImage = null;
+
+            UploadedImagePictureBox.Image = UploadedImagePictureBox.InitialImage;
+
+            UploadedFileLabel.Text = "No image uploaded";
+        }
+
         private void SearchBar_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -178,7 +203,7 @@ namespace CocktailApp.Forms
             {
                 SuccessLabelNoSelection();
             }
-            else if (DataAccess.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) && DialogResult.No == 
+            else if (DataAccess.Cocktails.Where(c => c.Id.ToString() != id).Select(c => c.Name).Contains(name) && DialogResult.No ==
                 MessageBox.Show("This will overwrite an existing cocktail with that name.\r\n\r\nDo you want to continue?",
                                 "Edit cocktail", MessageBoxButtons.YesNo))
             {
@@ -207,6 +232,13 @@ namespace CocktailApp.Forms
             }
         }
 
+        private bool TextBoxValidation()
+        {
+            return NameTextBox.Text.Trim() != ""
+                && IngredientTagListBox.Text.Trim() != ""
+                && FullIngredientInfoTextBox.Text.Trim() != "";
+        }
+
         private void RemoveCocktailButton_Click(object sender, EventArgs e)
         {
             if (CocktailsListBox.SelectedItems.Count > 0)
@@ -231,38 +263,6 @@ namespace CocktailApp.Forms
              */
 
             SuccessLabelClear();
-        }
-
-        private void RefreshListContent()
-        {
-            DataAccess.GetCocktails();
-
-            CocktailsListBox.DataSource = DataAccess.Cocktails;
-
-            CocktailsListBox.ClearSelected();
-            NameTextBox.Text = "";
-            IngredientTagsComboBox.Text = "";
-            TagList.Clear();
-            FullIngredientInfoTextBox.Text = "";
-            RecipeTextBox.Text = "";
-
-            ClearImage();
-        }
-
-        private bool TextBoxValidation()
-        {
-            return NameTextBox.Text.Trim() != ""
-                && IngredientTagListBox.Text.Trim() != ""
-                && FullIngredientInfoTextBox.Text.Trim() != "";
-        }
-
-        private void ClearImage()
-        {
-            CocktailImage = null;
-
-            UploadedImagePictureBox.Image = UploadedImagePictureBox.InitialImage;
-
-            UploadedFileLabel.Text = "No image uploaded";
         }
 
         private void SuccessLabelClear()

@@ -26,12 +26,88 @@ namespace CocktailApp.Forms
             PopulateComboBox();
         }
 
+        private void PopulateIngredientsTable()
+        {
+            DataAccess.GetIngredients();
+
+            //Storing the ingredient list as instance variable to use it later for sorting.
+            IngredientList = new List<Ingredient>(DataAccess.Ingredients);
+
+            IngredientsTable.DataSource = IngredientList;
+        }
+
+        private void PopulateComboBox()
+        {
+            var arr = DataAccess.Ingredients.Select(i => i.Type).Distinct().ToArray();
+
+            TypeComboBox.Items.AddRange(arr);
+            FilterDropDown.Items.AddRange(arr);
+        }
+
+        private void EditModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool check = EditModeCheckBox.Checked;
+
+            EditPanel.Enabled = check;
+
+            //Changes the colors of selected cells to give the appearance of selection being unavailable when not in edit mode.
+            IngredientsTable.DefaultCellStyle.SelectionForeColor = check ?
+                Color.SeaShell : IngredientsTable.DefaultCellStyle.ForeColor;
+
+            IngredientsTable.DefaultCellStyle.SelectionBackColor = check ?
+                Color.CornflowerBlue : IngredientsTable.DefaultCellStyle.BackColor;
+
+            if (check)
+            {
+                FillTextBoxes();
+            }
+            else
+            {
+                ClearTextBoxes();
+
+                SuccessLabelClear();
+            }
+        }
+
         private void IngredientsTable_SelectionChanged(object sender, EventArgs e)
         {
             if (EditModeCheckBox.Checked)
             {
                 FillTextBoxes();
             }
+        }
+
+        private void FillTextBoxes()
+        {
+            if (IngredientsTable.SelectedRows.Count > 0)
+            {
+                TypeComboBox.Text = IngredientsTable.SelectedCells[1].Value.ToString();
+                BrandTextBox.Text = IngredientsTable.SelectedCells[2].Value.ToString();
+                VolumeTextBox.Text = IngredientsTable.SelectedCells[3].Value.ToString();
+
+                switch (IngredientsTable.SelectedCells[4].Value)
+                {
+                    case 3:
+                        FullRadioButton.Checked = true;
+                        break;
+
+                    case 2:
+                        HalfRadioButton.Checked = true;
+                        break;
+
+                    case 1:
+                        QuarterRadioButton.Checked = true;
+                        break;
+                }
+            }
+        }
+
+        private void ClearTextBoxes()
+        {
+            TypeComboBox.Text = "";
+            BrandTextBox.Text = "";
+            VolumeTextBox.Text = "";
+            FullRadioButton.Checked = true;
         }
 
         private void FIlterDropDown_TextChanged(object sender, EventArgs e)
@@ -63,6 +139,46 @@ namespace CocktailApp.Forms
             }
         }
 
+        private void FilterIngredients()
+        {
+            var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
+
+            currencyManager.SuspendBinding();
+
+            foreach (DataGridViewRow row in IngredientsTable.Rows)
+            {
+                row.Visible = row.Cells[1].Value.ToString().IndexOf(FilterDropDown.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+
+            currencyManager.ResumeBinding();
+        }
+
+        private void SortIngredients()
+        {
+            switch (SortedColumn)
+            {
+                case 1:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Type).ToList() : IngredientList.OrderByDescending(i => i.Type).ToList();
+                    break;
+
+                case 2:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Brand).ToList() : IngredientList.OrderByDescending(i => i.Brand).ToList();
+                    break;
+
+                case 5:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Volume).ToList() : IngredientList.OrderByDescending(i => i.Volume).ToList();
+                    break;
+
+                case 6:
+                    IngredientList = SortAsc ?
+                        IngredientList.OrderBy(i => i.Level).ToList() : IngredientList.OrderByDescending(i => i.Level).ToList();
+                    break;
+            }
+        }
+
         private void ImportButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -87,31 +203,6 @@ namespace CocktailApp.Forms
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 DataTransfer.ExportIngredients(dialog.SelectedPath);
-            }
-        }
-
-        private void EditModeCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            bool check = EditModeCheckBox.Checked;
-
-            EditPanel.Enabled = check;
-
-            //Changes the colors of selected cells to give the appearance of selection being unavailable when not in edit mode.
-            IngredientsTable.DefaultCellStyle.SelectionForeColor = check ?
-                Color.SeaShell : IngredientsTable.DefaultCellStyle.ForeColor;
-
-            IngredientsTable.DefaultCellStyle.SelectionBackColor = check ?
-                Color.CornflowerBlue : IngredientsTable.DefaultCellStyle.BackColor;
-
-            if (check)
-            {
-                FillTextBoxes();
-            }
-            else
-            {
-                ClearTextBoxes();
-
-                SuccessLabelClear();
             }
         }
 
@@ -154,6 +245,50 @@ namespace CocktailApp.Forms
             }
         }
 
+        private bool TextBoxValidation()
+        {
+            if (TypeComboBox.Text.Trim() == "" || BrandTextBox.Text.Trim() == "" || VolumeTextBox.Text.Trim() == "")
+            {
+                SuccessLabelEmpty();
+
+                return false;
+            }
+            else if (!int.TryParse(VolumeTextBox.Text.Trim(), out _))
+            {
+                SuccessLabelInvalid();
+
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void AddToComboBox()
+        {
+            string text = Format.CapitalizeFirst(TypeComboBox.Text);
+
+            if (!TypeComboBox.Items.Contains(text))
+            {
+                TypeComboBox.Items.Add(text);
+                FilterDropDown.Items.Add(text);
+            }
+        }
+
+        private void RefreshAfterEdit()
+        {
+            PopulateIngredientsTable();
+
+            FilterIngredients();
+
+            IngredientsTable.ClearSelection();
+
+            ClearTextBoxes();
+
+            SuccessLabelSuccess();
+        }
+
         private void RemoveButton_Click(object sender, EventArgs e)
         {
             if (IngredientsTable.SelectedRows.Count > 0)
@@ -176,134 +311,6 @@ namespace CocktailApp.Forms
              */
 
             SuccessLabelClear();
-        }
-
-        private void PopulateIngredientsTable()
-        {
-            DataAccess.GetIngredients();
-
-            //Storing the ingredient list as instance variable to use it later for sorting.
-            IngredientList = new List<Ingredient>(DataAccess.Ingredients);
-
-            IngredientsTable.DataSource = IngredientList;
-        }
-
-        private void PopulateComboBox()
-        {
-            var arr = DataAccess.Ingredients.Select(i => i.Type).Distinct().ToArray();
-
-            TypeComboBox.Items.AddRange(arr);
-            FilterDropDown.Items.AddRange(arr);
-        }
-
-        private void FillTextBoxes()
-        {
-            if (IngredientsTable.SelectedRows.Count > 0)
-            {
-                TypeComboBox.Text = IngredientsTable.SelectedCells[1].Value.ToString();
-                BrandTextBox.Text = IngredientsTable.SelectedCells[2].Value.ToString();
-                VolumeTextBox.Text = IngredientsTable.SelectedCells[3].Value.ToString();
-
-                switch (IngredientsTable.SelectedCells[4].Value)
-                {
-                    case 3:
-                        FullRadioButton.Checked = true;
-                        break;
-                    case 2:
-                        HalfRadioButton.Checked = true;
-                        break;
-                    case 1:
-                        QuarterRadioButton.Checked = true;
-                        break;
-                }
-            }
-        }
-
-        private void FilterIngredients()
-        {
-            var currencyManager = (CurrencyManager)BindingContext[IngredientsTable.DataSource];
-
-            currencyManager.SuspendBinding();
-
-            foreach (DataGridViewRow row in IngredientsTable.Rows)
-            {
-                row.Visible = row.Cells[1].Value.ToString().IndexOf(FilterDropDown.Text, StringComparison.OrdinalIgnoreCase) >= 0;
-            }
-
-            currencyManager.ResumeBinding();
-        }
-
-        private void SortIngredients()
-        {
-            switch (SortedColumn)
-            {
-                case 1:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Type).ToList() : IngredientList.OrderByDescending(i => i.Type).ToList();
-                    break;
-                case 2:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Brand).ToList() : IngredientList.OrderByDescending(i => i.Brand).ToList();
-                    break;
-                case 5:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Volume).ToList() : IngredientList.OrderByDescending(i => i.Volume).ToList();
-                    break;
-                case 6:
-                    IngredientList = SortAsc ?
-                        IngredientList.OrderBy(i => i.Level).ToList() : IngredientList.OrderByDescending(i => i.Level).ToList();
-                    break;
-            }
-        }
-        private void ClearTextBoxes()
-        {
-            TypeComboBox.Text = "";
-            BrandTextBox.Text = "";
-            VolumeTextBox.Text = "";
-            FullRadioButton.Checked = true;
-        }
-
-        private void AddToComboBox()
-        {
-            string text = Format.CapitalizeFirst(TypeComboBox.Text);
-
-            if (!TypeComboBox.Items.Contains(text))
-            {
-                TypeComboBox.Items.Add(text);
-                FilterDropDown.Items.Add(text);
-            }
-        }
-
-        private bool TextBoxValidation()
-        {
-            if (TypeComboBox.Text.Trim() == "" || BrandTextBox.Text.Trim() == "" || VolumeTextBox.Text.Trim() == "")
-            {
-                SuccessLabelEmpty();
-
-                return false;
-            }
-            else if (!int.TryParse(VolumeTextBox.Text.Trim(), out _))
-            {
-                SuccessLabelInvalid();
-
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-
-        }
-
-        private void RefreshAfterEdit()
-        {
-            PopulateIngredientsTable();
-
-            IngredientsTable.ClearSelection();
-            
-            ClearTextBoxes();
-
-            SuccessLabelSuccess();
         }
 
         private void SuccessLabelClear()
